@@ -38,6 +38,7 @@ public class TimePicker : TimePickerBase, IClearControl
 
     private bool _suppressTextPresenterEvent;
     private TextBox? _textBox;
+    private TimeOnly? _pendingTime;
 
     static TimePicker()
     {
@@ -109,7 +110,15 @@ public class TimePicker : TimePickerBase, IClearControl
     {
         if (!IsInitialized) return;
         if (_suppressTextPresenterEvent) return;
-        SetCurrentValue(SelectedTimeProperty, e.NewTime.ToTimeSpan());
+        
+        if (NeedConfirmation)
+        {
+            _pendingTime = e.NewTime;
+        }
+        else
+        {
+            SetCurrentValue(SelectedTimeProperty, e.NewTime.ToTimeSpan());
+        }
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
@@ -119,6 +128,7 @@ public class TimePicker : TimePickerBase, IClearControl
 
     private void OnTextBoxGetFocus(object? sender, RoutedEventArgs e)
     {
+        _pendingTime = SelectedTime.ToTimeOnly();
         SetCurrentValue(IsDropdownOpenProperty, true);
     }
 
@@ -195,7 +205,10 @@ public class TimePicker : TimePickerBase, IClearControl
 
     public void Confirm()
     {
-        _presenter?.Confirm();
+        if (NeedConfirmation && _pendingTime.HasValue)
+        {
+            SetCurrentValue(SelectedTimeProperty, _pendingTime.Value.ToTimeSpan());
+        }
         SetCurrentValue(IsDropdownOpenProperty, false);
         Focus();
     }

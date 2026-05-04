@@ -53,6 +53,8 @@ public class TimeRangePicker : TimePickerBase, IClearControl
 
     private TextBox? _startTextBox;
     private bool _suppressTextPresenterEvent;
+    private TimeOnly? _pendingStartTime;
+    private TimeOnly? _pendingEndTime;
 
     static TimeRangePicker()
     {
@@ -204,7 +206,22 @@ public class TimeRangePicker : TimePickerBase, IClearControl
     {
         if (!IsInitialized) return;
         if (_suppressTextPresenterEvent) return;
-        SetCurrentValue(Equals(sender, _startPresenter) ? StartTimeProperty : EndTimeProperty, e.NewTime.ToTimeSpan());
+        
+        if (NeedConfirmation)
+        {
+            if (Equals(sender, _startPresenter))
+            {
+                _pendingStartTime = e.NewTime;
+            }
+            else if (Equals(sender, _endPresenter))
+            {
+                _pendingEndTime = e.NewTime;
+            }
+        }
+        else
+        {
+            SetCurrentValue(Equals(sender, _startPresenter) ? StartTimeProperty : EndTimeProperty, e.NewTime.ToTimeSpan());
+        }
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
@@ -214,6 +231,8 @@ public class TimeRangePicker : TimePickerBase, IClearControl
 
     private void OnTextBoxGetFocus(object? sender, RoutedEventArgs e)
     {
+        _pendingStartTime = StartTime.ToTimeOnly();
+        _pendingEndTime = EndTime.ToTimeOnly();
         SetCurrentValue(IsDropdownOpenProperty, true);
     }
 
@@ -252,8 +271,17 @@ public class TimeRangePicker : TimePickerBase, IClearControl
 
     public void Confirm()
     {
-        _startPresenter?.Confirm();
-        _endPresenter?.Confirm();
+        if (NeedConfirmation)
+        {
+            if (_pendingStartTime.HasValue)
+            {
+                SetCurrentValue(StartTimeProperty, _pendingStartTime.Value.ToTimeSpan());
+            }
+            if (_pendingEndTime.HasValue)
+            {
+                SetCurrentValue(EndTimeProperty, _pendingEndTime.Value.ToTimeSpan());
+            }
+        }
         SetCurrentValue(IsDropdownOpenProperty, false);
         Focus();
     }

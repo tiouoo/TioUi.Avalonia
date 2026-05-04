@@ -32,6 +32,12 @@
                     Classes="ClearButton"
                     Name="singlePicker"
                     Width="300" />
+                <ToggleSwitch Content="Need Confirm" Name="needConfirm" />
+                <tio:DatePicker
+                    DisplayFormat="yyyy-MM-dd"
+                    Name="confirmPicker"
+                    NeedConfirmation="{Binding #needConfirm.IsChecked}"
+                    Width="200" />
             </StackPanel>
         </ScrollViewer>
     </tio:GroupBorder>

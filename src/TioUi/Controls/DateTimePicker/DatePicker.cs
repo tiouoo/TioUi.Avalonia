@@ -41,6 +41,7 @@ public class DatePicker : DatePickerBase, IClearControl
     private bool _isFocused;
     private Popup? _popup;
     private TextBox? _textBox;
+    private DateTime? _pendingDate;
 
     static DatePicker()
     {
@@ -100,9 +101,20 @@ public class DatePicker : DatePickerBase, IClearControl
 
     private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
-        SetCurrentValue(SelectedDateProperty, 
-            e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null);
-        SetCurrentValue(IsDropdownOpenProperty, false);
+        if (NeedConfirmation)
+        {
+            _pendingDate = e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null;
+            if (e.Date.HasValue)
+            {
+                _calendar?.MarkDates(e.Date.Value, e.Date.Value);
+            }
+        }
+        else
+        {
+            SetCurrentValue(SelectedDateProperty, 
+                e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null);
+            SetCurrentValue(IsDropdownOpenProperty, false);
+        }
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
@@ -158,6 +170,7 @@ public class DatePicker : DatePickerBase, IClearControl
 
     private void OnTextBoxGetFocus(object? sender, RoutedEventArgs e)
     {
+        _pendingDate = SelectedDate;
         if (_calendar is not null)
         {
             var date = SelectedDate ?? DateTime.Today;
@@ -262,5 +275,19 @@ public class DatePicker : DatePickerBase, IClearControl
 
             _calendar?.ClearSelection();
         }
+    }
+
+    public override void Confirm()
+    {
+        if (NeedConfirmation && _pendingDate.HasValue)
+        {
+            SetCurrentValue(SelectedDateProperty, _pendingDate);
+        }
+        SetCurrentValue(IsDropdownOpenProperty, false);
+    }
+
+    public override void Dismiss()
+    {
+        SetCurrentValue(IsDropdownOpenProperty, false);
     }
 }

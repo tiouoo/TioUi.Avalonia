@@ -31,6 +31,15 @@
                         PanelFormat="{Binding #panelBox.Text}"
                         Width="300"
                         tio:FormItem.NoLabel="True" />
+                    <ToggleSwitch Content="Need Confirm" Name="needConfirm" />
+                    <tio:DateTimePicker
+                        Classes="ClearButton"
+                        DisplayFormat="{Binding #formatBox.Text}"
+                        Name="confirmPicker"
+                        NeedConfirmation="{Binding #needConfirm.IsChecked}"
+                        PanelFormat="{Binding #panelBox.Text}"
+                        Width="300"
+                        tio:FormItem.Label="Need Confirmation" />
                 </tio:Form>
             </StackPanel>
         </ScrollViewer>

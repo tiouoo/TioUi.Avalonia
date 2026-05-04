@@ -48,6 +48,9 @@ public class DatePickerBase : TemplatedControl, IInnerContentControl, IPopupInne
     public static readonly StyledProperty<bool> IsReadonlyProperty = AvaloniaProperty.Register<DatePickerBase, bool>(
         nameof(IsReadonly));
 
+    public static readonly StyledProperty<bool> NeedConfirmationProperty =
+        AvaloniaProperty.Register<DatePickerBase, bool>(nameof(NeedConfirmation));
+
     public AvaloniaList<DateRange> BlackoutDates
     {
         get => GetValue(BlackoutDatesProperty);
@@ -76,6 +79,12 @@ public class DatePickerBase : TemplatedControl, IInnerContentControl, IPopupInne
     {
         get => GetValue(IsReadonlyProperty);
         set => SetValue(IsReadonlyProperty, value);
+    }
+
+    public bool NeedConfirmation
+    {
+        get => GetValue(NeedConfirmationProperty);
+        set => SetValue(NeedConfirmationProperty, value);
     }
 
     public bool IsDropdownOpen
@@ -113,4 +122,7 @@ public class DatePickerBase : TemplatedControl, IInnerContentControl, IPopupInne
         get => GetValue(PopupInnerBottomContentProperty);
         set => SetValue(PopupInnerBottomContentProperty, value);
     }
+
+    public virtual void Confirm() { }
+    public virtual void Dismiss() { }
 }

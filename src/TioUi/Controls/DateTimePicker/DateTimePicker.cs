@@ -35,9 +35,6 @@ public class DateTimePicker : DatePickerBase
     public static readonly StyledProperty<string> PanelFormatProperty = AvaloniaProperty.Register<TimePicker, string>(
         nameof(PanelFormat), "HH mm ss");
 
-    public static readonly StyledProperty<bool> NeedConfirmationProperty = AvaloniaProperty.Register<TimePicker, bool>(
-        nameof(NeedConfirmation));
-
     public static readonly StyledProperty<DateTimeKind> DefaultDateKindProperty =
         AvaloniaProperty.Register<DateTimePicker, DateTimeKind>(
             nameof(DefaultDateKind), DateTimeKind.Unspecified);
@@ -51,6 +48,8 @@ public class DateTimePicker : DatePickerBase
     private Popup? _popup;
     private TextBox? _textBox;
     private TimePickerPresenter? _timePickerPresenter;
+    private DateTime? _pendingDate;
+    private TimeOnly? _pendingTime;
 
     static DateTimePicker()
     {
@@ -77,12 +76,6 @@ public class DateTimePicker : DatePickerBase
     {
         get => GetValue(PanelFormatProperty);
         set => SetValue(PanelFormatProperty, value);
-    }
-
-    public bool NeedConfirmation
-    {
-        get => GetValue(NeedConfirmationProperty);
-        set => SetValue(NeedConfirmationProperty, value);
     }
 
     public DateTimeKind DefaultDateKind
@@ -138,36 +131,51 @@ public class DateTimePicker : DatePickerBase
 
     private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
-        if (SelectedDate is null)
+        if (e.Date is null) return;
+        
+        if (NeedConfirmation)
         {
-            if (e.Date is null) return;
-            var date = e.Date.Value;
-            var time = DateTime.Now.ToTimeOnly();
-            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(time), DefaultDateKind));
+            _pendingDate = e.Date.Value.ToDateTime(TimeOnly.MinValue);
+            _calendar?.MarkDates(e.Date.Value, e.Date.Value);
         }
         else
         {
-            var selectedDate = SelectedDate;
-            if (e.Date is null) return;
-            var date = e.Date.Value;
-            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(selectedDate.Value.ToTimeOnly()), DefaultDateKind));
+            if (SelectedDate is null)
+            {
+                var date = e.Date.Value;
+                var time = DateTime.Now.ToTimeOnly();
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(time), DefaultDateKind));
+            }
+            else
+            {
+                var selectedDate = SelectedDate;
+                var date = e.Date.Value;
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(selectedDate.Value.ToTimeOnly()), DefaultDateKind));
+            }
         }
     }
 
     private void OnTimeSelectedChanged(object? sender, TimeChangedEventArgs e)
     {
-        if (SelectedDate is null)
+        if (e.NewTime is null) return;
+        
+        if (NeedConfirmation)
         {
-            if (e.NewTime is null) return;
-            var time = e.NewTime.Value;
-            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(DateTime.Today.ToDateOnly().ToDateTime(time), DefaultDateKind));
+            _pendingTime = e.NewTime.Value;
         }
         else
         {
-            var selectedDate = SelectedDate;
-            if (e.NewTime is null) return;
-            var time = e.NewTime.Value;
-            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(selectedDate.Value.ToDateOnly().ToDateTime(time), DefaultDateKind));
+            if (SelectedDate is null)
+            {
+                var time = e.NewTime.Value;
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(DateTime.Today.ToDateOnly().ToDateTime(time), DefaultDateKind));
+            }
+            else
+            {
+                var selectedDate = SelectedDate;
+                var time = e.NewTime.Value;
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(selectedDate.Value.ToDateOnly().ToDateTime(time), DefaultDateKind));
+            }
         }
     }
 
@@ -214,6 +222,9 @@ public class DateTimePicker : DatePickerBase
 
     private void OnTextBoxGetFocus(object? sender, RoutedEventArgs e)
     {
+        _pendingDate = SelectedDate;
+        _pendingTime = SelectedDate?.ToTimeOnly();
+        
         if (_calendar is not null)
         {
             var date = SelectedDate ?? DateTime.Today;
@@ -316,5 +327,26 @@ public class DateTimePicker : DatePickerBase
     public void Clear()
     {
         SetCurrentValue(SelectedDateProperty, null);
+    }
+
+    public override void Confirm()
+    {
+        if (NeedConfirmation)
+        {
+            var hasPendingSelection = _pendingDate is not null || _pendingTime is not null;
+            var hasExistingSelection = SelectedDate is not null;
+            if (hasPendingSelection || hasExistingSelection)
+            {
+                var date = _pendingDate?.ToDateOnly() ?? SelectedDate?.ToDateOnly() ?? DateTime.Today.ToDateOnly();
+                var time = _pendingTime ?? SelectedDate?.ToTimeOnly() ?? DateTime.Now.ToTimeOnly();
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(time), DefaultDateKind));
+            }
+        }
+        SetCurrentValue(IsDropdownOpenProperty, false);
+    }
+
+    public override void Dismiss()
+    {
+        SetCurrentValue(IsDropdownOpenProperty, false);
     }
 }

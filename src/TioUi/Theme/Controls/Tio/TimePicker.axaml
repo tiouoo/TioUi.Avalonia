@@ -198,7 +198,6 @@
                                             Name="PART_PopupFooter" />
                                         <tio:TimePickerPresenter
                                             Name="{x:Static tio:TimePicker.PART_Presenter}"
-                                            NeedsConfirmation="{TemplateBinding NeedConfirmation}"
                                             PanelFormat="{TemplateBinding PanelFormat}" />
                                     </DockPanel>
                                 </Border>

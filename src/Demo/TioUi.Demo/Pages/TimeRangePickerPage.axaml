@@ -47,6 +47,14 @@
                     DisplayFormat="{Binding #displayFormat.Text}"
                     PanelFormat="{Binding #panelFormat.Text}"
                     Width="300" />
+
+                <ToggleSwitch Content="Need Confirm" Name="needConfirm" />
+                <tio:TimeRangePicker
+                    DisplayFormat="{Binding #displayFormat.Text}"
+                    Name="confirmPicker"
+                    NeedConfirmation="{Binding #needConfirm.IsChecked}"
+                    PanelFormat="{Binding #panelFormat.Text}"
+                    Width="300" />
             </StackPanel>
         </ScrollViewer>
     </tio:GroupBorder>

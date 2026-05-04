@@ -90,21 +90,29 @@
                                     CornerRadius="{DynamicResource TioCornerRadius}"
                                     Margin="{DynamicResource ComboBoxPopupBorderMargin}"
                                     Padding="8">
-                                    <Grid ColumnDefinitions="*, *">
-                                        <tio:DatePickerCalendarView
-                                            BorderThickness="0"
-                                            CornerRadius="{Binding $parent[Border].CornerRadius}"
-                                            FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                            FontSize="{DynamicResource DefaultFontSize}"
-                                            IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
-                                            Name="{x:Static tio:DateTimePicker.PART_Calendar}" />
-                                        <tio:TimePickerPresenter
-                                            FontSize="{DynamicResource DefaultFontSize}"
-                                            Grid.Column="1"
-                                            Name="{x:Static tio:DateTimePicker.PART_TimePicker}"
-                                            NeedsConfirmation="{TemplateBinding NeedConfirmation}"
-                                            PanelFormat="{TemplateBinding PanelFormat}" />
-                                    </Grid>
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Bottom" IsVisible="{TemplateBinding NeedConfirmation}">
+                                            <Button
+                                                Command="{Binding $parent[tio:DateTimePicker].Confirm}"
+                                                Content="{DynamicResource Lang.Ok}"
+                                                HorizontalAlignment="Right"
+                                                Margin="8" />
+                                        </StackPanel>
+                                        <Grid ColumnDefinitions="*, *">
+                                            <tio:DatePickerCalendarView
+                                                BorderThickness="0"
+                                                CornerRadius="{Binding $parent[Border].CornerRadius}"
+                                                FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                                FontSize="{DynamicResource DefaultFontSize}"
+                                                IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                                Name="{x:Static tio:DateTimePicker.PART_Calendar}" />
+                                            <tio:TimePickerPresenter
+                                                FontSize="{DynamicResource DefaultFontSize}"
+                                                Grid.Column="1"
+                                                Name="{x:Static tio:DateTimePicker.PART_TimePicker}"
+                                                PanelFormat="{TemplateBinding PanelFormat}" />
+                                        </Grid>
+                                    </DockPanel>
                                 </Border>
                             </Popup>
                         </Grid>

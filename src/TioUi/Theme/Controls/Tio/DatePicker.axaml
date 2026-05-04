@@ -91,13 +91,22 @@
                                     CornerRadius="{DynamicResource TioCornerRadius}"
                                     Margin="{DynamicResource ComboBoxPopupBorderMargin}"
                                     Padding="8">
-                                    <tio:DatePickerCalendarView
-                                        BorderThickness="0"
-                                        CornerRadius="{Binding $parent[Border].CornerRadius}"
-                                        FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
-                                        FontSize="{DynamicResource TioFontSize}"
-                                        IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
-                                        Name="PART_Calendar" />
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Bottom" IsVisible="{TemplateBinding NeedConfirmation}">
+                                            <Button
+                                                Command="{Binding $parent[tio:DatePicker].Confirm}"
+                                                Content="{DynamicResource Lang.Ok}"
+                                                HorizontalAlignment="Right"
+                                                Margin="8" />
+                                        </StackPanel>
+                                        <tio:DatePickerCalendarView
+                                            BorderThickness="0"
+                                            CornerRadius="{Binding $parent[Border].CornerRadius}"
+                                            FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                            FontSize="{DynamicResource TioFontSize}"
+                                            IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                            Name="PART_Calendar" />
+                                    </DockPanel>
                                 </Border>
                             </Popup>
                         </Grid>
