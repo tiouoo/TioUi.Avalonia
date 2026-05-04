@@ -747,7 +747,7 @@ public partial class MultiAutoCompleteBox : TemplatedControl, IInnerContentContr
             // Check if we still have focus in the parent's focus scope
             // Add a special check for ListBoxItem because it should be closed when focus switch to dropdown. 
             if (GetFocusScope() is not null &&
-                (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is not { } focused ||
+                (TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() is not { } focused ||
                  (!Equals(focused, this) && focused is not ListBoxItem && focused is Visual v &&
                   !this.IsVisualAncestorOf(v))))
                 SetCurrentValue(IsDropDownOpenProperty, false);
@@ -1334,8 +1334,8 @@ public partial class MultiAutoCompleteBox : TemplatedControl, IInnerContentContr
 
                 if (!inResults)
                 {
-                    if (stringFiltering)
-                        inResults = textFilter!(text, FormatValue(item)!);
+                    if (stringFiltering && textFilter is not null)
+                        inResults = textFilter(text, FormatValue(item)!);
                     else if (objectFiltering) inResults = itemFilter!(text, item);
                 }
 

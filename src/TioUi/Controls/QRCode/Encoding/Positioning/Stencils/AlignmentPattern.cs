@@ -83,7 +83,7 @@ internal class AlignmentPattern : PatternStencilBase
 
     private IEnumerable<MatrixPoint> GetAllCoordinatePairs()
     {
-        IEnumerable<byte> coordinates = GetPatternCoordinatesByVersion(Version);
+        var coordinates = GetPatternCoordinatesByVersion(Version).ToList();
         foreach (byte centerX in coordinates)
         {
             foreach (byte centerY in coordinates)

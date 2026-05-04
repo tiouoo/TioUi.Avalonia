@@ -194,7 +194,7 @@ public class TagInput : TemplatedControl
     {
         base.OnLoaded(e);
         if (_PlaceholderText is null) return;
-        _presenter = _textBox.GetTemplateChildren().OfType<TextPresenter>().FirstOrDefault();
+        _presenter = _textBox.GetTemplateDescendants().OfType<TextPresenter>().FirstOrDefault();
         ObservableExtensions.Subscribe(_presenter?.GetObservable(TextPresenter.PreeditTextProperty)!,
             _ => CheckEmpty());
         ObservableExtensions.Subscribe(_textBox.GetObservable(TextBox.TextProperty), _ => CheckEmpty());

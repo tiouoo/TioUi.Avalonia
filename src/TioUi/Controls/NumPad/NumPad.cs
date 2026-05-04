@@ -158,7 +158,7 @@ public class NumPad : TemplatedControl
         if (target is TemplatedControl templatedControl && templatedControl.IsInitialized)
         {
             // 尝试通过模板查找 PART_TextBox
-            if (templatedControl.GetTemplateChildren().FirstOrDefault(c => c is TextBox) is TextBox partTextBox)
+            if (templatedControl.GetTemplateDescendants().FirstOrDefault(c => c is TextBox) is TextBox partTextBox)
                 return partTextBox;
         }
 
@@ -219,7 +219,7 @@ public class NumPad : TemplatedControl
                 HorizontalOffset = horizontalOffset,
                 VerticalOffset = rect.Bottom,
 
-                OnDialogControlClosed = (object? _, object? _) => target.Focus()
+                OnDialogControlClosed = (object? _, object? _) => target?.Focus()
             };
         }
         else
@@ -235,17 +235,17 @@ public class NumPad : TemplatedControl
                 HorizontalOffset = horizontalOffset,
                 VerticalOffset = topLevel.Bounds.Height - rect.Top,
 
-                OnDialogControlClosed = (object? _, object? _) => target.Focus()
+                OnDialogControlClosed = (object? _, object? _) => target?.Focus()
             };
         }
     }
 
-    private static Rect GetTargetRect(Control target)
+    private static Rect GetTargetRect(Control? target)
     {
         var topLevel = TopLevel.GetTopLevel(target)!;
-        var pt = target.TranslatePoint(new Point(0, 0), topLevel);
+        var pt = target?.TranslatePoint(new Point(0, 0), topLevel);
 
-        return pt.HasValue ? new Rect(pt.Value, target.Bounds.Size) : default;
+        return pt.HasValue ? new Rect(pt.Value, target?.Bounds.Size ?? new Size()) : default;
     }
 
     private static bool CanShowBelow(Rect targetRect, TopLevel topLevel)
