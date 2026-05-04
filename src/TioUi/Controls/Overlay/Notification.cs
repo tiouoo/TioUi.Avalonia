@@ -15,7 +15,7 @@ public class Notification : INotification, INotifyPropertyChanged
         TimeSpan? expiration = null,
         bool showClose = true,
         Action? onClick = null,
-        Action? onClose = null)
+        Action<Controls.MessageCloseReason>? onClose = null)
     {
         Title = title;
         Content = content;
@@ -65,7 +65,7 @@ public class Notification : INotification, INotifyPropertyChanged
 
     public Action? OnClick { get; set; }
 
-    public Action? OnClose { get; set; }
+    public Action<Controls.MessageCloseReason>? OnClose { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

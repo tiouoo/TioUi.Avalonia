@@ -5,7 +5,7 @@ namespace TioUi.Common.Classes;
 
 public class NotificationOptions
 {
-    public NotificationOptions(Action? onClose = null)
+    public NotificationOptions(Action<Controls.MessageCloseReason>? onClose = null)
     {
         OnClose = onClose;
     }
@@ -15,7 +15,7 @@ public class NotificationOptions
     public NotificationType Type { get; set; } = NotificationType.Information;
     public TimeSpan Expiration { get; set; } = TimeSpan.FromSeconds(3);
     public Action? OnClick { get; set; }
-    public Action? OnClose { get; set; }
+    public Action<Controls.MessageCloseReason>? OnClose { get; set; }
     public Action? OnRemove { get; set; }
     public ObservableCollection<OperateButtonEntry>? OperateButtons { get; set; }
     public bool IsButtonsInline { get; set; } = true;

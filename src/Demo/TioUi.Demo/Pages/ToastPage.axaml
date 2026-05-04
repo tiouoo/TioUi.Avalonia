@@ -121,6 +121,41 @@
                     </WrapPanel>
                 </tio:GroupBorder>
 
+                <tio:GroupBorder Header="Close 和 CloseAll">
+                    <StackPanel Margin="15" Spacing="10">
+                        <TextBlock FontWeight="Bold" Text="关闭原因追踪 (MessageCloseReason)" />
+                        <WrapPanel ItemSpacing="15" LineSpacing="15">
+                            <Button Command="{Binding ShowToastWithCloseReason}" Content="显示带关闭原因的 Toast" />
+                            <Button Command="{Binding ShowToastWithTimeoutReason}" Content="超时关闭 (Timeout)" />
+                            <Button Command="{Binding ShowToastWithUserActionReason}" Content="用户操作 (UserAction)" />
+                            <Button Command="{Binding ShowManyToastsForDisplaced}" Content="替换关闭 (Displaced)" />
+                            <!-- <Button Command="{Binding ShowCloseReasonComparison}" Content="对比关闭原因" /> -->
+                            <!-- <Button Command="{Binding ShowAllCloseReasonTypes}" Content="完整演示三种原因" /> -->
+                        </WrapPanel>
+
+                        <Separator Margin="0,10" />
+
+                        <TextBlock FontWeight="Bold" Text="Close() 和 CloseAll() 方法" />
+                        <WrapPanel ItemSpacing="15" LineSpacing="15">
+                            <Button Command="{Binding ShowMultipleToastsForClose}" Content="显示多个 Toast" />
+                            <Button Command="{Binding CloseFirstToast}" Content="关闭第一个 (Close)" />
+                            <Button Command="{Binding CloseAllToasts}" Content="关闭所有 (CloseAll)" />
+                            <!-- <Button Command="{Binding ShowToastWithCloseMethod}" Content="显示可关闭的 Toast" /> -->
+                        </WrapPanel>
+
+                        <Separator Margin="0,10" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="关闭原因:" VerticalAlignment="Center" />
+                            <TextBlock
+                                FontWeight="Bold"
+                                Foreground="#FF4CAF50"
+                                Text="{Binding LastCloseReason}"
+                                VerticalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                </tio:GroupBorder>
+
             </StackPanel>
         </ScrollViewer>
     </Border>

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -12,14 +15,36 @@ using Notification = TioUi.Controls.Notification;
 
 namespace TioUi.Demo.Pages;
 
-public partial class NotificationPage : UserControl
+public partial class NotificationPage : UserControl, INotifyPropertyChanged
 {
     private TioNotificationManager? _notificationManager;
+    private string _lastCloseReason = "无";
+    private readonly List<Notification> _activeNotifications = new();
 
     public NotificationPage()
     {
         InitializeComponent();
         DataContext = this;
+    }
+
+    public string LastCloseReason
+    {
+        get => _lastCloseReason;
+        set
+        {
+            if (_lastCloseReason != value)
+            {
+                _lastCloseReason = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public new event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private TioNotificationManager GetNotificationManager()
@@ -374,7 +399,7 @@ public partial class NotificationPage : UserControl
             "关闭时会触发事件",
             NotificationType.Information,
             TimeSpan.FromSeconds(3),
-            onClose: () =>
+            onClose: _ =>
             {
                 GetNotificationManager().Show("事件", "通知已关闭",
                     new NotificationOptions { Type = NotificationType.Information });
@@ -491,7 +516,7 @@ public partial class NotificationPage : UserControl
                 GetNotificationManager().Show("事件", "通知被点击",
                     new NotificationOptions { Type = NotificationType.Information });
             },
-            OnClose = () =>
+            OnClose = _ =>
             {
                 GetNotificationManager().Show("事件", "通知已关闭",
                     new NotificationOptions { Type = NotificationType.Information });
@@ -565,6 +590,189 @@ public partial class NotificationPage : UserControl
             {
                 GetNotificationManager().Show("第四条", "Error 通知",
                     new NotificationOptions { Type = NotificationType.Error });
+            });
+        });
+    }
+
+    // ========== 新功能演示：Close 和 CloseAll ==========
+
+    public void ShowNotificationWithCloseReason()
+    {
+        var notification = new Notification(
+            "关闭原因追踪",
+            "关闭此通知时会显示关闭原因",
+            NotificationType.Information,
+            TimeSpan.FromSeconds(5),
+            onClose: reason =>
+            {
+                LastCloseReason = reason switch
+                {
+                    MessageCloseReason.Timeout => "超时自动关闭",
+                    MessageCloseReason.UserAction => "用户手动关闭",
+                    MessageCloseReason.Displaced => "被新通知替换",
+                    _ => "未知原因"
+                };
+            }
+        );
+        GetNotificationManager().Show(notification);
+    }
+
+    public void ShowMultipleNotificationsForClose()
+    {
+        // 显示多个通知用于测试 Close 功能
+        for (int i = 1; i <= 3; i++)
+        {
+            var index = i;
+            var notification = new Notification(
+                $"通知 #{index}",
+                $"这是第 {index} 条通知",
+                NotificationType.Information,
+                TimeSpan.Zero, // 持久显示
+                onClose: reason =>
+                {
+                    LastCloseReason = $"通知 #{index} - {reason switch
+                    {
+                        MessageCloseReason.Timeout => "超时",
+                        MessageCloseReason.UserAction => "用户操作",
+                        MessageCloseReason.Displaced => "被替换",
+                        _ => "未知"
+                    }}";
+                }
+            );
+            _activeNotifications.Add(notification);
+            GetNotificationManager().Show(notification);
+        }
+    }
+
+    public void CloseFirstNotification()
+    {
+        if (_activeNotifications.Count > 0)
+        {
+            var notification = _activeNotifications[0];
+            GetNotificationManager().Close(notification);
+            _activeNotifications.RemoveAt(0);
+        }
+        else
+        {
+            GetNotificationManager().Show("提示", "没有可关闭的通知",
+                new NotificationOptions { Type = NotificationType.Warning });
+        }
+    }
+
+    public void CloseAllNotifications()
+    {
+        GetNotificationManager().CloseAll();
+        _activeNotifications.Clear();
+        LastCloseReason = "已关闭所有通知";
+    }
+
+    public void ShowNotificationWithTimeoutReason()
+    {
+        var notification = new Notification(
+            "超时关闭测试",
+            "2秒后自动关闭，观察关闭原因",
+            NotificationType.Success,
+            TimeSpan.FromSeconds(2),
+            onClose: reason =>
+            {
+                LastCloseReason = $"{reason switch
+                {
+                    MessageCloseReason.Timeout => "超时自动关闭",
+                    MessageCloseReason.UserAction => "用户手动关闭",
+                    MessageCloseReason.Displaced => "被新通知替换",
+                    _ => "未知原因"
+                }}";
+            }
+        );
+        GetNotificationManager().Show(notification);
+    }
+
+    public void ShowNotificationWithUserActionReason()
+    {
+        var notification = new Notification(
+            "用户操作测试",
+            "请手动点击关闭按钮，观察关闭原因",
+            NotificationType.Information,
+            TimeSpan.Zero, // 持久显示
+            showClose: true,
+            onClose: reason =>
+            {
+                LastCloseReason = $"{reason switch
+                {
+                    MessageCloseReason.Timeout => "超时自动关闭",
+                    MessageCloseReason.UserAction => "用户手动关闭",
+                    MessageCloseReason.Displaced => "被新通知替换",
+                    _ => "未知原因"
+                }}";
+            }
+        );
+        GetNotificationManager().Show(notification);
+    }
+
+    public void ShowManyNotificationsForDisplaced()
+    {
+        // 快速显示多个通知，触发 Displaced 原因
+        for (int i = 1; i <= 8; i++)
+        {
+            var index = i;
+            var notification = new Notification(
+                $"通知 #{index}",
+                "当超过最大数量时，旧通知会被替换",
+                NotificationType.Information,
+                TimeSpan.Zero,
+                onClose: reason =>
+                {
+                    if (reason == MessageCloseReason.Displaced)
+                    {
+                        LastCloseReason = $"通知 #{index} - 被新通知替换 (Displaced)";
+                    }
+                }
+            );
+            GetNotificationManager().Show(notification);
+        }
+    }
+
+    public void ShowNotificationForCloseMethod()
+    {
+        var notification = new Notification(
+            "Close() 方法测试",
+            "点击下方按钮关闭此通知",
+            NotificationType.Warning,
+            TimeSpan.Zero,
+            onClose: reason =>
+            {
+                LastCloseReason = $"通过 Close() 方法关闭 - 原因: {reason}";
+            }
+        );
+        _activeNotifications.Add(notification);
+        GetNotificationManager().Show(notification);
+    }
+
+    public void ShowCloseReasonComparison()
+    {
+        // 显示三个通知，分别演示三种关闭原因
+        var notification1 = new Notification(
+            "超时关闭 (2秒)",
+            "将显示 Timeout 原因",
+            NotificationType.Information,
+            TimeSpan.FromSeconds(2),
+            onClose: reason => LastCloseReason = $"通知1: {reason}"
+        );
+        GetNotificationManager().Show(notification1);
+
+        Task.Delay(500).ContinueWith(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                var notification2 = new Notification(
+                    "手动关闭",
+                    "请点击关闭按钮，将显示 UserAction 原因",
+                    NotificationType.Success,
+                    TimeSpan.Zero,
+                    showClose: true,
+                    onClose: reason => LastCloseReason = $"通知2: {reason}"
+                );
+                GetNotificationManager().Show(notification2);
             });
         });
     }

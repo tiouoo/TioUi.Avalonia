@@ -48,8 +48,8 @@ public abstract class TioMessageCard : ContentControl
     public static readonly StyledProperty<Action?> OnRemoveProperty =
         AvaloniaProperty.Register<TioMessageCard, Action?>(nameof(OnRemove));
 
-    public static readonly RoutedEvent<RoutedEventArgs> MessageClosedEvent =
-        RoutedEvent.Register<TioMessageCard, RoutedEventArgs>(nameof(MessageClosed), RoutingStrategies.Bubble);
+    public static readonly RoutedEvent<MessageClosedEventArgs> MessageClosedEvent =
+        RoutedEvent.Register<TioMessageCard, MessageClosedEventArgs>(nameof(MessageClosed), RoutingStrategies.Bubble);
 
     public static readonly AttachedProperty<bool> CloseOnClickProperty =
         AvaloniaProperty.RegisterAttached<TioMessageCard, Button, bool>("CloseOnClick");
@@ -64,6 +64,11 @@ public abstract class TioMessageCard : ContentControl
     {
         UpdateNotificationType();
     }
+
+    /// <summary>
+    /// Gets the reason the message was closed.
+    /// </summary>
+    private MessageCloseReason _closeReason = MessageCloseReason.UserAction;
 
     public bool IsClosing
     {
@@ -148,7 +153,7 @@ public abstract class TioMessageCard : ContentControl
         RemoveAndDelete();
     }
 
-    public event EventHandler<RoutedEventArgs>? MessageClosed
+    public event EventHandler<MessageClosedEventArgs>? MessageClosed
     {
         add => AddHandler(MessageClosedEvent, value);
         remove => RemoveHandler(MessageClosedEvent, value);
@@ -180,13 +185,18 @@ public abstract class TioMessageCard : ContentControl
     {
         var btn = sender as ILogical;
         var message = btn?.GetLogicalAncestors().OfType<TioMessageCard>().FirstOrDefault();
-        message?.Close();
+        message?.Close(MessageCloseReason.UserAction);
     }
 
-    public void Close()
+    /// <summary>
+    /// Closes the <see cref="TioMessageCard"/> with the specified <see cref="MessageCloseReason"/>.
+    /// </summary>
+    /// <param name="reason">The reason the message is being closed.</param>
+    public void Close(MessageCloseReason reason = MessageCloseReason.UserAction)
     {
         if (IsClosing) return;
 
+        _closeReason = reason;
         IsClosing = true;
         IsClosed = true;
 
@@ -196,10 +206,11 @@ public abstract class TioMessageCard : ContentControl
     /// <summary>
     ///     关闭 Toast 卡片但不从通知列表中移除
     /// </summary>
-    public void CloseWithoutRemovingFromList()
+    public void CloseWithoutRemovingFromList(MessageCloseReason reason = MessageCloseReason.UserAction)
     {
         if (IsClosing) return;
 
+        _closeReason = reason;
         IsClosing = true;
         IsClosed = true;
         // 不调用 NotificationEntry?.Remove()
@@ -208,10 +219,11 @@ public abstract class TioMessageCard : ContentControl
     /// <summary>
     ///     移除通知（从列表中移除并删除）
     /// </summary>
-    public void RemoveAndDelete()
+    public void RemoveAndDelete(MessageCloseReason reason = MessageCloseReason.UserAction)
     {
         if (IsClosing) return;
 
+        _closeReason = reason;
         IsClosing = true;
         IsClosed = true;
 
@@ -231,7 +243,7 @@ public abstract class TioMessageCard : ContentControl
         {
             if (!IsClosing && !IsClosed) return;
 
-            RaiseEvent(new RoutedEventArgs(MessageClosedEvent));
+            RaiseEvent(new MessageClosedEventArgs(_closeReason) { RoutedEvent = MessageClosedEvent });
         }
     }
 

@@ -142,9 +142,9 @@ public class TioNotificationManager : WindowMessageManager, INotificationManager
             }
         }
 
-        notificationControl.MessageClosed += (sender, _) =>
+        notificationControl.MessageClosed += (sender, args) =>
         {
-            options.OnClose?.Invoke();
+            options.OnClose?.Invoke(args.Reason);
             _items?.Remove(sender);
         };
 
@@ -160,9 +160,9 @@ public class TioNotificationManager : WindowMessageManager, INotificationManager
         {
             _items?.Add(notificationControl);
 
-            if (_items?.OfType<NotificationCard>().Count(i => !i.IsClosing) > MaxItems)
+            if (_items?.OfType<TioNotificationCard>().Count(i => !i.IsClosing) > MaxItems)
             {
-                _items.OfType<NotificationCard>().First(i => !i.IsClosing).Close();
+                _items.OfType<TioNotificationCard>().First(i => !i.IsClosing).Close(MessageCloseReason.Displaced);
             }
         });
 
@@ -173,7 +173,30 @@ public class TioNotificationManager : WindowMessageManager, INotificationManager
 
         await Task.Delay(options.Expiration);
 
-        notificationControl.Close();
+        notificationControl.Close(MessageCloseReason.Timeout);
+    }
+
+    /// <inheritdoc/>
+    public void Close(INotification notification)
+    {
+        Dispatcher.UIThread.VerifyAccess();
+
+        _items?.OfType<TioNotificationCard>()
+            .FirstOrDefault(i => i.Content == notification)
+            ?.Close(MessageCloseReason.UserAction);
+    }
+
+    /// <inheritdoc/>
+    public void CloseAll()
+    {
+        Dispatcher.UIThread.VerifyAccess();
+
+        var items = _items?.OfType<TioNotificationCard>().ToList();
+        if (items is null) return;
+        foreach (var item in items)
+        {
+            item.Close(MessageCloseReason.UserAction);
+        }
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)

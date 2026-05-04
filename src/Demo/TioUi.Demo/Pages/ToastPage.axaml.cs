@@ -1,17 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
+using Avalonia.Threading;
 using TioUi.Common.Classes;
 using TioUi.Controls;
 
 namespace TioUi.Demo.Pages;
 
-public partial class ToastPage : UserControl
+public partial class ToastPage : UserControl, INotifyPropertyChanged
 {
     private TioToastManager? _toastManager;
+    private string _lastCloseReason = "无";
+    private readonly List<Toast> _activeToasts = new();
 
     public ToastPage()
     {
@@ -19,10 +26,30 @@ public partial class ToastPage : UserControl
         DataContext = this;
     }
 
+    public string LastCloseReason
+    {
+        get => _lastCloseReason;
+        set
+        {
+            if (_lastCloseReason != value)
+            {
+                _lastCloseReason = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public new event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     private TioToastManager GetToastManager()
     {
         if (_toastManager != null) return _toastManager;
-        
+
         _toastManager = App.RootView.ToastManager;
         return _toastManager!;
     }
@@ -236,7 +263,7 @@ public partial class ToastPage : UserControl
             "关闭时会触发事件",
             NotificationType.Information,
             TimeSpan.FromSeconds(3),
-            onClose: () => { GetToastManager().Show("Toast 已关闭", NotificationType.Information); }
+            onClose: _ => { GetToastManager().Show("Toast 已关闭", NotificationType.Information); }
         );
         GetToastManager().Show(toast);
     }
@@ -295,7 +322,7 @@ public partial class ToastPage : UserControl
                 new OperateButtonEntry("忽略", _ => { }, closeOnClick: true)
             },
             OnClick = () => { GetToastManager().Show("Toast 被点击", NotificationType.Information); },
-            OnClose = () => { GetToastManager().Show("Toast 已关闭", NotificationType.Information); }
+            OnClose = _ => { GetToastManager().Show("Toast 已关闭", NotificationType.Information); }
         };
         GetToastManager().Show(options);
     }
@@ -324,5 +351,234 @@ public partial class ToastPage : UserControl
         options.Classes.Clear();
         options.Classes.Add("Light");
         GetToastManager().Show(options);
+    }
+
+    public void ShowToastWithCloseReason()
+    {
+        var toast = new Toast(
+            "关闭此 Toast 时会显示关闭原因",
+            NotificationType.Information,
+            TimeSpan.FromSeconds(5),
+            onClose: reason =>
+            {
+                LastCloseReason = reason switch
+                {
+                    MessageCloseReason.Timeout => "超时自动关闭",
+                    MessageCloseReason.UserAction => "用户手动关闭",
+                    MessageCloseReason.Displaced => "被新 Toast 替换",
+                    _ => "未知原因"
+                };
+            }
+        );
+        GetToastManager().Show(toast);
+    }
+
+    public void ShowMultipleToastsForClose()
+    {
+        // 显示多个 Toast 用于测试 Close 功能
+        for (int i = 1; i <= 3; i++)
+        {
+            var index = i;
+            var toast = new Toast(
+                $"Toast #{index} - 持久显示",
+                NotificationType.Information,
+                TimeSpan.Zero // 持久显示
+            );
+            toast.OnClose = reason =>
+            {
+                LastCloseReason = $"Toast #{index} - {reason switch
+                {
+                    MessageCloseReason.Timeout => "超时",
+                    MessageCloseReason.UserAction => "用户操作",
+                    MessageCloseReason.Displaced => "被替换",
+                    _ => "未知"
+                }}";
+            };
+            _activeToasts.Add(toast);
+            GetToastManager().Show(toast);
+        }
+    }
+
+    public void CloseFirstToast()
+    {
+        if (_activeToasts.Count > 0)
+        {
+            var toast = _activeToasts[0];
+            GetToastManager().Close(toast);
+            _activeToasts.Remove(toast);
+        }
+        else
+        {
+            GetToastManager().Show("没有可关闭的 Toast", NotificationType.Warning);
+        }
+    }
+
+    public void CloseAllToasts()
+    {
+        GetToastManager().CloseAll();
+        _activeToasts.Clear();
+        LastCloseReason = "已关闭所有 Toast";
+    }
+
+    public void ShowToastWithTimeoutReason()
+    {
+        var toast = new Toast(
+            "2秒后自动关闭",
+            NotificationType.Success,
+            TimeSpan.FromSeconds(2),
+            onClose: reason =>
+            {
+                LastCloseReason = $"{reason switch
+                {
+                    MessageCloseReason.Timeout => "超时自动关闭",
+                    MessageCloseReason.UserAction => "用户手动关闭",
+                    MessageCloseReason.Displaced => "被新 Toast 替换",
+                    _ => "未知原因"
+                }}";
+            }
+        );
+        GetToastManager().Show(toast);
+    }
+
+    public void ShowToastWithUserActionReason()
+    {
+        var toast = new Toast(
+            "请手动点击关闭按钮",
+            NotificationType.Information,
+            TimeSpan.Zero,
+            showClose: true,
+            onClose: reason =>
+            {
+                LastCloseReason = $"{reason switch
+                {
+                    MessageCloseReason.Timeout => "超时自动关闭",
+                    MessageCloseReason.UserAction => "用户手动关闭",
+                    MessageCloseReason.Displaced => "被新 Toast 替换",
+                    _ => "未知原因"
+                }}";
+            }
+        );
+        GetToastManager().Show(toast);
+    }
+
+    public void ShowManyToastsForDisplaced()
+    {
+        // 快速显示多个 Toast，触发 Displaced 原因
+        for (int i = 1; i <= 8; i++)
+        {
+            var index = i;
+            var toast = new Toast(
+                $"Toast #{index} - 当超过最大数量时会被替换",
+                NotificationType.Information,
+                TimeSpan.Zero,
+                onClose: reason =>
+                {
+                    if (reason == MessageCloseReason.Displaced)
+                    {
+                        LastCloseReason = $"Toast #{index} - 被新 Toast 替换 (Displaced)";
+                    }
+                }
+            );
+            GetToastManager().Show(toast);
+        }
+    }
+
+    public void ShowToastWithCloseMethod()
+    {
+        var toast = new Toast(
+            "点击下方按钮通过 Close() 方法关闭此 Toast",
+            NotificationType.Warning,
+            TimeSpan.Zero,
+            onClose: reason => { LastCloseReason = $"通过 Close() 方法关闭 - 原因: {reason}"; }
+        );
+        _activeToasts.Add(toast);
+        GetToastManager().Show(toast);
+    }
+
+    public void ShowCloseReasonComparison()
+    {
+        // 显示三个 Toast，分别演示三种关闭原因
+        var toast1 = new Toast(
+            "超时关闭 (2秒) - 将显示 Timeout 原因",
+            NotificationType.Information,
+            TimeSpan.FromSeconds(2),
+            onClose: reason => LastCloseReason = $"Toast1: {reason}"
+        );
+        GetToastManager().Show(toast1);
+
+        Task.Delay(500).ContinueWith(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                var toast2 = new Toast(
+                    "手动关闭 - 请点击关闭按钮，将显示 UserAction 原因",
+                    NotificationType.Success,
+                    TimeSpan.Zero,
+                    showClose: true,
+                    onClose: reason => LastCloseReason = $"Toast2: {reason}"
+                );
+                GetToastManager().Show(toast2);
+            });
+        });
+    }
+
+    public void ShowAllCloseReasonTypes()
+    {
+        // 综合演示所有三种关闭原因
+        GetToastManager().Show("演示开始：将展示三种关闭原因", NotificationType.Information);
+
+        Task.Delay(1000).ContinueWith(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                var toast1 = new Toast(
+                    "1️⃣ Timeout: 3秒后自动关闭",
+                    NotificationType.Success,
+                    TimeSpan.FromSeconds(3),
+                    onClose: reason => LastCloseReason = $"演示1: {reason} (Timeout)"
+                );
+                GetToastManager().Show(toast1);
+            });
+        });
+
+        Task.Delay(2000).ContinueWith(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                var toast2 = new Toast(
+                    "2️⃣ UserAction: 请手动关闭",
+                    NotificationType.Warning,
+                    TimeSpan.Zero,
+                    showClose: true,
+                    onClose: reason => LastCloseReason = $"演示2: {reason} (UserAction)"
+                );
+                GetToastManager().Show(toast2);
+            });
+        });
+
+        Task.Delay(3000).ContinueWith(_ =>
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                // 快速显示多个触发 Displaced
+                for (int i = 1; i <= 6; i++)
+                {
+                    var index = i;
+                    var toast = new Toast(
+                        $"3️⃣ Displaced 测试 #{index}",
+                        NotificationType.Information,
+                        TimeSpan.Zero,
+                        onClose: reason =>
+                        {
+                            if (reason == MessageCloseReason.Displaced)
+                            {
+                                LastCloseReason = $"演示3: Toast #{index} - {reason} (Displaced)";
+                            }
+                        }
+                    );
+                    GetToastManager().Show(toast);
+                }
+            });
+        });
     }
 }

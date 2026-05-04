@@ -14,7 +14,7 @@ public class Toast : IToast, INotifyPropertyChanged
         TimeSpan? expiration = null,
         bool showClose = true,
         Action? onClick = null,
-        Action? onClose = null)
+        Action<Controls.MessageCloseReason>? onClose = null)
     {
         Content = content;
         Type = type;
@@ -53,7 +53,7 @@ public class Toast : IToast, INotifyPropertyChanged
 
     public Action? OnClick { get; set; }
 
-    public Action? OnClose { get; set; }
+    public Action<Controls.MessageCloseReason>? OnClose { get; set; }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

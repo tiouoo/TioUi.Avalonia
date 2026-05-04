@@ -96,9 +96,9 @@ public class TioToastManager : WindowMessageManager, IToastManager
             foreach (var @class in options.Classes)
                 toastControl.Classes.Add(@class);
 
-        toastControl.MessageClosed += (sender, _) =>
+        toastControl.MessageClosed += (sender, args) =>
         {
-            options.OnClose?.Invoke();
+            options.OnClose?.Invoke(args.Reason);
             _items?.Remove(sender);
         };
 
@@ -114,13 +114,36 @@ public class TioToastManager : WindowMessageManager, IToastManager
             _items?.Add(toastControl);
 
             if (_items?.OfType<TioToastCard>().Count(i => !i.IsClosing) > MaxItems)
-                _items.OfType<TioToastCard>().First(i => !i.IsClosing).Close();
+                _items.OfType<TioToastCard>().First(i => !i.IsClosing).Close(MessageCloseReason.Displaced);
         });
 
         if (options.Expiration == TimeSpan.Zero) return;
 
         await Task.Delay(options.Expiration);
 
-        toastControl.CloseWithoutRemovingFromList();
+        toastControl.CloseWithoutRemovingFromList(MessageCloseReason.Timeout);
+    }
+
+    /// <inheritdoc/>
+    public void Close(IToast toast)
+    {
+        Dispatcher.UIThread.VerifyAccess();
+
+        _items?.OfType<TioToastCard>()
+            .FirstOrDefault(i => i.Content == toast)
+            ?.Close(MessageCloseReason.UserAction);
+    }
+
+    /// <inheritdoc/>
+    public void CloseAll()
+    {
+        Dispatcher.UIThread.VerifyAccess();
+
+        var items = _items?.OfType<TioToastCard>().ToList();
+        if (items is null) return;
+        foreach (var item in items)
+        {
+            item.Close(MessageCloseReason.UserAction);
+        }
     }
 }
