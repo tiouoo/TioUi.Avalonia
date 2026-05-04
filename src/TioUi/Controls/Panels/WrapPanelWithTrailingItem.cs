@@ -110,7 +110,7 @@ public class WrapPanelWithTrailingItem : Panel
 
         foreach (var child in children)
         {
-            double deltaX = finalSize.Width - currentLineX;
+            var deltaX = finalSize.Width - currentLineX;
             // Width is enough to place next child
             if (MathHelpers.GreaterThan(deltaX, child.DesiredSize.Width))
             {
@@ -141,14 +141,14 @@ public class WrapPanelWithTrailingItem : Panel
         {
             totalHeight += currentLineHeight;
             last.Arrange(new Rect(0, totalHeight, finalSize.Width, last.DesiredSize.Height));
-            totalHeight += last.DesiredSize.Height;
+            totalHeight += last.Bounds.Height;
         }
         else
         {
             currentLineHeight = children.Count == 1 ? finalSize.Height : currentLineHeight;
             last.Arrange(new Rect(currentLineX, totalHeight, lastDeltaX,
                 Math.Max(currentLineHeight, last.DesiredSize.Height)));
-            currentLineHeight = Math.Max(currentLineHeight, last.DesiredSize.Height);
+            currentLineHeight = Math.Max(currentLineHeight, last.Bounds.Height);
             totalHeight += currentLineHeight;
         }
 

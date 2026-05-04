@@ -68,18 +68,9 @@
     </ResourceDictionary.ThemeDictionaries>
 
     <ControlTheme TargetType="tio:TagInput" x:Key="{x:Type tio:TagInput}">
-        <Setter Property="InputTheme" Value="{DynamicResource TagInputTextBoxTheme}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="ItemTemplate">
-            <DataTemplate>
-                <tio:ClosableTag
-                    Command="{Binding $parent[tio:TagInput].Close}"
-                    Content="{ReflectionBinding}"
-                    Margin="0,2" />
-            </DataTemplate>
-        </Setter>
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:TagInput">
                 <Border
@@ -98,19 +89,27 @@
                             Opacity="0.5"
                             Text="{TemplateBinding PlaceholderText}"
                             VerticalAlignment="Center" />
-                        <ItemsControl
-                            HorizontalAlignment="Stretch"
+                        <tio:MultiComboBoxSelectedItemList 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch" Margin="3,0,3,0"
                             ItemTemplate="{TemplateBinding ItemTemplate}"
-                            ItemsSource="{TemplateBinding Items}"
+                            ItemsSource="{TemplateBinding Tags}"
                             Name="PART_ItemsControl"
-                            VerticalAlignment="Top">
-
-                            <ItemsControl.ItemsPanel>
+                            RemoveCommand="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Close}">
+                            <tio:MultiComboBoxSelectedItemList.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <tio:TagInputPanel Margin="3,2" VerticalAlignment="Top" />
+                                    <tio:WrapPanelWithTrailingItem TrailingWrapWidth="24">
+                                        <tio:WrapPanelWithTrailingItem.TrailingItem>
+                                            <TextBox
+                                                Margin="10,0"
+                                                MinHeight="24"
+                                                Theme="{DynamicResource TagInputTextBoxTheme}"
+                                                VerticalAlignment="Center" />
+                                        </tio:WrapPanelWithTrailingItem.TrailingItem>
+                                    </tio:WrapPanelWithTrailingItem>
                                 </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                            </tio:MultiComboBoxSelectedItemList.ItemsPanel>
+                        </tio:MultiComboBoxSelectedItemList>
                     </Panel>
                 </Border>
             </ControlTemplate>
@@ -137,7 +136,6 @@
         TargetType="TextBox"
         x:Key="TagInputTextBoxTheme">
         <Setter Property="Cursor" Value="Ibeam" />
-        <Setter Property="Margin" Value="10,0" />
         <Setter Property="CaretBrush" Value="{DynamicResource TextBoxTextCaretBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -147,7 +145,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TextBox">
-                <Border Padding="0,4">
+                <Border>
                     <ScrollViewer
                         AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                         HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
@@ -183,6 +181,7 @@
         <Setter Property="Background" Value="{DynamicResource ClosableTagBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ClosableTagBorder}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:ClosableTag">

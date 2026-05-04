@@ -28,4 +28,7 @@
     <Style Selector="Button.Accent">
         <Setter Property="Theme" Value="{DynamicResource SolidButton}" />
     </Style>
+    <Style Selector="tio|ClosableTag">
+        <Setter Property="Margin" Value="0"></Setter>
+    </Style>
 </Styles>
