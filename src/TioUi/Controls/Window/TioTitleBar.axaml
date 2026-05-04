@@ -11,7 +11,8 @@
     <Border
         Background="Transparent"
         Height="36"
-        VerticalAlignment="Top">
+        VerticalAlignment="Top"
+        WindowDecorationProperties.ElementRole="TitleBar">
         <Grid
             Background="Transparent"
             Margin="0,0,5,0"
