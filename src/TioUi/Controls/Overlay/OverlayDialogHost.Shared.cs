@@ -68,6 +68,15 @@ public partial class OverlayDialogHost : Canvas
         set => SetValue(OverlayMaskBrushProperty, value);
     }
 
+    public static readonly StyledProperty<Thickness> SafePaddingProperty =
+        AvaloniaProperty.Register<OverlayDialogHost, Thickness>(nameof(SafePadding));
+
+    public Thickness SafePadding
+    {
+        get => GetValue(SafePaddingProperty);
+        set => SetValue(SafePaddingProperty, value);
+    }
+
     public static void SetIsModalStatusScope(Control obj, bool value)
     {
         obj.SetValue(IsModalStatusScopeProperty, value);

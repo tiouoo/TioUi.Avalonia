@@ -19,11 +19,14 @@ public partial class OverlayDialogHost
 
         _layers.Add(new DialogPair(mask, control));
         ResetZIndices();
-        control.MaxWidth = Math.Min(control.MaxWidth, Bounds.Width);
-        control.MaxHeight = Math.Min(control.MaxHeight, Bounds.Height);
+        var safePadding = SafePadding;
+        var safeWidth = Bounds.Width - safePadding.Left - safePadding.Right;
+        var safeHeight = Bounds.Height - safePadding.Top - safePadding.Bottom;
+        control.MaxWidth = Math.Min(control.MaxWidth, safeWidth);
+        control.MaxHeight = Math.Min(control.MaxHeight, safeHeight);
         if (mask is not null) Children.Add(mask);
         Children.Add(control);
-        control.Measure(Bounds.Size);
+        control.Measure(new Size(safeWidth, safeHeight));
         control.Arrange(new Rect(control.DesiredSize));
         SetDrawerPosition(control);
         control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDrawerControlClosing);
@@ -44,13 +47,16 @@ public partial class OverlayDialogHost
     internal async void AddModalDrawer(DrawerControlBase control)
     {
         var mask = CreateOverlayMask(true, control.CanLightDismiss);
-        control.MaxWidth = Math.Min(control.MaxWidth, Bounds.Width);
-        control.MaxHeight = Math.Min(control.MaxHeight, Bounds.Height);
+        var safePadding = SafePadding;
+        var safeWidth = Bounds.Width - safePadding.Left - safePadding.Right;
+        var safeHeight = Bounds.Height - safePadding.Top - safePadding.Bottom;
+        control.MaxWidth = Math.Min(control.MaxWidth, safeWidth);
+        control.MaxHeight = Math.Min(control.MaxHeight, safeHeight);
         _layers.Add(new DialogPair(mask, control));
         Children.Add(mask);
         Children.Add(control);
         ResetZIndices();
-        control.Measure(Bounds.Size);
+        control.Measure(new Size(safeWidth, safeHeight));
         control.Arrange(new Rect(control.DesiredSize));
         SetDrawerPosition(control);
         _modalCount++;
@@ -72,64 +78,81 @@ public partial class OverlayDialogHost
 
     private void SetDrawerPosition(DrawerControlBase control)
     {
-        if (control.Position is Position.Left or Position.Right) control.Height = Bounds.Height;
+        var safePadding = SafePadding;
+        if (control.Position is Position.Left or Position.Right)
+        {
+            control.Height = Bounds.Height - safePadding.Top - safePadding.Bottom;
+            SetTop(control, safePadding.Top);
+        }
 
-        if (control.Position is Position.Top or Position.Bottom) control.Width = Bounds.Width;
+        if (control.Position is Position.Top or Position.Bottom)
+        {
+            control.Width = Bounds.Width - safePadding.Left - safePadding.Right;
+            SetLeft(control, safePadding.Left);
+        }
     }
 
-    private static void ResetDrawerPosition(DrawerControlBase control, Size newSize)
+    private void ResetDrawerPosition(DrawerControlBase control, Size newSize)
     {
-        control.MaxWidth = newSize.Width;
-        control.MaxHeight = newSize.Height;
+        var safePadding = SafePadding;
+        var safeWidth = newSize.Width - safePadding.Left - safePadding.Right;
+        var safeHeight = newSize.Height - safePadding.Top - safePadding.Bottom;
+        control.MaxWidth = safeWidth;
+        control.MaxHeight = safeHeight;
         if (control.Position == Position.Right)
         {
-            control.Height = newSize.Height;
-            SetLeft(control, newSize.Width - control.Bounds.Width);
+            control.Height = safeHeight;
+            SetLeft(control, newSize.Width - safePadding.Right - control.Bounds.Width);
+            SetTop(control, safePadding.Top);
         }
         else if (control.Position == Position.Left)
         {
-            control.Height = newSize.Height;
-            SetLeft(control, 0);
+            control.Height = safeHeight;
+            SetLeft(control, safePadding.Left);
+            SetTop(control, safePadding.Top);
         }
         else if (control.Position == Position.Top)
         {
-            control.Width = newSize.Width;
-            SetTop(control, 0);
+            control.Width = safeWidth;
+            SetLeft(control, safePadding.Left);
+            SetTop(control, safePadding.Top);
         }
         else
         {
-            control.Width = newSize.Width;
-            SetTop(control, newSize.Height - control.Bounds.Height);
+            control.Width = safeWidth;
+            SetLeft(control, safePadding.Left);
+            SetTop(control, newSize.Height - safePadding.Bottom - control.Bounds.Height);
         }
     }
 
     private Animation CreateAnimation(Size elementBounds, Position position, bool appear = true)
     {
+        var safePadding = SafePadding;
         // left or top.
         double source = 0;
         double target = 0;
         if (position == Position.Left)
         {
-            source = appear ? -elementBounds.Width : 0;
-            target = appear ? 0 : -elementBounds.Width;
+            source = appear ? -elementBounds.Width : safePadding.Left;
+            target = appear ? safePadding.Left : -elementBounds.Width;
         }
 
         if (position == Position.Right)
         {
-            source = appear ? Bounds.Width : Bounds.Width - elementBounds.Width;
-            target = appear ? Bounds.Width - elementBounds.Width : Bounds.Width;
+            source = appear ? Bounds.Width : Bounds.Width - safePadding.Right - elementBounds.Width;
+            target = appear ? Bounds.Width - safePadding.Right - elementBounds.Width : Bounds.Width;
         }
 
         if (position == Position.Top)
         {
-            source = appear ? -elementBounds.Height : 0;
-            target = appear ? 0 : -elementBounds.Height;
+            source = appear ? -elementBounds.Height : safePadding.Top;
+            target = appear ? safePadding.Top : -elementBounds.Height;
         }
 
         if (position == Position.Bottom)
         {
-            source = appear ? Bounds.Height : Bounds.Height - elementBounds.Height;
-            target = appear ? Bounds.Height - elementBounds.Height : Bounds.Height;
+            source = appear ? Bounds.Height : Bounds.Height - safePadding.Bottom - elementBounds.Height;
+            target = appear ? Bounds.Height - safePadding.Bottom - elementBounds.Height : Bounds.Height;
         }
 
         var targetProperty = position == Position.Left || position == Position.Right
