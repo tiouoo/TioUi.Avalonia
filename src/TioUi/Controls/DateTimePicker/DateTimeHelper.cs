@@ -54,4 +54,39 @@ internal static class DateTimeHelper
         int start = year / 100 * 100;
         return new ValueTuple<int, int>(start, start + 100);
     }
+
+    public static DateOnly GetFirstDayOfMonth(this DateOnly date)
+    {
+        return new DateOnly(date.Year, date.Month, 1);
+    }
+
+    public static DateOnly GetLastDayOfMonth(this DateOnly date)
+    {
+        return new DateOnly(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+    }
+
+    public static DateOnly ToDateOnly(this DateTime date)
+    {
+        return DateOnly.FromDateTime(date);
+    }
+
+    public static DateOnly? ToDateOnly(this DateTime? date)
+    {
+        return date.HasValue ? DateOnly.FromDateTime(date.Value) : null;
+    }
+
+    public static TimeOnly ToTimeOnly(this DateTime date)
+    {
+        return TimeOnly.FromDateTime(date);
+    }
+
+    public static TimeOnly? ToTimeOnly(this TimeSpan? time)
+    {
+        return time.HasValue ? TimeOnly.FromTimeSpan(time.Value) : null;
+    }
+
+    public static TimeSpan? ToTimeSpan(this TimeOnly? time)
+    {
+        return time?.ToTimeSpan();
+    }
 }

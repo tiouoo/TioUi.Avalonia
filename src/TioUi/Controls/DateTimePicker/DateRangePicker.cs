@@ -45,9 +45,9 @@ public class DateRangePicker : DatePickerBase, IClearControl
 
     private bool _isFocused;
     private Popup? _popup;
-    private DateTime? _previewEnd;
+    private DateOnly? _previewEnd;
 
-    private DateTime? _previewStart;
+    private DateOnly? _previewStart;
     private bool? _start;
     private DatePickerCalendarView? _startCalendar;
     private TextBox? _startTextBox;
@@ -97,7 +97,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
             }
             else
             {
-                _startCalendar?.MarkDates(args.NewValue.Value, args.NewValue.Value);
+                _startCalendar?.MarkDates(args.NewValue.Value.ToDateOnly(), args.NewValue.Value.ToDateOnly());
                 _startTextBox?.SetValue(TextBox.TextProperty,
                     args.NewValue.Value.Value.ToString(DisplayFormat ?? "yyyy-MM-dd"));
             }
@@ -111,7 +111,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
             }
             else
             {
-                _endCalendar?.MarkDates(args.NewValue.Value, args.NewValue.Value);
+                _endCalendar?.MarkDates(args.NewValue.Value.ToDateOnly(), args.NewValue.Value.ToDateOnly());
                 _endTextBox?.SetValue(TextBox.TextProperty,
                     args.NewValue.Value.Value.ToString(DisplayFormat ?? "yyyy-MM-dd"));
             }
@@ -198,16 +198,16 @@ public class DateRangePicker : DatePickerBase, IClearControl
 
         if (SelectedStartDate is not null && SelectedEndDate is not null)
         {
-            _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate);
-            _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate);
+            _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly());
+            _endCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly());
         }
         else if (SelectedStartDate is not null)
         {
-            _startCalendar?.MarkDates(SelectedStartDate, SelectedStartDate);
+            _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedStartDate.ToDateOnly());
         }
         else if (SelectedEndDate is not null)
         {
-            _endCalendar?.MarkDates(SelectedEndDate, SelectedEndDate);
+            _endCalendar?.MarkDates(SelectedEndDate.ToDateOnly(), SelectedEndDate.ToDateOnly());
         }
 
         PseudoClasses.Set(PseudoClassName.PC_Empty, SelectedStartDate is null && SelectedEndDate is null);
@@ -239,14 +239,14 @@ public class DateRangePicker : DatePickerBase, IClearControl
         if (_start == true)
         {
             _previewStart = e.Date;
-            _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
-            _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
+            _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
+            _endCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
         }
         else if (_start == false)
         {
             _previewEnd = e.Date;
-            _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
-            _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
+            _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
+            _endCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
         }
     }
 
@@ -254,26 +254,28 @@ public class DateRangePicker : DatePickerBase, IClearControl
     {
         if (_start == true)
         {
-            if (SelectedEndDate < e.Date) SelectedEndDate = null;
-            SetCurrentValue(SelectedStartDateProperty, e.Date);
-            _startTextBox?.SetValue(TextBox.TextProperty, e.Date?.ToString(DisplayFormat ?? "yyyy-MM-dd"));
+            if (SelectedEndDate.ToDateOnly() is { } selectedEndDate && e.Date is { } selectedDate && selectedEndDate < selectedDate) 
+                SelectedEndDate = null;
+            SetCurrentValue(SelectedStartDateProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue) : null);
+            _startTextBox?.SetValue(TextBox.TextProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue).ToString(DisplayFormat ?? "yyyy-MM-dd") : null);
             //_start = false;
             _previewStart = null;
             _previewEnd = null;
-            _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
-            _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
+            _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
+            _endCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
             _endTextBox?.Focus();
         }
         else if (_start == false)
         {
-            if (SelectedStartDate > e.Date) SelectedStartDate = null;
-            SetCurrentValue(SelectedEndDateProperty, e.Date);
-            _endTextBox?.SetValue(TextBox.TextProperty, e.Date?.ToString(DisplayFormat ?? "yyyy-MM-dd"));
+            if (SelectedStartDate.ToDateOnly() is { } selectedStartDate && e.Date is { } selectedDate && selectedStartDate > selectedDate) 
+                SelectedStartDate = null;
+            SetCurrentValue(SelectedEndDateProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue) : null);
+            _endTextBox?.SetValue(TextBox.TextProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue).ToString(DisplayFormat ?? "yyyy-MM-dd") : null);
             _start = null;
             _previewStart = null;
             _previewEnd = null;
-            _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
-            _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
+            _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
+            _endCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
             if (SelectedStartDate is null)
             {
                 //_start = true;
@@ -367,8 +369,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
             if (DateTime.TryParse(textBox.Text, out var defaultTime))
             {
                 SetCurrentValue(property, defaultTime);
-                _startCalendar?.MarkDates(defaultTime, defaultTime);
-                _endCalendar?.MarkDates(defaultTime, defaultTime);
+                _startCalendar?.MarkDates(defaultTime.ToDateOnly(), defaultTime.ToDateOnly());
+                _endCalendar?.MarkDates(defaultTime.ToDateOnly(), defaultTime.ToDateOnly());
             }
         }
         else
@@ -383,7 +385,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
                     _startCalendar.ContextDate = new DatePickerCalendarContext(date1.Year, date.Month);
                     //_startCalendar.SyncContextDate(new DatePickerCalendarContext(date1.Year, date1.Month));
                     _startCalendar.UpdateDayButtons();
-                    _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
+                    _startCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
                 }
 
                 if (_endCalendar is not null)
@@ -393,7 +395,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
                     _endCalendar.ContextDate = new DatePickerCalendarContext(date2.Year, date2.Month);
                     //_endCalendar.SyncContextDate(new DatePickerCalendarContext(date2.Year, date2.Month));
                     _endCalendar.UpdateDayButtons();
-                    _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
+                    _endCalendar?.MarkDates(SelectedStartDate.ToDateOnly(), SelectedEndDate.ToDateOnly(), _previewStart, _previewEnd);
                 }
             }
             else
@@ -568,8 +570,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
         }
         else
         {
-            _startCalendar?.MarkDates(startDate: startDate, endDate: endDate);
-            _endCalendar?.MarkDates(startDate: startDate, endDate: endDate);
+            _startCalendar?.MarkDates(startDate: startDate.ToDateOnly(), endDate: endDate.ToDateOnly());
+            _endCalendar?.MarkDates(startDate: startDate.ToDateOnly(), endDate: endDate.ToDateOnly());
         }
     }
 }

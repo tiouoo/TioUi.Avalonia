@@ -110,7 +110,7 @@ public class TimeRangePicker : TimePickerBase, IClearControl
         SyncTimeToText(args.NewValue.Value, start);
         _suppressTextPresenterEvent = true;
         var presenter = start ? _startPresenter : _endPresenter;
-        presenter?.SyncTime(args.NewValue.Value);
+        presenter?.SyncTime(args.NewValue.Value.ToTimeOnly());
         _suppressTextPresenterEvent = false;
     }
 
@@ -124,8 +124,7 @@ public class TimeRangePicker : TimePickerBase, IClearControl
             return;
         }
 
-        var date = new DateTime(1, 1, 1, time.Value.Hours, time.Value.Minutes, time.Value.Seconds);
-        var text = date.ToString(DisplayFormat);
+        var text = TimeOnly.FromTimeSpan(time.Value).ToString(DisplayFormat);
         textBox.Text = text;
         PseudoClasses.Set(PseudoClassName.PC_Empty, StartTime is null && EndTime is null);
     }
@@ -152,8 +151,8 @@ public class TimeRangePicker : TimePickerBase, IClearControl
         TimePickerPresenter.SelectedTimeChangedEvent.AddHandler(OnPresenterTimeChanged, _startPresenter, _endPresenter);
         TextBox.TextChangedEvent.AddHandler(OnTextChanged, _startTextBox, _endTextBox);
 
-        _startPresenter?.SyncTime(StartTime);
-        _endPresenter?.SyncTime(EndTime);
+        _startPresenter?.SyncTime(StartTime.ToTimeOnly());
+        _endPresenter?.SyncTime(EndTime.ToTimeOnly());
         SyncTimeToText(StartTime);
         SyncTimeToText(EndTime, false);
     }
@@ -178,16 +177,16 @@ public class TimeRangePicker : TimePickerBase, IClearControl
             if (DateTime.TryParse(textBox.Text, out var defaultTime))
             {
                 SetCurrentValue(property, defaultTime.TimeOfDay);
-                presenter?.SyncTime(defaultTime.TimeOfDay);
+                presenter?.SyncTime(defaultTime.ToTimeOnly());
             }
         }
         else
         {
-            if (DateTime.TryParseExact(textBox.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
-                    out var date))
+            if (TimeOnly.TryParseExact(textBox.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
+                    out var time))
             {
-                SetCurrentValue(property, date.TimeOfDay);
-                presenter?.SyncTime(date.TimeOfDay);
+                SetCurrentValue(property, time.ToTimeSpan());
+                presenter?.SyncTime(time);
             }
             else
             {
@@ -205,7 +204,7 @@ public class TimeRangePicker : TimePickerBase, IClearControl
     {
         if (!IsInitialized) return;
         if (_suppressTextPresenterEvent) return;
-        SetCurrentValue(Equals(sender, _startPresenter) ? StartTimeProperty : EndTimeProperty, e.NewTime);
+        SetCurrentValue(Equals(sender, _startPresenter) ? StartTimeProperty : EndTimeProperty, e.NewTime.ToTimeSpan());
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
@@ -292,12 +291,12 @@ public class TimeRangePicker : TimePickerBase, IClearControl
 
     private void CommitInput(bool clearWhenInvalid)
     {
-        if (DateTime.TryParseExact(_startTextBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture,
+        if (TimeOnly.TryParseExact(_startTextBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture,
                 DateTimeStyles.None,
                 out var start))
         {
-            _startPresenter?.SyncTime(start.TimeOfDay);
-            SetCurrentValue(StartTimeProperty, start.TimeOfDay);
+            _startPresenter?.SyncTime(start);
+            SetCurrentValue(StartTimeProperty, start.ToTimeSpan());
         }
         else
         {
@@ -308,11 +307,11 @@ public class TimeRangePicker : TimePickerBase, IClearControl
             }
         }
 
-        if (DateTime.TryParseExact(_endTextBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
+        if (TimeOnly.TryParseExact(_endTextBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
                 out var end))
         {
-            _endPresenter?.SyncTime(end.TimeOfDay);
-            SetCurrentValue(EndTimeProperty, end.TimeOfDay);
+            _endPresenter?.SyncTime(end);
+            SetCurrentValue(EndTimeProperty, end.ToTimeSpan());
         }
         else
         {

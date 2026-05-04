@@ -4,13 +4,13 @@ namespace TioUi.Controls;
 
 public class TimeChangedEventArgs : RoutedEventArgs
 {
-    public TimeChangedEventArgs(TimeSpan? oldTime, TimeSpan? newTime)
+    public TimeChangedEventArgs(TimeOnly? oldTime, TimeOnly? newTime)
     {
         this.OldTime = oldTime;
         this.NewTime = newTime;
     }
 
-    public TimeSpan? OldTime { get; }
+    public TimeOnly? OldTime { get; }
 
-    public TimeSpan? NewTime { get; }
+    public TimeOnly? NewTime { get; }
 }

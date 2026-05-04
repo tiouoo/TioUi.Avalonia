@@ -25,7 +25,8 @@ internal sealed class DatePickerCalendarContext(int? year = null, int? month = n
 
     public static DatePickerCalendarContext Today()
     {
-        return new DatePickerCalendarContext(DateTime.Today.Year, DateTime.Today.Month);
+        var today = DateTime.Today.ToDateOnly();
+        return new DatePickerCalendarContext(today.Year, today.Month);
     }
 
     public DatePickerCalendarContext With(int? year = null, int? month = null, int? startYear = null, int? endYear = null)

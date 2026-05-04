@@ -99,8 +99,9 @@ public class DateTimePicker : DatePickerBase
         {
             _textBox?.SetValue(TextBox.TextProperty,
                 date.Value.ToString(DisplayFormat ?? CultureInfo.InvariantCulture.DateTimeFormat.FullDateTimePattern));
-            _calendar?.MarkDates(date.Value.Date, date.Value.Date);
-            _timePickerPresenter?.SyncTime(date.Value.TimeOfDay);
+            var selectedDate = date.ToDateOnly();
+            _calendar?.MarkDates(selectedDate, selectedDate);
+            _timePickerPresenter?.SyncTime(date.Value.ToTimeOnly());
         }
     }
 
@@ -131,18 +132,15 @@ public class DateTimePicker : DatePickerBase
         {
             if (e.Date is null) return;
             var date = e.Date.Value;
-            var time = DateTime.Now.TimeOfDay;
-            SetCurrentValue(SelectedDateProperty,
-                new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds));
+            var time = DateTime.Now.ToTimeOnly();
+            SetCurrentValue(SelectedDateProperty, date.ToDateTime(time));
         }
         else
         {
             var selectedDate = SelectedDate;
             if (e.Date is null) return;
             var date = e.Date.Value;
-            SetCurrentValue(SelectedDateProperty,
-                new DateTime(date.Year, date.Month, date.Day, selectedDate.Value.Hour, selectedDate.Value.Minute,
-                    selectedDate.Value.Second));
+            SetCurrentValue(SelectedDateProperty, date.ToDateTime(selectedDate.Value.ToTimeOnly()));
         }
     }
 
@@ -152,19 +150,14 @@ public class DateTimePicker : DatePickerBase
         {
             if (e.NewTime is null) return;
             var time = e.NewTime.Value;
-            var date = DateTime.Today;
-            SetCurrentValue(SelectedDateProperty,
-                new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds));
+            SetCurrentValue(SelectedDateProperty, DateTime.Today.ToDateOnly().ToDateTime(time));
         }
         else
         {
             var selectedDate = SelectedDate;
             if (e.NewTime is null) return;
             var time = e.NewTime.Value;
-            SetCurrentValue(SelectedDateProperty,
-                new DateTime(selectedDate.Value.Year, selectedDate.Value.Month, selectedDate.Value.Day, time.Hours,
-                    time.Minutes,
-                    time.Seconds));
+            SetCurrentValue(SelectedDateProperty, selectedDate.Value.ToDateOnly().ToDateTime(time));
         }
     }
 
@@ -197,8 +190,8 @@ public class DateTimePicker : DatePickerBase
             if (DateTime.TryParse(_textBox?.Text, out var defaultTime))
             {
                 SetCurrentValue(SelectedDateProperty, defaultTime);
-                _calendar?.MarkDates(defaultTime.Date, defaultTime.Date);
-                _timePickerPresenter?.SyncTime(defaultTime.TimeOfDay);
+                _calendar?.MarkDates(defaultTime.ToDateOnly(), defaultTime.ToDateOnly());
+                _timePickerPresenter?.SyncTime(defaultTime.ToTimeOnly());
             }
         }
         else
@@ -216,7 +209,7 @@ public class DateTimePicker : DatePickerBase
             var date = SelectedDate ?? DateTime.Today;
             _calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);
             _calendar.UpdateDayButtons();
-            _timePickerPresenter?.SyncTime(date.TimeOfDay);
+            _timePickerPresenter?.SyncTime(date.ToTimeOnly());
         }
 
         SetCurrentValue(IsDropdownOpenProperty, true);
@@ -272,8 +265,8 @@ public class DateTimePicker : DatePickerBase
                 _calendar.UpdateDayButtons();
             }
 
-            _calendar?.MarkDates(date.Date, date.Date);
-            _timePickerPresenter?.SyncTime(date.TimeOfDay);
+            _calendar?.MarkDates(date.ToDateOnly(), date.ToDateOnly());
+            _timePickerPresenter?.SyncTime(date.ToTimeOnly());
         }
         else
         {

@@ -101,7 +101,7 @@ public class TimePicker : TimePickerBase, IClearControl
         Button.ClickEvent.AddHandler(OnButtonClick, _button);
         TimePickerPresenter.SelectedTimeChangedEvent.AddHandler(OnPresenterTimeChanged, _presenter);
 
-        _presenter?.SyncTime(SelectedTime);
+        _presenter?.SyncTime(SelectedTime.ToTimeOnly());
         SyncTimeToText(SelectedTime);
     }
 
@@ -109,7 +109,7 @@ public class TimePicker : TimePickerBase, IClearControl
     {
         if (!IsInitialized) return;
         if (_suppressTextPresenterEvent) return;
-        SetCurrentValue(SelectedTimeProperty, e.NewTime);
+        SetCurrentValue(SelectedTimeProperty, e.NewTime.ToTimeSpan());
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
@@ -163,7 +163,7 @@ public class TimePicker : TimePickerBase, IClearControl
         }
         else if (DisplayFormat is null || DisplayFormat.Length == 0)
         {
-            if (TimeSpan.TryParse(_textBox?.Text, out var defaultTime)) _presenter?.SyncTime(defaultTime);
+            if (TimeSpan.TryParse(_textBox?.Text, out var defaultTime)) _presenter?.SyncTime(TimeOnly.FromTimeSpan(defaultTime));
         }
         else
         {
@@ -175,7 +175,7 @@ public class TimePicker : TimePickerBase, IClearControl
     {
         if (_textBox is null) return;
         _suppressTextPresenterEvent = true;
-        _presenter?.SyncTime(args.NewValue.Value);
+        _presenter?.SyncTime(args.NewValue.Value.ToTimeOnly());
         SyncTimeToText(args.NewValue.Value);
         _suppressTextPresenterEvent = false;
     }
@@ -189,8 +189,7 @@ public class TimePicker : TimePickerBase, IClearControl
             return;
         }
 
-        var date = new DateTime(1, 1, 1, time.Value.Hours, time.Value.Minutes, time.Value.Seconds);
-        var text = date.ToString(DisplayFormat);
+        var text = TimeOnly.FromTimeSpan(time.Value).ToString(DisplayFormat);
         _textBox.Text = text;
     }
 
@@ -240,11 +239,11 @@ public class TimePicker : TimePickerBase, IClearControl
 
     private void CommitInput(bool clearWhenInvalid)
     {
-        if (DateTime.TryParseExact(_textBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
+        if (TimeOnly.TryParseExact(_textBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
                 out var time))
         {
-            SetCurrentValue(SelectedTimeProperty, time.TimeOfDay);
-            _presenter?.SyncTime(time.TimeOfDay);
+            SetCurrentValue(SelectedTimeProperty, time.ToTimeSpan());
+            _presenter?.SyncTime(time);
         }
         else
         {
