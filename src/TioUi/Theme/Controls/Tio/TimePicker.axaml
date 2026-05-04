@@ -99,7 +99,7 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:TimePicker" x:Key="{x:Type tio:TimePicker}">
+    <ControlTheme TargetType="tio:TimePickerBase" x:Key="{x:Type tio:TimePickerBase}">
         <Setter Property="Background" Value="{DynamicResource TextBoxDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBoxForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxDefaultBorderBrush}" />
@@ -107,7 +107,7 @@
         <Setter Property="CornerRadius" Value="{DynamicResource TioCornerRadius}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:TimePicker">
+            <ControlTemplate TargetType="tio:TimePickerBase">
                 <DataValidationErrors>
                     <Panel
                         HorizontalAlignment="Stretch"
@@ -129,12 +129,12 @@
                                 InnerRightContent="{TemplateBinding InnerRightContent}"
                                 IsReadOnly="{TemplateBinding IsReadonly}"
                                 MinHeight="{TemplateBinding MinHeight}"
-                                Name="{x:Static tio:TimePicker.PART_TextBox}"
+                                Name="{x:Static tio:TimePickerBase.PART_TextBox}"
                                 PlaceholderText="{TemplateBinding PlaceholderText}"
                                 Theme="{DynamicResource LooklessTextBox}"
                                 VerticalAlignment="Stretch" />
                             <Button
-                                Command="{Binding $parent[tio:TimePicker].Clear}"
+                                Command="{Binding $parent[tio:TimePickerBase].Clear}"
                                 Focusable="False"
                                 Grid.Column="1"
                                 IsVisible="False"
@@ -147,18 +147,16 @@
                                     Height="11"
                                     Width="20" />
                             </Button>
-                            <Button
+                            <PathIcon
+                                Data="F1 M512,512z M0,0z M256,0A256,256,0,1,1,256,512A256,256,0,1,1,256,0z M232,120L232,256C232,264,236,271.5,242.7,276L338.7,340C349.7,347.4 364.6,344.4 372,333.3 379.4,322.2 376.4,307.4 365.3,300L280,243.2 280,120C280,106.7 269.3,96 256,96 242.7,96 232,106.7 232,120z"
                                 Focusable="False"
+                                Foreground="{DynamicResource InnerForeground}"
                                 Grid.Column="1"
+                                Height="16"
+                                IsVisible="{Binding !#ClearButton.IsVisible}"
                                 Margin="8,0"
-                                Name="{x:Static tio:TimePicker.PART_Button}"
-                                Theme="{DynamicResource TransparentButton}">
-                                <PathIcon
-                                    Data="F1 M512,512z M0,0z M256,0A256,256,0,1,1,256,512A256,256,0,1,1,256,0z M232,120L232,256C232,264,236,271.5,242.7,276L338.7,340C349.7,347.4 364.6,344.4 372,333.3 379.4,322.2 376.4,307.4 365.3,300L280,243.2 280,120C280,106.7 269.3,96 256,96 242.7,96 232,106.7 232,120z"
-                                    Foreground="{DynamicResource DateTimePickerIconForeground}"
-                                    Height="16"
-                                    Width="20" />
-                            </Button>
+                                Name="PART_Icon"
+                                Width="20" />
                             <Popup
                                 Grid.Column="0"
                                 IsLightDismissEnabled="True"
@@ -175,13 +173,6 @@
                                     HorizontalAlignment="Stretch"
                                     Margin="{DynamicResource ComboBoxPopupBorderMargin}">
                                     <DockPanel>
-                                        <StackPanel DockPanel.Dock="Bottom" IsVisible="{TemplateBinding NeedConfirmation}">
-                                            <Button
-                                                Command="{Binding $parent[tio:TimePicker].Confirm}"
-                                                Content="{DynamicResource Lang.Ok}"
-                                                HorizontalAlignment="Right"
-                                                Margin="8" />
-                                        </StackPanel>
                                         <ContentPresenter
                                             Content="{TemplateBinding PopupInnerTopContent}"
                                             DockPanel.Dock="Top"
@@ -196,9 +187,7 @@
                                                                         Converter={x:Static ObjectConverters.IsNotNull}}"
                                             Margin="8,0,8,8"
                                             Name="PART_PopupFooter" />
-                                        <tio:TimePickerPresenter
-                                            Name="{x:Static tio:TimePicker.PART_Presenter}"
-                                            PanelFormat="{TemplateBinding PanelFormat}" />
+                                        <tio:TimePickerPresenter Name="{x:Static tio:TimePickerBase.PART_Presenter}" PanelFormat="{TemplateBinding PanelFormat}" />
                                     </DockPanel>
                                 </Border>
                             </Popup>
@@ -209,11 +198,8 @@
         </Setter>
 
         <Style Selector="^.clearButton, ^.ClearButton">
-            <Style Selector="^:pointerover /template/ Button#ClearButton">
-                <Setter Property="IsVisible" Value="{Binding $parent[tio:TimePicker].SelectedTime, Converter={x:Static ObjectConverters.IsNotNull}}" />
-            </Style>
-            <Style Selector="^:pointerover /template/ Button#PART_Button">
-                <Setter Property="IsVisible" Value="{Binding $parent[tio:TimePicker].SelectedTime, Converter={x:Static ObjectConverters.IsNull}}" />
+            <Style Selector="^:not(:empty):pointerover /template/ Button#ClearButton">
+                <Setter Property="IsVisible" Value="True" />
             </Style>
         </Style>
 

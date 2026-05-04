@@ -2,7 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ControlTheme TargetType="tio:TimeRangePicker" x:Key="{x:Type tio:TimeRangePicker}">
+    <ControlTheme TargetType="tio:TimeRangePickerBase" x:Key="{x:Type tio:TimeRangePickerBase}">
         <Setter Property="Background" Value="{DynamicResource TextBoxDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBoxForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxDefaultBorderBrush}" />
@@ -10,7 +10,7 @@
         <Setter Property="CornerRadius" Value="{DynamicResource TioCornerRadius}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:TimeRangePicker">
+            <ControlTemplate TargetType="tio:TimeRangePickerBase">
                 <DataValidationErrors>
                     <Panel
                         HorizontalAlignment="Stretch"
@@ -34,7 +34,7 @@
                                 InnerLeftContent="{TemplateBinding InnerLeftContent}"
                                 IsReadOnly="{TemplateBinding IsReadonly}"
                                 MinHeight="{TemplateBinding MinHeight}"
-                                Name="{x:Static tio:TimeRangePicker.PART_StartTextBox}"
+                                Name="{x:Static tio:TimeRangePickerBase.PART_StartTextBox}"
                                 PlaceholderText="{TemplateBinding StartPlaceholderText}"
                                 VerticalAlignment="Stretch" />
                             <TextBlock
@@ -50,11 +50,11 @@
                                 InnerRightContent="{TemplateBinding InnerRightContent}"
                                 IsReadOnly="{TemplateBinding IsReadonly}"
                                 MinHeight="{TemplateBinding MinHeight}"
-                                Name="{x:Static tio:TimeRangePicker.PART_EndTextBox}"
+                                Name="{x:Static tio:TimeRangePickerBase.PART_EndTextBox}"
                                 PlaceholderText="{TemplateBinding EndPlaceholderText}"
                                 VerticalAlignment="Stretch" />
                             <Button
-                                Command="{Binding $parent[tio:TimeRangePicker].Clear}"
+                                Command="{Binding $parent[tio:TimeRangePickerBase].Clear}"
                                 Focusable="False"
                                 Grid.Column="3"
                                 IsVisible="False"
@@ -67,20 +67,16 @@
                                     Height="11"
                                     Width="20" />
                             </Button>
-                            <Button
+                            <PathIcon
+                                Data="F1 M512,512z M0,0z M256,0A256,256,0,1,1,256,512A256,256,0,1,1,256,0z M232,120L232,256C232,264,236,271.5,242.7,276L338.7,340C349.7,347.4 364.6,344.4 372,333.3 379.4,322.2 376.4,307.4 365.3,300L280,243.2 280,120C280,106.7 269.3,96 256,96 242.7,96 232,106.7 232,120z"
                                 Focusable="False"
                                 Foreground="{DynamicResource DateTimePickerIconForeground}"
                                 Grid.Column="3"
+                                Height="16"
                                 IsVisible="{Binding !#ClearButton.IsVisible}"
                                 Margin="8,0"
-                                Name="{x:Static tio:TimePicker.PART_Button}"
-                                Theme="{DynamicResource TransparentButton}">
-                                <PathIcon
-                                    Data="F1 M512,512z M0,0z M256,0A256,256,0,1,1,256,512A256,256,0,1,1,256,0z M232,120L232,256C232,264,236,271.5,242.7,276L338.7,340C349.7,347.4 364.6,344.4 372,333.3 379.4,322.2 376.4,307.4 365.3,300L280,243.2 280,120C280,106.7 269.3,96 256,96 242.7,96 232,106.7 232,120z"
-                                    Foreground="{DynamicResource DateTimePickerIconForeground}"
-                                    Height="16"
-                                    Width="20" />
-                            </Button>
+                                Name="PART_Icon"
+                                Width="20" />
                         </Grid>
                         <Popup
                             IsLightDismissEnabled="True"
@@ -99,13 +95,6 @@
                                 HorizontalAlignment="Stretch"
                                 Margin="{DynamicResource ComboBoxPopupBorderMargin}">
                                 <DockPanel>
-                                    <StackPanel DockPanel.Dock="Bottom" IsVisible="{TemplateBinding NeedConfirmation}">
-                                        <Button
-                                            Command="{Binding $parent[tio:TimeRangePicker].Confirm}"
-                                            Content="{DynamicResource Lang.Ok}"
-                                            HorizontalAlignment="Right"
-                                            Margin="8" />
-                                    </StackPanel>
                                     <ContentPresenter
                                         Content="{TemplateBinding PopupInnerTopContent}"
                                         DockPanel.Dock="Top"
@@ -145,7 +134,7 @@
                                         <tio:TimePickerPresenter
                                             Grid.Column="0"
                                             Grid.Row="2"
-                                            Name="{x:Static tio:TimeRangePicker.PART_StartPresenter}"
+                                            Name="{x:Static tio:TimeRangePickerBase.PART_StartPresenter}"
                                             PanelFormat="{TemplateBinding PanelFormat}" />
                                         <Rectangle
                                             Fill="{DynamicResource DateTimePickerSeparatorBackground}"
@@ -157,7 +146,7 @@
                                         <tio:TimePickerPresenter
                                             Grid.Column="2"
                                             Grid.Row="2"
-                                            Name="{x:Static tio:TimeRangePicker.PART_EndPresenter}"
+                                            Name="{x:Static tio:TimeRangePickerBase.PART_EndPresenter}"
                                             PanelFormat="{TemplateBinding PanelFormat}" />
                                     </Grid>
                                 </DockPanel>

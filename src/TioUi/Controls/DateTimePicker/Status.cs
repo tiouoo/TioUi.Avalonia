@@ -2,7 +2,7 @@ namespace TioUi.Controls;
 
 internal enum Status
 {
-    Idle,
-    Selecting,
-    Selected
+    None,
+    Start,
+    End
 }

@@ -53,6 +53,10 @@ public class DatePickerCalendarView : TemplatedControl
         RoutedEvent.Register<TimePickerPresenter, DatePickerCalendarDayButtonEventArgs>(
             nameof(DateSelected), RoutingStrategies.Bubble);
 
+    public static readonly RoutedEvent<DatePickerCalendarDayButtonEventArgs> DatePreviewedEvent =
+        RoutedEvent.Register<DatePickerCalendarView, DatePickerCalendarDayButtonEventArgs>(
+            nameof(DatePreviewed), RoutingStrategies.Bubble);
+
     private DatePickerCalendarContext _contextDate = new();
 
     private bool _dateContextSyncing;
@@ -125,7 +129,12 @@ public class DatePickerCalendarView : TemplatedControl
         remove => RemoveHandler(DateSelectedEvent, value);
     }
 
-    public event EventHandler<DatePickerCalendarDayButtonEventArgs>? DatePreviewed;
+    public event EventHandler<DatePickerCalendarDayButtonEventArgs> DatePreviewed
+    {
+        add => AddHandler(DatePreviewedEvent, value);
+        remove => RemoveHandler(DatePreviewedEvent, value);
+    }
+
     internal event EventHandler<DatePickerCalendarContext>? ContextDateChanged;
 
     private void OnFirstDayOfWeekChanged(AvaloniaPropertyChangedEventArgs<DayOfWeek> args)
@@ -417,7 +426,7 @@ public class DatePickerCalendarView : TemplatedControl
 
     private void OnCellDatePreviewed(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
-        DatePreviewed?.Invoke(this, e);
+        RaiseEvent(new DatePickerCalendarDayButtonEventArgs(e.Date) { RoutedEvent = DatePreviewedEvent, Source = this });
     }
 
     private void OnCellDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
@@ -605,7 +614,7 @@ public class DatePickerCalendarView : TemplatedControl
     protected override void OnPointerExited(PointerEventArgs e)
     {
         base.OnPointerExited(e);
-        DatePreviewed?.Invoke(this, new DatePickerCalendarDayButtonEventArgs(null));
+        RaiseEvent(new DatePickerCalendarDayButtonEventArgs(null) { RoutedEvent = DatePreviewedEvent, Source = this });
     }
 
     /// <summary>

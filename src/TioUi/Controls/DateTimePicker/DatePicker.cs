@@ -1,66 +1,19 @@
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using TioUi.Common.Contracts;
-using TioUi.Common.Helpers;
 
 namespace TioUi.Controls;
 
-[TemplatePart(PART_Button, typeof(Button))]
-[TemplatePart(PART_Popup, typeof(Popup))]
-[TemplatePart(PART_TextBox, typeof(TextBox))]
+[TemplatePart(PART_Popup, typeof(Avalonia.Controls.Primitives.Popup))]
+[TemplatePart(PART_TextBox, typeof(Avalonia.Controls.TextBox))]
 [TemplatePart(PART_Calendar, typeof(DatePickerCalendarView))]
-public class DatePicker : DatePickerBase, IClearControl
+public class DatePicker : DatePickerBase<DateTime>
 {
-    public const string PART_Button = "PART_Button";
-    public const string PART_Popup = "PART_Popup";
-    public const string PART_TextBox = "PART_TextBox";
-    public const string PART_Calendar = "PART_Calendar";
-
-    public static readonly StyledProperty<DateTime?> SelectedDateProperty =
-        AvaloniaProperty.Register<DatePicker, DateTime?>(
-            nameof(SelectedDate), defaultBindingMode: BindingMode.TwoWay);
-
-    public static readonly StyledProperty<string?> PlaceholderTextProperty =
-        AvaloniaProperty.Register<DatePicker, string?>(
-            nameof(PlaceholderText));
-
     public static readonly StyledProperty<DateTimeKind> DefaultDateKindProperty =
         AvaloniaProperty.Register<DatePicker, DateTimeKind>(
             nameof(DefaultDateKind), DateTimeKind.Unspecified);
 
-    private Button? _button;
-    private DatePickerCalendarView? _calendar;
-
-    private bool _isFocused;
-    private Popup? _popup;
-    private TextBox? _textBox;
-    private DateTime? _pendingDate;
-
-    static DatePicker()
-    {
-        FocusableProperty.OverrideDefaultValue<DatePicker>(true);
-        SelectedDateProperty.Changed.AddClassHandler<DatePicker, DateTime?>((picker, args) =>
-            picker.OnSelectionChanged(args));
-    }
-
-    public DateTime? SelectedDate
-    {
-        get => GetValue(SelectedDateProperty);
-        set => SetValue(SelectedDateProperty, value);
-    }
-
-    public string? PlaceholderText
-    {
-        get => GetValue(PlaceholderTextProperty);
-        set => SetValue(PlaceholderTextProperty, value);
-    }
+    protected override Type StyleKeyOverride => typeof(DatePickerBase);
 
     public DateTimeKind DefaultDateKind
     {
@@ -68,226 +21,26 @@ public class DatePicker : DatePickerBase, IClearControl
         set => SetValue(DefaultDateKindProperty, value);
     }
 
-    public void Clear()
+    protected override DateOnly? ToDateOnly(DateTime? value)
+        => value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
+
+    protected override DateTime FromDateOnly(DateOnly date)
+        => DateTime.SpecifyKind(date.ToDateTime(TimeOnly.MinValue), DefaultDateKind);
+
+    protected override DateTime? Parse(string? text, string? format)
     {
-        SetCurrentValue(SelectedDateProperty, null);
-    }
-
-    private void OnSelectionChanged(AvaloniaPropertyChangedEventArgs<DateTime?> args)
-    {
-        SyncSelectedDateToText(args.NewValue.Value);
-    }
-
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-    {
-        base.OnApplyTemplate(e);
-
-        GotFocusEvent.RemoveHandler(OnTextBoxGetFocus, _textBox);
-        TextBox.TextChangedEvent.RemoveHandler(OnTextChanged, _textBox);
-        Button.ClickEvent.RemoveHandler(OnButtonClick, _button);
-        DatePickerCalendarView.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
-
-        _button = e.NameScope.Find<Button>(PART_Button);
-        _popup = e.NameScope.Find<Popup>(PART_Popup);
-        _textBox = e.NameScope.Find<TextBox>(PART_TextBox);
-        _calendar = e.NameScope.Find<DatePickerCalendarView>(PART_Calendar);
-
-        Button.ClickEvent.AddHandler(OnButtonClick, RoutingStrategies.Bubble, false, _button);
-        GotFocusEvent.AddHandler(OnTextBoxGetFocus, _textBox);
-        TextBox.TextChangedEvent.AddHandler(OnTextChanged, _textBox);
-        DatePickerCalendarView.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
-        SyncSelectedDateToText(SelectedDate);
-    }
-
-    private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
-    {
-        if (NeedConfirmation)
+        if (string.IsNullOrWhiteSpace(text)) return null;
+        if (string.IsNullOrWhiteSpace(format))
         {
-            _pendingDate = e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null;
-            if (e.Date.HasValue)
-            {
-                _calendar?.MarkDates(e.Date.Value, e.Date.Value);
-            }
+            return DateTime.TryParse(text, out var result)
+                ? DateTime.SpecifyKind(result, DefaultDateKind)
+                : null;
         }
-        else
-        {
-            SetCurrentValue(SelectedDateProperty, 
-                e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null);
-            SetCurrentValue(IsDropdownOpenProperty, false);
-        }
+        return DateTime.TryParseExact(text, format, CultureInfo.CurrentUICulture, DateTimeStyles.None, out var date)
+            ? DateTime.SpecifyKind(date, DefaultDateKind)
+            : null;
     }
 
-    private void OnButtonClick(object? sender, RoutedEventArgs e)
-    {
-        if (IsFocused)
-        {
-            SetCurrentValue(IsDropdownOpenProperty, !IsDropdownOpen);
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void OnTextChanged(object? sender, TextChangedEventArgs e)
-    {
-        SetSelectedDate(true);
-    }
-
-    private void SyncSelectedDateToText(DateTime? date)
-    {
-        if (date is null)
-        {
-            _textBox?.SetValue(TextBox.TextProperty, null);
-            _calendar?.ClearSelection();
-        }
-        else
-        {
-            _textBox?.SetValue(TextBox.TextProperty, date.Value.ToString(DisplayFormat ?? "yyyy-MM-dd"));
-            var selectedDate = date.ToDateOnly();
-            _calendar?.MarkDates(startDate: selectedDate, endDate: selectedDate);
-        }
-    }
-
-    private void SetSelectedDate(bool fromText = false)
-    {
-        if (string.IsNullOrEmpty(_textBox?.Text))
-        {
-            SetCurrentValue(SelectedDateProperty, null);
-            _calendar?.ClearSelection();
-        }
-        else if (DisplayFormat is null || DisplayFormat.Length == 0)
-        {
-            if (DateTime.TryParse(_textBox?.Text, out var defaultTime))
-            {
-                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(defaultTime, DefaultDateKind));
-                var selectedDate = defaultTime.ToDateOnly();
-                _calendar?.MarkDates(startDate: selectedDate, endDate: selectedDate);
-            }
-        }
-        else
-        {
-            CommitInput(!fromText);
-        }
-    }
-
-    private void OnTextBoxGetFocus(object? sender, RoutedEventArgs e)
-    {
-        _pendingDate = SelectedDate;
-        if (_calendar is not null)
-        {
-            var date = SelectedDate ?? DateTime.Today;
-            _calendar.ContextDate = _calendar.ContextDate.With(year: date.Year, month: date.Month);
-            _calendar.UpdateDayButtons();
-        }
-
-        SetCurrentValue(IsDropdownOpenProperty, true);
-    }
-
-    /// <inheritdoc/>
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
-    {
-        base.OnPointerPressed(e);
-        if (!e.Handled && e.Source is Visual source)
-        {
-            if (_popup?.IsInsidePopup(source) == true)
-            {
-                e.Handled = true;
-            }
-        }
-    }
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        switch (e.Key)
-        {
-            case Key.Escape:
-                SetCurrentValue(IsDropdownOpenProperty, false);
-                e.Handled = true;
-                return;
-            case Key.Down:
-                SetCurrentValue(IsDropdownOpenProperty, true);
-                e.Handled = true;
-                return;
-            case Key.Tab:
-                SetCurrentValue(IsDropdownOpenProperty, false);
-                return;
-            case Key.Enter:
-            {
-                SetCurrentValue(IsDropdownOpenProperty, false);
-                CommitInput(true);
-                e.Handled = true;
-                return;
-            }
-            default:
-                base.OnKeyDown(e);
-                break;
-        }
-    }
-
-    protected void OnGotFocus(RoutedEventArgs e)
-    {
-        FocusChanged(IsKeyboardFocusWithin);
-    }
-
-    protected void OnLostFocus(RoutedEventArgs e)
-    {
-        FocusChanged(IsKeyboardFocusWithin);
-        var top = TopLevel.GetTopLevel(this);
-        var element = top?.FocusManager?.GetFocusedElement();
-        if (element is Visual v && _popup?.IsInsidePopup(v) == true) return;
-        if (Equals(element, _textBox)) return;
-        CommitInput(true);
-        SetCurrentValue(IsDropdownOpenProperty, false);
-    }
-
-    private void FocusChanged(bool hasFocus)
-    {
-        bool wasFocused = _isFocused;
-        _isFocused = hasFocus;
-
-        if (hasFocus)
-        {
-            if (!wasFocused && _textBox != null)
-            {
-                _textBox.Focus();
-            }
-        }
-    }
-
-    private void CommitInput(bool clearWhenInvalid)
-    {
-        if (DateTime.TryParseExact(_textBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
-                out var date))
-        {
-            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date, DefaultDateKind));
-            if (_calendar is not null)
-            {
-                _calendar.ContextDate = _calendar.ContextDate.With(year: date.Year, month: date.Month);
-                _calendar.UpdateDayButtons();
-            }
-
-            _calendar?.MarkDates(startDate: date.ToDateOnly(), endDate: date.ToDateOnly());
-        }
-        else
-        {
-            if (clearWhenInvalid)
-            {
-                SetCurrentValue(SelectedDateProperty, null);
-            }
-
-            _calendar?.ClearSelection();
-        }
-    }
-
-    public override void Confirm()
-    {
-        if (NeedConfirmation && _pendingDate.HasValue)
-        {
-            SetCurrentValue(SelectedDateProperty, _pendingDate);
-        }
-        SetCurrentValue(IsDropdownOpenProperty, false);
-    }
-
-    public override void Dismiss()
-    {
-        SetCurrentValue(IsDropdownOpenProperty, false);
-    }
+    protected override string? Format(DateTime? value, string? format)
+        => value?.ToString(format ?? DEFAULT_DATE_DISPLAY_FORMAT);
 }

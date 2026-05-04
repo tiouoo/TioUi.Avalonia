@@ -2,7 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ControlTheme TargetType="tio:DateTimePicker" x:Key="{x:Type tio:DateTimePicker}">
+    <ControlTheme TargetType="tio:DateTimePickerBase" x:Key="{x:Type tio:DateTimePickerBase}">
         <Setter Property="Background" Value="{DynamicResource CalendarDatePickerBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource CalendarDatePickerForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CalendarDatePickerBorderBrush}" />
@@ -14,7 +14,7 @@
         <Setter Property="Padding" Value="8 0" />
         <Setter Property="MinHeight" Value="{DynamicResource CalendarDatePickerDefaultHeight}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:DateTimePicker">
+            <ControlTemplate TargetType="tio:DateTimePickerBase">
                 <DataValidationErrors>
                     <Panel
                         HorizontalAlignment="Stretch"
@@ -48,7 +48,7 @@
                                 Theme="{DynamicResource LooklessTextBox}"
                                 VerticalAlignment="Stretch" />
                             <Button
-                                Command="{Binding $parent[tio:DateTimePicker].Clear}"
+                                Command="{Binding $parent[tio:DateTimePickerBase].Clear}"
                                 Focusable="False"
                                 Grid.Column="1"
                                 IsVisible="False"
@@ -91,13 +91,6 @@
                                     Margin="{DynamicResource ComboBoxPopupBorderMargin}"
                                     Padding="8">
                                     <DockPanel>
-                                        <StackPanel DockPanel.Dock="Bottom" IsVisible="{TemplateBinding NeedConfirmation}">
-                                            <Button
-                                                Command="{Binding $parent[tio:DateTimePicker].Confirm}"
-                                                Content="{DynamicResource Lang.Ok}"
-                                                HorizontalAlignment="Right"
-                                                Margin="8" />
-                                        </StackPanel>
                                         <Grid ColumnDefinitions="*, *">
                                             <tio:DatePickerCalendarView
                                                 BorderThickness="0"
@@ -105,11 +98,11 @@
                                                 FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
                                                 FontSize="{DynamicResource DefaultFontSize}"
                                                 IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
-                                                Name="{x:Static tio:DateTimePicker.PART_Calendar}" />
+                                                Name="{x:Static tio:DateTimePickerBase.PART_Calendar}" />
                                             <tio:TimePickerPresenter
                                                 FontSize="{DynamicResource DefaultFontSize}"
                                                 Grid.Column="1"
-                                                Name="{x:Static tio:DateTimePicker.PART_TimePicker}"
+                                                Name="{x:Static tio:DateTimePickerBase.PART_TimePicker}"
                                                 PanelFormat="{TemplateBinding PanelFormat}" />
                                         </Grid>
                                     </DockPanel>
@@ -123,8 +116,8 @@
         </Setter>
 
         <Style Selector="^.clearButton, ^.ClearButton">
-            <Style Selector="^:pointerover /template/ Button#ClearButton">
-                <Setter Property="IsVisible" Value="{Binding $parent[tio:DateTimePicker].SelectedDate, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <Style Selector="^:not(:empty):pointerover /template/ Button#ClearButton">
+                <Setter Property="IsVisible" Value="True" />
             </Style>
         </Style>
 

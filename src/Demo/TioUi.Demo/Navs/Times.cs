@@ -25,6 +25,11 @@ public static class Times
         },
         new()
         {
+            Title = "DateOnlyPicker",
+            Content = new DateOnlyPickerPage(),
+        },
+        new()
+        {
             Title = "DatePicker(tio)",
             Content = new DatePickerTioPage(),
         },
@@ -35,6 +40,11 @@ public static class Times
         },
         new()
         {
+            Title = "TimeOnlyPicker",
+            Content = new TimeOnlyPickerPage(),
+        },
+        new()
+        {
             Title = "Clock",
             Content = new ClockPage(),
         },
@@ -42,6 +52,11 @@ public static class Times
         {
             Title = "DateRangePicker",
             Content = new DateRangePickerPage(),
+        },
+        new()
+        {
+            Title = "DateOnlyRangePicker",
+            Content = new DateOnlyRangePickerPage(),
         },
         new()
         {
@@ -62,6 +77,11 @@ public static class Times
         {
             Title = "TimeRangePicker",
             Content = new TimeRangePickerPage(),
+        },
+        new()
+        {
+            Title = "TimeOnlyRangePicker",
+            Content = new TimeOnlyRangePickerPage(),
         },
     ];
 }

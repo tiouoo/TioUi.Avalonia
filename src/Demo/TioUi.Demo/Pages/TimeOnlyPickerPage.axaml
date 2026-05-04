@@ -2,8 +2,8 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d"
-    x:Class="TioUi.Demo.Pages.TimeRangePickerPage"
-    x:DataType="pages:TimeRangePickerDemoViewModel"
+    x:Class="TioUi.Demo.Pages.TimeOnlyPickerPage"
+    x:DataType="pages:TimeOnlyPickerDemoViewModel"
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,11 +11,15 @@
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <tio:GroupBorder
-        Header="TimeRangePicker"
+        Header="TimeOnlyPicker"
         Margin="15"
         Padding="15">
         <ScrollViewer>
             <StackPanel HorizontalAlignment="Left" Spacing="20">
+                <ToggleSwitch Content="Need Confirm" Name="needConfirm" />
+
+                <TextBlock Text="{Binding #picker.SelectedTime}" />
+
                 <TextBox
                     InnerLeftContent="Display Format"
                     Name="displayFormat"
@@ -28,32 +32,27 @@
                     Width="300" />
 
                 <TextBlock Text="Default" />
-                <tio:TimeRangePicker
+                <tio:TimeOnlyPicker
                     DisplayFormat="{Binding #displayFormat.Text}"
+                    Name="picker"
+                    NeedConfirmation="{Binding #needConfirm.IsChecked}"
                     PanelFormat="{Binding #panelFormat.Text}"
-                    Width="300" />
-
-                <TextBlock Text="Initialized by Binding" />
-                <tio:TimeRangePicker
-                    DisplayFormat="{Binding #displayFormat.Text}"
-                    SelectedEndTime="{Binding EndTime}"
-                    PanelFormat="{Binding #panelFormat.Text}"
-                    SelectedStartTime="{Binding StartTime}"
-                    Width="300" />
+                    Width="200" />
 
                 <TextBlock Text="Clear Button" />
-                <tio:TimeRangePicker
+                <tio:TimeOnlyPicker
+                    Classes="ClearButton"
+                    DisplayFormat="{Binding #displayFormat.Text}"
+                    NeedConfirmation="True"
+                    PanelFormat="{Binding #panelFormat.Text}"
+                    Width="300" />
+
+                <TextBlock Text="Binding" />
+                <tio:TimeOnlyPicker
                     Classes="ClearButton"
                     DisplayFormat="{Binding #displayFormat.Text}"
                     PanelFormat="{Binding #panelFormat.Text}"
-                    Width="300" />
-
-                <ToggleSwitch Content="Need Confirm" Name="needConfirm" />
-                <tio:TimeRangePicker
-                    DisplayFormat="{Binding #displayFormat.Text}"
-                    Name="confirmPicker"
-                    NeedConfirmation="{Binding #needConfirm.IsChecked}"
-                    PanelFormat="{Binding #panelFormat.Text}"
+                    SelectedTime="{Binding Time}"
                     Width="300" />
             </StackPanel>
         </ScrollViewer>

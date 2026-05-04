@@ -2,16 +2,18 @@ namespace TioUi.Controls;
 
 internal class RangePickerStatus
 {
-    public Status StartStatus { get; set; } = Status.Idle;
-    public Status EndStatus { get; set; } = Status.Idle;
+    public Status Current { get; private set; } = Status.None;
+    public Status Previous { get; private set; } = Status.None;
+
+    public void Push(Status status)
+    {
+        Previous = Current;
+        Current = status;
+    }
 
     public void Reset()
     {
-        StartStatus = Status.Idle;
-        EndStatus = Status.Idle;
+        Current = Status.None;
+        Previous = Status.None;
     }
-
-    public bool IsIdle => StartStatus == Status.Idle && EndStatus == Status.Idle;
-    public bool IsSelecting => StartStatus == Status.Selecting || EndStatus == Status.Selecting;
-    public bool IsSelected => StartStatus == Status.Selected && EndStatus == Status.Selected;
 }
