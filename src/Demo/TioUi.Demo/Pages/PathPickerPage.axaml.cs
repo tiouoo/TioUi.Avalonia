@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -21,7 +22,7 @@ public partial class PathPickerDemoViewModel : ObservableObject
     [ObservableProperty] private IReadOnlyList<string>? _paths;
 
     [RelayCommand]
-    private void Selected(IReadOnlyList<string> paths)
+    private void Selected(IReadOnlyList<IStorageItem> items)
     {
         CommandTriggerCount++;
     }
