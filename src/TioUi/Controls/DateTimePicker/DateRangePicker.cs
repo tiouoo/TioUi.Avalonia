@@ -13,8 +13,8 @@ namespace TioUi.Controls;
 
 [TemplatePart(PART_Button, typeof(Button))]
 [TemplatePart(PART_Popup, typeof(Popup))]
-[TemplatePart(PART_StartCalendar, typeof(CalendarView))]
-[TemplatePart(PART_EndCalendar, typeof(CalendarView))]
+[TemplatePart(PART_StartCalendar, typeof(DatePickerCalendarView))]
+[TemplatePart(PART_EndCalendar, typeof(DatePickerCalendarView))]
 [TemplatePart(PART_StartTextBox, typeof(TextBox))]
 [TemplatePart(PART_EndTextBox, typeof(TextBox))]
 [PseudoClasses(PseudoClassName.PC_Empty)]
@@ -40,7 +40,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
             nameof(EnableMonthSync));
 
     private Button? _button;
-    private CalendarView? _endCalendar;
+    private DatePickerCalendarView? _endCalendar;
     private TextBox? _endTextBox;
 
     private bool _isFocused;
@@ -49,7 +49,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
 
     private DateTime? _previewStart;
     private bool? _start;
-    private CalendarView? _startCalendar;
+    private DatePickerCalendarView? _startCalendar;
     private TextBox? _startTextBox;
 
     static DateRangePicker()
@@ -144,8 +144,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
 
         _button = e.NameScope.Find<Button>(PART_Button);
         _popup = e.NameScope.Find<Popup>(PART_Popup);
-        _startCalendar = e.NameScope.Find<CalendarView>(PART_StartCalendar);
-        _endCalendar = e.NameScope.Find<CalendarView>(PART_EndCalendar);
+        _startCalendar = e.NameScope.Find<DatePickerCalendarView>(PART_StartCalendar);
+        _endCalendar = e.NameScope.Find<DatePickerCalendarView>(PART_EndCalendar);
         _startTextBox = e.NameScope.Find<TextBox>(PART_StartTextBox);
         _endTextBox = e.NameScope.Find<TextBox>(PART_EndTextBox);
 
@@ -220,21 +220,21 @@ public class DateRangePicker : DatePickerBase, IClearControl
         else if (Equals(sender, _endTextBox)) OnTextChangedInternal(_endTextBox, SelectedEndDateProperty);
     }
 
-    private void OnContextDateChanged(object? sender, CalendarContext e)
+    private void OnContextDateChanged(object? sender, DatePickerCalendarContext e)
     {
-        if (Equals(sender, _startCalendar) && _startCalendar?.Mode == CalendarViewMode.Month)
+        if (Equals(sender, _startCalendar) && _startCalendar?.Mode == DatePickerCalendarViewMode.Month)
         {
             var needsUpdate = EnableMonthSync || _startCalendar?.ContextDate.CompareTo(_endCalendar?.ContextDate) >= 0;
             if (needsUpdate) _endCalendar?.SyncContextDate(_startCalendar?.ContextDate.NextMonth());
         }
-        else if (Equals(sender, _endCalendar) && _endCalendar?.Mode == CalendarViewMode.Month)
+        else if (Equals(sender, _endCalendar) && _endCalendar?.Mode == DatePickerCalendarViewMode.Month)
         {
             var needsUpdate = EnableMonthSync || _endCalendar?.ContextDate.CompareTo(_startCalendar?.ContextDate) <= 0;
             if (needsUpdate) _startCalendar?.SyncContextDate(_endCalendar?.ContextDate.PreviousMonth());
         }
     }
 
-    private void OnDatePreviewed(object? sender, CalendarDayButtonEventArgs e)
+    private void OnDatePreviewed(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
         if (_start == true)
         {
@@ -250,7 +250,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
         }
     }
 
-    private void OnDateSelected(object? sender, CalendarDayButtonEventArgs e)
+    private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
         if (_start == true)
         {
@@ -301,7 +301,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
             if (_startCalendar is not null)
             {
                 var date = SelectedStartDate ?? DateTime.Today;
-                _startCalendar.ContextDate = new CalendarContext(date.Year, date.Month);
+                _startCalendar.ContextDate = new DatePickerCalendarContext(date.Year, date.Month);
                 _startCalendar.UpdateDayButtons();
             }
 
@@ -315,7 +315,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
                     date2 = date2.Value.AddMonths(1);
                 }
 
-                _endCalendar.ContextDate = new CalendarContext(date2.Value.Year, date2.Value.Month);
+                _endCalendar.ContextDate = new DatePickerCalendarContext(date2.Value.Year, date2.Value.Month);
                 _endCalendar.UpdateDayButtons();
             }
         }
@@ -325,7 +325,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
             if (_endCalendar is not null)
             {
                 var date = SelectedEndDate ?? DateTime.Today;
-                _endCalendar.ContextDate = new CalendarContext(date.Year, date.Month);
+                _endCalendar.ContextDate = new DatePickerCalendarContext(date.Year, date.Month);
                 _endCalendar.UpdateDayButtons();
             }
 
@@ -339,7 +339,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
                     date2 = date2.Value.AddMonths(-1);
                 }
 
-                _startCalendar.ContextDate = new CalendarContext(date2.Value.Year, date2.Value.Month);
+                _startCalendar.ContextDate = new DatePickerCalendarContext(date2.Value.Year, date2.Value.Month);
                 _startCalendar.UpdateDayButtons();
             }
         }
@@ -380,8 +380,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
                 if (_startCalendar is not null)
                 {
                     var date1 = SelectedStartDate ?? DateTime.Today;
-                    _startCalendar.ContextDate = new CalendarContext(date1.Year, date.Month);
-                    //_startCalendar.SyncContextDate(new CalendarContext(date1.Year, date1.Month));
+                    _startCalendar.ContextDate = new DatePickerCalendarContext(date1.Year, date.Month);
+                    //_startCalendar.SyncContextDate(new DatePickerCalendarContext(date1.Year, date1.Month));
                     _startCalendar.UpdateDayButtons();
                     _startCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
                 }
@@ -390,8 +390,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
                 {
                     var date2 = SelectedEndDate ?? SelectedStartDate ?? DateTime.Today;
                     if (SelectedEndDate is null) date2 = date2.AddMonths(1);
-                    _endCalendar.ContextDate = new CalendarContext(date2.Year, date2.Month);
-                    //_endCalendar.SyncContextDate(new CalendarContext(date2.Year, date2.Month));
+                    _endCalendar.ContextDate = new DatePickerCalendarContext(date2.Year, date2.Month);
+                    //_endCalendar.SyncContextDate(new DatePickerCalendarContext(date2.Year, date2.Month));
                     _endCalendar.UpdateDayButtons();
                     _endCalendar?.MarkDates(SelectedStartDate, SelectedEndDate, _previewStart, _previewEnd);
                 }

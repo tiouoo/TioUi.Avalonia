@@ -125,7 +125,7 @@
                                         Margin="8,0,8,8"
                                         Name="PART_PopupFooter" />
                                     <Grid ColumnDefinitions="*, *">
-                                        <tio:CalendarView
+                                        <tio:DatePickerCalendarView
                                             BorderThickness="0"
                                             CornerRadius="{Binding $parent[Border].CornerRadius}"
                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
@@ -134,7 +134,7 @@
                                             IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
                                             Margin="8"
                                             Name="{x:Static tio:DateRangePicker.PART_StartCalendar}" />
-                                        <tio:CalendarView
+                                        <tio:DatePickerCalendarView
                                             BorderThickness="0"
                                             CornerRadius="{Binding $parent[Border].CornerRadius}"
                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"

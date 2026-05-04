@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
@@ -15,7 +15,7 @@ namespace TioUi.Controls;
 [TemplatePart(PART_Button, typeof(Button))]
 [TemplatePart(PART_Popup, typeof(Popup))]
 [TemplatePart(PART_TextBox, typeof(TextBox))]
-[TemplatePart(PART_Calendar, typeof(CalendarView))]
+[TemplatePart(PART_Calendar, typeof(DatePickerCalendarView))]
 public class DatePicker : DatePickerBase, IClearControl
 {
     public const string PART_Button = "PART_Button";
@@ -32,7 +32,7 @@ public class DatePicker : DatePickerBase, IClearControl
             nameof(PlaceholderText));
 
     private Button? _button;
-    private CalendarView? _calendar;
+    private DatePickerCalendarView? _calendar;
 
     private bool _isFocused;
     private Popup? _popup;
@@ -74,21 +74,21 @@ public class DatePicker : DatePickerBase, IClearControl
         GotFocusEvent.RemoveHandler(OnTextBoxGetFocus, _textBox);
         TextBox.TextChangedEvent.RemoveHandler(OnTextChanged, _textBox);
         Button.ClickEvent.RemoveHandler(OnButtonClick, _button);
-        CalendarView.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
+        DatePickerCalendarView.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
 
         _button = e.NameScope.Find<Button>(PART_Button);
         _popup = e.NameScope.Find<Popup>(PART_Popup);
         _textBox = e.NameScope.Find<TextBox>(PART_TextBox);
-        _calendar = e.NameScope.Find<CalendarView>(PART_Calendar);
+        _calendar = e.NameScope.Find<DatePickerCalendarView>(PART_Calendar);
 
         Button.ClickEvent.AddHandler(OnButtonClick, RoutingStrategies.Bubble, false, _button);
         GotFocusEvent.AddHandler(OnTextBoxGetFocus, _textBox);
         TextBox.TextChangedEvent.AddHandler(OnTextChanged, _textBox);
-        CalendarView.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
+        DatePickerCalendarView.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
         SyncSelectedDateToText(SelectedDate);
     }
 
-    private void OnDateSelected(object? sender, CalendarDayButtonEventArgs e)
+    private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
         SetCurrentValue(SelectedDateProperty, e.Date);
         SetCurrentValue(IsDropdownOpenProperty, false);

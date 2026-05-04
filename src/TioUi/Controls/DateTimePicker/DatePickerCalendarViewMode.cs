@@ -1,6 +1,6 @@
 namespace TioUi.Controls;
 
-internal enum CalendarViewMode
+internal enum DatePickerCalendarViewMode
 {
     // Show days in current month.
     Month,

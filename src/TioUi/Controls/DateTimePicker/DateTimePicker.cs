@@ -14,7 +14,7 @@ namespace TioUi.Controls;
 [TemplatePart(PART_Button, typeof(Button))]
 [TemplatePart(PART_Popup, typeof(Popup))]
 [TemplatePart(PART_TextBox, typeof(TextBox))]
-[TemplatePart(PART_Calendar, typeof(CalendarView))]
+[TemplatePart(PART_Calendar, typeof(DatePickerCalendarView))]
 [TemplatePart(PART_TimePicker, typeof(TimePickerPresenter))]
 public class DateTimePicker : DatePickerBase
 {
@@ -39,7 +39,7 @@ public class DateTimePicker : DatePickerBase
         nameof(NeedConfirmation));
 
     private Button? _button;
-    private CalendarView? _calendar;
+    private DatePickerCalendarView? _calendar;
 
     private bool _fromText = false;
 
@@ -110,22 +110,22 @@ public class DateTimePicker : DatePickerBase
         GotFocusEvent.RemoveHandler(OnTextBoxGetFocus, _textBox);
         TextBox.TextChangedEvent.RemoveHandler(OnTextChanged, _textBox);
         Button.ClickEvent.RemoveHandler(OnButtonClick, _button);
-        CalendarView.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
+        DatePickerCalendarView.DateSelectedEvent.RemoveHandler(OnDateSelected, _calendar);
         TimePickerPresenter.SelectedTimeChangedEvent.RemoveHandler(OnTimeSelectedChanged, _timePickerPresenter);
         _button = e.NameScope.Find<Button>(PART_Button);
         _popup = e.NameScope.Find<Popup>(PART_Popup);
         _textBox = e.NameScope.Find<TextBox>(PART_TextBox);
-        _calendar = e.NameScope.Find<CalendarView>(PART_Calendar);
+        _calendar = e.NameScope.Find<DatePickerCalendarView>(PART_Calendar);
         _timePickerPresenter = e.NameScope.Find<TimePickerPresenter>(PART_TimePicker);
         Button.ClickEvent.AddHandler(OnButtonClick, RoutingStrategies.Bubble, true, _button);
         GotFocusEvent.AddHandler(OnTextBoxGetFocus, _textBox);
         TextBox.TextChangedEvent.AddHandler(OnTextChanged, _textBox);
-        CalendarView.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
+        DatePickerCalendarView.DateSelectedEvent.AddHandler(OnDateSelected, RoutingStrategies.Bubble, true, _calendar);
         TimePickerPresenter.SelectedTimeChangedEvent.AddHandler(OnTimeSelectedChanged, _timePickerPresenter);
         SyncSelectedDateToText(SelectedDate);
     }
 
-    private void OnDateSelected(object? sender, CalendarDayButtonEventArgs e)
+    private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
         if (SelectedDate is null)
         {

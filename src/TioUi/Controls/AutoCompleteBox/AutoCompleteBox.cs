@@ -4,6 +4,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using TioUi.Common.Classes;
 using TioUi.Common.Contracts;
 using TioUi.Common.Helpers;
 

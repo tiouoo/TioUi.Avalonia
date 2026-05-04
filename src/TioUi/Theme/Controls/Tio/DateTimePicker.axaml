@@ -91,7 +91,7 @@
                                     Margin="{DynamicResource ComboBoxPopupBorderMargin}"
                                     Padding="8">
                                     <Grid ColumnDefinitions="*, *">
-                                        <tio:CalendarView
+                                        <tio:DatePickerCalendarView
                                             BorderThickness="0"
                                             CornerRadius="{Binding $parent[Border].CornerRadius}"
                                             FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"

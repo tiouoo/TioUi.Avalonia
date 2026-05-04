@@ -1,4 +1,4 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -181,7 +181,7 @@
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
-    <ControlTheme TargetType="tio:CalendarDayButton" x:Key="{x:Type tio:CalendarDayButton}">
+    <ControlTheme TargetType="tio:DatePickerCalendarDayButton" x:Key="{x:Type tio:DatePickerCalendarDayButton}">
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="Height" Value="29" />
         <Setter Property="Margin" Value="{DynamicResource CalenderDayMargin}" />
@@ -192,7 +192,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="CornerRadius" Value="{DynamicResource CalenderDayCornerRadius}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:CalendarDayButton">
+            <ControlTemplate TargetType="tio:DatePickerCalendarDayButton">
                 <Panel>
                     <Border
                         Background="{TemplateBinding Background}"
@@ -315,7 +315,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:CalendarYearButton" x:Key="{x:Type tio:CalendarYearButton}">
+    <ControlTheme TargetType="tio:DatePickerCalendarYearButton" x:Key="{x:Type tio:DatePickerCalendarYearButton}">
         <Setter Property="MinWidth" Value="{DynamicResource CalenderYearMinWidth}" />
         <Setter Property="MinHeight" Value="{DynamicResource CalenderYearMinHeight}" />
         <Setter Property="Margin" Value="{DynamicResource CalenderYearMargin}" />
@@ -324,7 +324,7 @@
         <Setter Property="BorderThickness" Value="{DynamicResource CalenderYearBorderThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource CalenderYearCornerRadius}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:CalendarDayButton">
+            <ControlTemplate TargetType="tio:DatePickerCalendarDayButton">
                 <Panel>
                     <Border
                         Background="{TemplateBinding Background}"
@@ -361,12 +361,12 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:CalendarView" x:Key="{x:Type tio:CalendarView}">
+    <ControlTheme TargetType="tio:DatePickerCalendarView" x:Key="{x:Type tio:DatePickerCalendarView}">
         <Setter Property="MinHeight" Value="{DynamicResource CalenderViewMinWidth}" />
         <Setter Property="MinWidth" Value="{DynamicResource CalenderViewMinHeight}" />
         <Setter Property="Background" Value="{DynamicResource DatePickerViewBackground}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:CalendarView">
+            <ControlTemplate TargetType="tio:DatePickerCalendarView">
                 <Grid Background="{TemplateBinding Background}" RowDefinitions="Auto, *">
                     <Grid
                         ColumnDefinitions="Auto, Auto,*, Auto, Auto"
@@ -375,14 +375,14 @@
                         <Button
                             Grid.Column="0"
                             Margin="10,0,5,0"
-                            Name="{x:Static tio:CalendarView.PART_FastPreviousButton}"
+                            Name="{x:Static tio:DatePickerCalendarView.PART_FastPreviousButton}"
                             Theme="{DynamicResource TransparentButton}">
                             <PathIcon Data="{DynamicResource CalendarViewFastForwardGlyph}" Height="14" />
                         </Button>
                         <Button
                             Grid.Column="1"
                             Margin="5,0,10,0"
-                            Name="{x:Static tio:CalendarView.PART_PreviousButton}"
+                            Name="{x:Static tio:DatePickerCalendarView.PART_PreviousButton}"
                             Theme="{DynamicResource TransparentButton}">
                             <PathIcon Data="{DynamicResource CalendarItemPreviousIconGlyph}" Height="14" />
                         </Button>
@@ -392,14 +392,14 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 Grid.Column="0"
                                 HorizontalContentAlignment="Center"
-                                Name="{x:Static tio:CalendarView.PART_YearButton}"
+                                Name="{x:Static tio:DatePickerCalendarView.PART_YearButton}"
                                 Theme="{DynamicResource BorderlessButton}" />
                             <Button
                                 CornerRadius="16"
                                 Foreground="{TemplateBinding Foreground}"
                                 Grid.Column="1"
                                 HorizontalContentAlignment="Center"
-                                Name="{x:Static tio:CalendarView.PART_MonthButton}"
+                                Name="{x:Static tio:DatePickerCalendarView.PART_MonthButton}"
                                 Theme="{DynamicResource BorderlessButton}" />
                             <Button
                                 CornerRadius="16"
@@ -408,19 +408,19 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 IsVisible="True"
-                                Name="{x:Static tio:CalendarView.PART_HeaderButton}" />
+                                Name="{x:Static tio:DatePickerCalendarView.PART_HeaderButton}" />
                         </Grid>
                         <Button
                             Grid.Column="3"
                             Margin="10,0,5,0"
-                            Name="{x:Static tio:CalendarView.PART_NextButton}"
+                            Name="{x:Static tio:DatePickerCalendarView.PART_NextButton}"
                             Theme="{DynamicResource TransparentButton}">
                             <PathIcon Data="{DynamicResource CalendarItemNextIconGlyph}" Height="14" />
                         </Button>
                         <Button
                             Grid.Column="4"
                             Margin="5,0,10,0"
-                            Name="{x:Static tio:CalendarView.PART_FastNextButton}"
+                            Name="{x:Static tio:DatePickerCalendarView.PART_FastNextButton}"
                             Theme="{DynamicResource TransparentButton}">
                             <PathIcon Data="{DynamicResource CalendarViewFastBackwardGlyph}" Height="14" />
                         </Button>
@@ -429,14 +429,14 @@
                         ColumnDefinitions="*, *, *, *, *, *, *"
                         Grid.Row="1"
                         HorizontalAlignment="Stretch"
-                        Name="{x:Static tio:CalendarView.PART_MonthGrid}"
+                        Name="{x:Static tio:DatePickerCalendarView.PART_MonthGrid}"
                         RowDefinitions="*, Auto, *, *, *, *, *, *"
                         VerticalAlignment="Stretch" />
                     <Grid
                         ColumnDefinitions="*, *, *"
                         Grid.Row="1"
                         HorizontalAlignment="Stretch"
-                        Name="{x:Static tio:CalendarView.PART_YearGrid}"
+                        Name="{x:Static tio:DatePickerCalendarView.PART_YearGrid}"
                         RowDefinitions="*, *, *, *"
                         VerticalAlignment="Stretch" />
                 </Grid>
