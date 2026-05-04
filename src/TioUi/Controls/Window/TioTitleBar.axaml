@@ -11,19 +11,26 @@
     <Border
         Background="Transparent"
         Height="36"
-        VerticalAlignment="Top"
-        WindowDecorationProperties.ElementRole="TitleBar">
+        VerticalAlignment="Top">
         <Grid
             Background="Transparent"
             Margin="0,0,5,0"
             Name="MoveDragArea">
-            <ContentControl Content="{Binding #RootControl.LeftContent}" />
+            <ContentControl
+                Content="{Binding #RootControl.LeftContent}"
+                TabIndex="1"
+                KeyboardNavigation.TabNavigation="Local" />
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <ContentControl Content="{Binding #RootControl.RightContent}" />
+                <ContentControl
+                    Content="{Binding #RootControl.RightContent}"
+                    TabIndex="2"
+                    KeyboardNavigation.TabNavigation="Local" />
                 <StackPanel
                     HorizontalAlignment="Right"
                     Name="FunctionRoot"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    TabIndex="3"
+                    KeyboardNavigation.TabNavigation="Local">
                     <Button
                         Classes="title-bar-button"
                         Content="{DynamicResource Minimize}"
