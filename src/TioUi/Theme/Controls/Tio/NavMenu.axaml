@@ -399,7 +399,8 @@
                 <Setter Property="IsVisible" Value="False" />
             </Style>
             <Style Selector="^ /template/ tio|ContentExpander#PART_ContentExpand">
-                <Setter Property="IsVisible" Value="False" />
+                <Setter Property="Multiplier" Value="0" />
+                <Setter Property="Opacity" Value="0" />
             </Style>
         </Style>
 
