@@ -505,6 +505,8 @@
             </OnPlatform>
         </Setter>
         <Setter Property="CanResize" Value="False" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:CustomDialogWindow">
                 <Panel>
@@ -518,10 +520,13 @@
                     <Panel Background="Transparent" Margin="{TemplateBinding WindowDecorationMargin}" />
                     <VisualLayerManager>
                         <Grid RowDefinitions="Auto, *">
-                            <ContentPresenter
-                                Content="{TemplateBinding Content}"
+                            <ScrollViewer
                                 Grid.Row="0"
-                                Grid.RowSpan="2" />
+                                Grid.RowSpan="2"
+                                HorizontalScrollBarVisibility="{Binding (ScrollViewer.HorizontalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalScrollBarVisibility="{Binding (ScrollViewer.VerticalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </ScrollViewer>
                             <Grid ColumnDefinitions="*, Auto" Grid.Row="0">
                                 <Panel
                                     Background="Transparent"
@@ -577,6 +582,8 @@
             </OnPlatform>
         </Setter>
         <Setter Property="CanResize" Value="False" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:StandardDialogWindow">
                 <Panel>
@@ -590,11 +597,15 @@
                     <Panel Background="Transparent" Margin="{TemplateBinding WindowDecorationMargin}" />
                     <VisualLayerManager>
                         <Grid RowDefinitions="Auto, *, Auto">
-                            <ContentPresenter
-                                Content="{TemplateBinding Content}"
+                            <ScrollViewer
                                 Grid.Row="1"
                                 Margin="24,8"
-                                Name="PART_ContentPresenter" />
+                                HorizontalScrollBarVisibility="{Binding (ScrollViewer.HorizontalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalScrollBarVisibility="{Binding (ScrollViewer.VerticalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                                <ContentPresenter
+                                    Content="{TemplateBinding Content}"
+                                    Name="PART_ContentPresenter" />
+                            </ScrollViewer>
                             <Grid
                                 ColumnDefinitions="Auto, *, Auto"
                                 Grid.Row="0"

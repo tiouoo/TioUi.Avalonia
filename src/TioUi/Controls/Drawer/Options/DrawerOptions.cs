@@ -1,4 +1,5 @@
-﻿using TioUi.Common;
+﻿using Avalonia.Controls.Primitives;
+using TioUi.Common;
 
 namespace TioUi.Controls.Options;
 
@@ -25,4 +26,14 @@ public class DrawerOptions
     public bool CanResize { get; set; }
 
     public string? StyleClass { get; set; }
+
+    /// <summary>
+    /// Visibility of the horizontal scrollbar inside the drawer content area. Default is <see cref="ScrollBarVisibility.Auto"/>.
+    /// </summary>
+    public ScrollBarVisibility HorizontalScrollBarVisibility { get; set; } = ScrollBarVisibility.Auto;
+
+    /// <summary>
+    /// Visibility of the vertical scrollbar inside the drawer content area. Default is <see cref="ScrollBarVisibility.Auto"/>.
+    /// </summary>
+    public ScrollBarVisibility VerticalScrollBarVisibility { get; set; } = ScrollBarVisibility.Auto;
 }
