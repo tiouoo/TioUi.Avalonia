@@ -23,8 +23,8 @@ public class TagInput : TemplatedControl
     public const string PART_ItemsControl = "PART_ItemsControl";
     public const string PART_PlaceholderText = "PART_PlaceholderText";
 
-    public static readonly StyledProperty<IList<string>> TagsProperty =
-        AvaloniaProperty.Register<TagInput, IList<string>>(
+    public static readonly StyledProperty<IList<string>?> TagsProperty =
+        AvaloniaProperty.Register<TagInput, IList<string>?>(
             nameof(Tags));
 
     public static readonly StyledProperty<string?> PlaceholderTextProperty =
@@ -110,7 +110,7 @@ public class TagInput : TemplatedControl
         set => SetValue(PlaceholderTextProperty, value);
     }
 
-    public IList<string> Tags
+    public IList<string>? Tags
     {
         get => GetValue(TagsProperty);
         set => SetValue(TagsProperty, value);
@@ -209,7 +209,7 @@ public class TagInput : TemplatedControl
     private void CheckEmpty()
     {
         if (string.IsNullOrWhiteSpace(_presenter?.PreeditText) && string.IsNullOrEmpty(_textBox.Text) &&
-            Tags.Count == 0)
+            (Tags is null || Tags.Count == 0))
             PseudoClasses.Set(PseudoClassName.PC_Empty, true);
         else
             PseudoClasses.Set(PseudoClassName.PC_Empty, false);
@@ -291,7 +291,7 @@ public class TagInput : TemplatedControl
         else if (args.Key == Key.Delete || args.Key == Key.Back)
             if (string.IsNullOrEmpty(_textBox.Text) || _textBox.Text?.Length == 0)
             {
-                if (Tags.Count == 0) return;
+                if (Tags is null || Tags.Count == 0) return;
                 var index = Items.Count - 2;
                 // Items.RemoveAt(index);
                 Tags.RemoveAt(index);
@@ -301,6 +301,7 @@ public class TagInput : TemplatedControl
     private void AddTags(string? text)
     {
         if (!(text?.Length > 0)) return;
+        if (Tags is null) return;
         if (Tags.Count >= MaxCount) return;
         string[] values = [];
         if (!string.IsNullOrEmpty(Separator))
@@ -327,6 +328,7 @@ public class TagInput : TemplatedControl
         if (o is Control t)
             if (t.Parent is ContentPresenter presenter)
             {
+                if (Tags is null) return;
                 var index = _itemsControl?.IndexFromContainer(presenter);
                 if (index is >= 0 && index < Items.Count - 1)
                     // Items.RemoveAt(index.Value);
