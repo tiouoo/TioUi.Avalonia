@@ -16,6 +16,7 @@ public class AutoCompleteBox : Avalonia.Controls.AutoCompleteBox, IClearControl
     private bool _closeBySelectionFlag;
 
     private TextBox? _textbox;
+    private Popup? _popup;
 
     static AutoCompleteBox()
     {
@@ -35,7 +36,7 @@ public class AutoCompleteBox : Avalonia.Controls.AutoCompleteBox, IClearControl
         SetCurrentValue(TextProperty, null);
     }
 
-    private void OnCurrentPointerReleased(object sender, PointerReleasedEventArgs e)
+    private void OnCurrentPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         var source = (e.Source as Control).FindAncestorOfType<ListBoxItem>();
         if (source is not null)
@@ -49,6 +50,7 @@ public class AutoCompleteBox : Avalonia.Controls.AutoCompleteBox, IClearControl
         base.OnApplyTemplate(e);
         _textbox?.RemoveHandler(PointerPressedEvent, OnBoxPointerPressed);
         _textbox = e.NameScope.Find<TextBox>(PART_TextBox);
+        _popup = e.NameScope.Find<Popup>(PartNames.PART_Popup);
         _textbox?.AddHandler(PointerPressedEvent, OnBoxPointerPressed, handledEventsToo: true);
         PseudoClasses.Set(PseudoClassName.PC_Empty, string.IsNullOrEmpty(Text));
     }
@@ -80,5 +82,20 @@ public class AutoCompleteBox : Avalonia.Controls.AutoCompleteBox, IClearControl
             var value = change.GetNewValue<string?>();
             PseudoClasses.Set(PseudoClassName.PC_Empty, string.IsNullOrEmpty(value));
         }
+    }
+
+    protected override void OnLostFocus(FocusChangedEventArgs e)
+    {
+        base.OnLostFocus(e);
+        var newElement = e.NewFocusedElement;
+        if (newElement is Visual v && _popup?.IsInsidePopup(v) == true)
+        {
+            return;
+        }
+        if (Equals(newElement, _textbox))
+        {
+            return;
+        }
+        SetCurrentValue(IsDropDownOpenProperty, false);
     }
 }
