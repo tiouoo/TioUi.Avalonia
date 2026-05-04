@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <StackPanel Margin="20">
-            <tio:PathPicker Title="Hello World" Width="300" />
+            <tio:PathPicker Title="Hello World" ButtonContent="Hello World" Width="300" />
         </StackPanel>
     </Design.PreviewWith>
     <ControlTheme TargetType="tio:PathPicker" x:Key="{x:Type tio:PathPicker}">
@@ -13,7 +13,7 @@
             <ControlTemplate>
                 <DockPanel>
                     <Button
-                        Content="{TemplateBinding Title}"
+                        Content="{TemplateBinding ButtonContent}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Stretch"
                         Name="{x:Static tio:PathPicker.PART_Button}"
@@ -60,7 +60,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Button
-                    Content="{TemplateBinding Title}"
+                    Content="{TemplateBinding ButtonContent}"
                     HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                     Name="{x:Static tio:PathPicker.PART_Button}"
                     VerticalAlignment="{TemplateBinding VerticalAlignment}" />
@@ -82,7 +82,7 @@
                     VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <Expander.Header>
                         <Button
-                            Content="{TemplateBinding Title}"
+                            Content="{TemplateBinding ButtonContent}"
                             CornerRadius="{TemplateBinding CornerRadius,
                                                            Converter={tio:CornerRadiusMixerConverter Left}}"
                             HorizontalAlignment="Stretch"

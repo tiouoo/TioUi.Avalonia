@@ -124,6 +124,32 @@
                                 Title="{Binding #Title.Text}"
                                 UsePickerType="{Binding #UsePickerType.Value}" />
                         </HeaderedContentControl>
+                        <HeaderedContentControl Header="Custom ButtonContent (Icon + Text)">
+                            <tio:PathPicker
+                                AllowMultiple="{Binding #AllowMultiple.IsChecked}"
+                                Command="{Binding SelectedCommand}"
+                                DefaultFileExtension="{Binding #DefaultFileExtension.Text}"
+                                FileFilter="{Binding #FileFilter.Text}"
+                                IsClearSelectionOnCancel="{Binding #IsClearSelectionOnCancel.IsChecked}"
+                                IsOmitCommandOnCancel="{Binding #IsOmitCommandOnCancel.IsChecked}"
+                                SelectedPaths="{Binding Paths, Mode=OneWayToSource}"
+                                SelectedPathsText="{Binding Path, Mode=OneWayToSource}"
+                                SuggestedFileName="{Binding #SuggestedFileName.Text}"
+                                SuggestedStartPath="{Binding #SuggestedStartPath.Text}"
+                                Title="{Binding #Title.Text}"
+                                UsePickerType="{Binding #UsePickerType.Value}">
+                                <tio:PathPicker.ButtonContent>
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <PathIcon
+                                            Data="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                                            Height="16"
+                                            VerticalAlignment="Center"
+                                            Width="16" />
+                                        <TextBlock Text="浏览" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </tio:PathPicker.ButtonContent>
+                            </tio:PathPicker>
+                        </HeaderedContentControl>
                     </StackPanel>
                 </ScrollViewer>
                 <ScrollViewer
