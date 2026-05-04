@@ -117,7 +117,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:DefaultDrawerControl" x:Key="{x:Type tio:DefaultDrawerControl}">
+    <ControlTheme TargetType="tio:StandardDrawerControl" x:Key="{x:Type tio:StandardDrawerControl}">
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="MinWidth" Value="96" />
@@ -128,7 +128,7 @@
         <Setter Property="BorderThickness" Value="{DynamicResource DrawerBorderThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource DrawerCornerRadius}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:DefaultDrawerControl">
+            <ControlTemplate TargetType="tio:StandardDrawerControl">
                 <Panel>
                     <Border
                         Background="{DynamicResource PopupBackgroundColor}"
@@ -183,10 +183,10 @@
                                     HorizontalAlignment="Right"
                                     Margin="24,0,24,24"
                                     Orientation="Horizontal">
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_CancelButton}" />
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_NoButton}" />
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_YesButton}" />
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_OKButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_CancelButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_NoButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_YesButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_OKButton}" />
                                 </StackPanel>
                             </Grid>
                         </Border>

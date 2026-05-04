@@ -1,19 +1,14 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using TioUi.Common;
 using TioUi.Controls.Options;
-using Constants = TioUi.Common.Constants;
-
-// ReSharper disable RedundantExplicitArrayCreation
 
 namespace TioUi.Controls;
 
-[Obsolete("Use OverlayDrawer instead. This will be removed in TioUi 2.0 lifecycle.")]
-public static class Drawer
+public static class OverlayDrawer
 {
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowStandard instead.")]
-    public static void Show<TView, TViewModel>(TViewModel vm, string? hostId = null, DrawerOptions? options = null)
+    public static void ShowStandard<TView, TViewModel>(TViewModel vm, string? hostId = null, DrawerOptions? options = null)
         where TView : Control, new()
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -27,8 +22,7 @@ public static class Drawer
         host.AddDrawer(drawer);
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowStandard instead.")]
-    public static void Show(Control control, object? vm, string? hostId = null,
+    public static void ShowStandard(Control control, object? vm, string? hostId = null,
         DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -42,8 +36,7 @@ public static class Drawer
         host.AddDrawer(drawer);
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowStandard instead.")]
-    public static void Show(object? vm, string? hostId = null, DrawerOptions? options = null)
+    public static void ShowStandard(object? vm, string? hostId = null, DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return;
@@ -59,8 +52,7 @@ public static class Drawer
         host.AddDrawer(drawer);
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowStandardAsync instead.")]
-    public static Task<DialogResult> ShowModal<TView, TViewModel>(TViewModel vm, string? hostId = null,
+    public static Task<DialogResult> ShowStandardAsync<TView, TViewModel>(TViewModel vm, string? hostId = null,
         DrawerOptions? options = null)
         where TView : Control, new()
     {
@@ -77,8 +69,7 @@ public static class Drawer
         return drawer.ShowAsync<DialogResult>();
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowStandardAsync instead.")]
-    public static Task<DialogResult> ShowModal(Control control, object? vm, string? hostId = null,
+    public static Task<DialogResult> ShowStandardAsync(Control control, object? vm, string? hostId = null,
         DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -94,8 +85,7 @@ public static class Drawer
         return drawer.ShowAsync<DialogResult>();
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowStandardAsync instead.")]
-    public static Task<DialogResult> ShowModal(object? vm, string? hostId = null, DrawerOptions? options = null)
+    public static Task<DialogResult> ShowStandardAsync(object? vm, string? hostId = null, DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
         if (host is null) return Task.FromResult(DialogResult.None);
@@ -113,7 +103,6 @@ public static class Drawer
         return drawer.ShowAsync<DialogResult>();
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowCustom instead.")]
     public static void ShowCustom<TView, TViewModel>(TViewModel vm, string? hostId = null,
         DrawerOptions? options = null)
         where TView : Control, new()
@@ -129,7 +118,6 @@ public static class Drawer
         host.AddDrawer(dialog);
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowCustom instead.")]
     public static void ShowCustom(Control control, object? vm, string? hostId = null, DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -143,7 +131,6 @@ public static class Drawer
         host.AddDrawer(dialog);
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowCustom instead.")]
     public static void ShowCustom(object? vm, string? hostId = null, DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -160,8 +147,7 @@ public static class Drawer
         host.AddDrawer(dialog);
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowCustomAsync instead.")]
-    public static Task<TResult?> ShowCustomModal<TView, TViewModel, TResult>(TViewModel vm, string? hostId = null,
+    public static Task<TResult?> ShowCustomAsync<TView, TViewModel, TResult>(TViewModel vm, string? hostId = null,
         DrawerOptions? options = null)
         where TView : Control, new()
     {
@@ -178,8 +164,7 @@ public static class Drawer
         return dialog.ShowAsync<TResult?>();
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowCustomAsync instead.")]
-    public static Task<TResult?> ShowCustomModal<TResult>(Control control, object? vm, string? hostId = null,
+    public static Task<TResult?> ShowCustomAsync<TResult>(Control control, object? vm, string? hostId = null,
         DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);
@@ -195,8 +180,7 @@ public static class Drawer
         return dialog.ShowAsync<TResult?>();
     }
 
-    [Obsolete("This will be removed in TioUi 2.0 lifecycle. Please use OverlayDrawer.ShowCustomAsync instead.")]
-    public static Task<TResult?> ShowCustomModal<TResult>(object? vm, string? hostId = null,
+    public static Task<TResult?> ShowCustomAsync<TResult>(object? vm, string? hostId = null,
         DrawerOptions? options = null)
     {
         var host = OverlayDialogManager.GetHost(hostId, options?.TopLevelHashCode);

@@ -13,7 +13,7 @@ namespace TioUi.Controls;
 [TemplatePart(PART_NoButton, typeof(Button))]
 [TemplatePart(PART_OKButton, typeof(Button))]
 [TemplatePart(PART_CancelButton, typeof(Button))]
-public class DefaultDialogWindow : DialogWindow
+public class StandardDialogWindow : CustomDialogWindow
 {
     public const string PART_YesButton = "PART_YesButton";
     public const string PART_NoButton = "PART_NoButton";
@@ -21,11 +21,11 @@ public class DefaultDialogWindow : DialogWindow
     public const string PART_CancelButton = "PART_CancelButton";
 
     public static readonly StyledProperty<DialogButton> ButtonsProperty =
-        AvaloniaProperty.Register<DefaultDialogWindow, DialogButton>(
+        AvaloniaProperty.Register<StandardDialogWindow, DialogButton>(
             nameof(Buttons));
 
     public static readonly StyledProperty<DialogMode> ModeProperty =
-        AvaloniaProperty.Register<DefaultDialogWindow, DialogMode>(
+        AvaloniaProperty.Register<StandardDialogWindow, DialogMode>(
             nameof(Mode));
 
     private Button? _cancelButton;
@@ -33,7 +33,7 @@ public class DefaultDialogWindow : DialogWindow
     private Button? _okButton;
 
     private Button? _yesButton;
-    protected override Type StyleKeyOverride { get; } = typeof(DefaultDialogWindow);
+    protected override Type StyleKeyOverride { get; } = typeof(StandardDialogWindow);
 
     public DialogButton Buttons
     {

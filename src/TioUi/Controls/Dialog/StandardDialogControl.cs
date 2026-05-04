@@ -1,43 +1,48 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using TioUi.Common;
-using TioUi.Common.Classes;
 using TioUi.Common.Helpers;
 using TioUi.Common.Interfaces;
 
 namespace TioUi.Controls;
 
-[TemplatePart(PART_YesButton, typeof(Button))]
-[TemplatePart(PART_NoButton, typeof(Button))]
 [TemplatePart(PART_OKButton, typeof(Button))]
 [TemplatePart(PART_CancelButton, typeof(Button))]
-public class DefaultDrawerControl : DrawerControlBase
+[TemplatePart(PART_YesButton, typeof(Button))]
+[TemplatePart(PART_NoButton, typeof(Button))]
+public class StandardDialogControl : DialogControlBase
 {
-    public const string PART_YesButton = "PART_YesButton";
-    public const string PART_NoButton = "PART_NoButton";
     public const string PART_OKButton = "PART_OKButton";
     public const string PART_CancelButton = "PART_CancelButton";
-
-    public static readonly StyledProperty<DialogButton> ButtonsProperty =
-        AvaloniaProperty.Register<DefaultDrawerControl, DialogButton>(
-            nameof(Buttons), DialogButton.OKCancel);
-
-    public static readonly StyledProperty<DialogMode> ModeProperty =
-        AvaloniaProperty.Register<DefaultDrawerControl, DialogMode>(
-            nameof(Mode), DialogMode.None);
+    public const string PART_YesButton = "PART_YesButton";
+    public const string PART_NoButton = "PART_NoButton";
 
     public static readonly StyledProperty<string?> TitleProperty =
-        AvaloniaProperty.Register<DefaultDrawerControl, string?>(
+        AvaloniaProperty.Register<StandardDialogControl, string?>(
             nameof(Title));
+
+    public static readonly StyledProperty<DialogButton> ButtonsProperty =
+        AvaloniaProperty.Register<StandardDialogControl, DialogButton>(
+            nameof(Buttons));
+
+    public static readonly StyledProperty<DialogMode> ModeProperty =
+        AvaloniaProperty.Register<StandardDialogControl, DialogMode>(
+            nameof(Mode));
 
     private Button? _cancelButton;
     private Button? _noButton;
-    private Button? _okButton;
 
+    private Button? _okButton;
     private Button? _yesButton;
+
+    public string? Title
+    {
+        get => GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
 
     public DialogButton Buttons
     {
@@ -51,23 +56,18 @@ public class DefaultDrawerControl : DrawerControlBase
         set => SetValue(ModeProperty, value);
     }
 
-    public string? Title
-    {
-        get => GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
-    }
-
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        Button.ClickEvent.RemoveHandler(OnDefaultButtonClick, _yesButton, _noButton, _okButton, _cancelButton);
-        _yesButton = e.NameScope.Find<Button>(PART_YesButton);
-        _noButton = e.NameScope.Find<Button>(PART_NoButton);
+        Button.ClickEvent.RemoveHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
         _okButton = e.NameScope.Find<Button>(PART_OKButton);
         _cancelButton = e.NameScope.Find<Button>(PART_CancelButton);
-        Button.ClickEvent.AddHandler(OnDefaultButtonClick, _yesButton, _noButton, _okButton, _cancelButton);
+        _yesButton = e.NameScope.Find<Button>(PART_YesButton);
+        _noButton = e.NameScope.Find<Button>(PART_NoButton);
+        Button.ClickEvent.AddHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
         SetButtonVisibility();
     }
+
 
     private void SetButtonVisibility()
     {
@@ -103,7 +103,7 @@ public class DefaultDrawerControl : DrawerControlBase
         }
     }
 
-    private void OnDefaultButtonClick(object? sender, RoutedEventArgs e)
+    private void DefaultButtonsClose(object? sender, RoutedEventArgs args)
     {
         if (sender is Button button)
         {
@@ -134,12 +134,7 @@ public class DefaultDrawerControl : DrawerControlBase
                 DialogButton.YesNoCancel => DialogResult.Cancel,
                 _ => DialogResult.None
             };
-            RaiseEvent(new ResultEventArgs(ClosedEvent, result));
+            OnElementClosing(this, result);
         }
-    }
-
-    protected internal override void AnchorAndUpdatePositionInfo()
-    {
-        // throw new NotImplementedException();
     }
 }

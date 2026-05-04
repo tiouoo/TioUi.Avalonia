@@ -5,7 +5,7 @@ using TioUi.Common;
 
 namespace TioUi.Controls;
 
-public static class Dialog
+public static partial class Dialog
 {
     /// <summary>
     ///     Show a Window Dialog that with all content fully customized. And the owner of the dialog is specified.
@@ -20,12 +20,12 @@ public static class Dialog
         DialogOptions? options = null)
         where TView : Control, new()
     {
-        var window = new DialogWindow
+        var window = new CustomDialogWindow
         {
             Content = new TView(),
             DataContext = vm
         };
-        ConfigureDialogWindow(window, options);
+        ConfigureCustomDialogWindow(window, options);
         owner ??= GetMainWindow();
         if (owner is null)
         {
@@ -47,12 +47,12 @@ public static class Dialog
     /// <param name="options">Dialog options to configure the window. </param>
     public static void ShowCustom(Control view, object? vm, Window? owner = null, DialogOptions? options = null)
     {
-        var window = new DialogWindow
+        var window = new CustomDialogWindow
         {
             Content = view,
             DataContext = vm
         };
-        ConfigureDialogWindow(window, options);
+        ConfigureCustomDialogWindow(window, options);
         owner ??= GetMainWindow();
         if (owner is null)
         {
@@ -66,7 +66,7 @@ public static class Dialog
     }
 
     /// <summary>
-    ///     Show a Modal Dialog Window with default style.
+    ///     Show a Modal Dialog Window with standard style.
     /// </summary>
     /// <param name="vm"></param>
     /// <param name="owner"></param>
@@ -74,16 +74,16 @@ public static class Dialog
     /// <typeparam name="TView"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     /// <returns></returns>
-    public static Task<DialogResult> ShowModal<TView, TViewModel>(TViewModel vm, Window? owner = null,
+    public static Task<DialogResult> ShowStandardAsync<TView, TViewModel>(TViewModel vm, Window? owner = null,
         DialogOptions? options = null)
         where TView : Control, new()
     {
-        var window = new DefaultDialogWindow
+        var window = new StandardDialogWindow
         {
             Content = new TView(),
             DataContext = vm
         };
-        ConfigureDefaultDialogWindow(window, options);
+        ConfigureStandardDialogWindow(window, options);
         owner ??= GetMainWindow();
         if (owner is null)
         {
@@ -96,22 +96,22 @@ public static class Dialog
     }
 
     /// <summary>
-    ///     Show a Modal Dialog Window with default style.
+    ///     Show a Modal Dialog Window with standard style.
     /// </summary>
     /// <param name="view"></param>
     /// <param name="vm"></param>
     /// <param name="owner"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    public static Task<DialogResult> ShowModal(Control view, object? vm, Window? owner = null,
+    public static Task<DialogResult> ShowStandardAsync(Control view, object? vm, Window? owner = null,
         DialogOptions? options = null)
     {
-        var window = new DefaultDialogWindow
+        var window = new StandardDialogWindow
         {
             Content = view,
             DataContext = vm
         };
-        ConfigureDefaultDialogWindow(window, options);
+        ConfigureStandardDialogWindow(window, options);
         owner ??= GetMainWindow();
         if (owner is null)
         {
@@ -133,16 +133,16 @@ public static class Dialog
     /// <typeparam name="TViewModel"></typeparam>
     /// <typeparam name="TResult"></typeparam>
     /// <returns></returns>
-    public static Task<TResult?> ShowCustomModal<TView, TViewModel, TResult>(TViewModel vm, Window? owner = null,
+    public static Task<TResult?> ShowCustomAsync<TView, TViewModel, TResult>(TViewModel vm, Window? owner = null,
         DialogOptions? options = null)
         where TView : Control, new()
     {
-        var window = new DialogWindow
+        var window = new CustomDialogWindow
         {
             Content = new TView(),
             DataContext = vm
         };
-        ConfigureDialogWindow(window, options);
+        ConfigureCustomDialogWindow(window, options);
         owner ??= GetMainWindow();
         if (owner is null)
         {
@@ -163,15 +163,15 @@ public static class Dialog
     /// <param name="options"></param>
     /// <typeparam name="TResult"></typeparam>
     /// <returns></returns>
-    public static Task<TResult?> ShowCustomModal<TResult>(Control view, object? vm, Window? owner = null,
+    public static Task<TResult?> ShowCustomAsync<TResult>(Control view, object? vm, Window? owner = null,
         DialogOptions? options = null)
     {
-        var window = new DialogWindow
+        var window = new CustomDialogWindow
         {
             Content = view,
             DataContext = vm
         };
-        ConfigureDialogWindow(window, options);
+        ConfigureCustomDialogWindow(window, options);
         owner ??= GetMainWindow();
         if (owner is null)
         {
@@ -194,11 +194,11 @@ public static class Dialog
     }
 
     /// <summary>
-    ///     Attach options to dialog window.
+    ///     Attach options to custom dialog window.
     /// </summary>
     /// <param name="window"></param>
     /// <param name="options"></param>
-    private static void ConfigureDialogWindow(DialogWindow window, DialogOptions? options)
+    private static void ConfigureCustomDialogWindow(CustomDialogWindow window, DialogOptions? options)
     {
         if (options is null) options = new DialogOptions();
         window.WindowStartupLocation = options.StartupLocation;
@@ -224,11 +224,11 @@ public static class Dialog
     }
 
     /// <summary>
-    ///     Attach options to default dialog window.
+    ///     Attach options to standard dialog window.
     /// </summary>
     /// <param name="window"></param>
     /// <param name="options"></param>
-    private static void ConfigureDefaultDialogWindow(DefaultDialogWindow window, DialogOptions? options)
+    private static void ConfigureStandardDialogWindow(StandardDialogWindow window, DialogOptions? options)
     {
         options ??= DialogOptions.Default;
         window.WindowStartupLocation = options.StartupLocation;

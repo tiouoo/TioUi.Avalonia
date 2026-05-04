@@ -178,7 +178,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:DefaultDialogControl" x:Key="{x:Type tio:DefaultDialogControl}">
+    <ControlTheme TargetType="tio:StandardDialogControl" x:Key="{x:Type tio:StandardDialogControl}">
         <Setter Property="MinWidth" Value="{DynamicResource DialogMinWidth}" />
         <Setter Property="MinHeight" Value="{DynamicResource DialogMinHeight}" />
         <Setter Property="CornerRadius" Value="{DynamicResource DialogCornerRadius}" />
@@ -190,7 +190,7 @@
             </Transitions>
         </Setter>
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:DefaultDialogControl">
+            <ControlTemplate TargetType="tio:StandardDialogControl">
                 <Panel>
                     <Border
                         Background="{DynamicResource PopupBackgroundColor}"
@@ -256,10 +256,10 @@
                                     HorizontalAlignment="Right"
                                     Margin="24,0,24,24"
                                     Name="PART_Footer">
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_CancelButton}" />
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_NoButton}" />
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_YesButton}" />
-                                    <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_OKButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_CancelButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_NoButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_YesButton}" />
+                                    <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_OKButton}" />
                                 </Grid>
 
                             </Grid>
@@ -479,7 +479,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:DialogWindow" x:Key="{x:Type tio:DialogWindow}">
+    <ControlTheme TargetType="tio:CustomDialogWindow" x:Key="{x:Type tio:CustomDialogWindow}">
         <Setter Property="Title" Value="{x:Null}" />
         <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource PopupBackgroundColor}" />
@@ -506,7 +506,7 @@
         </Setter>
         <Setter Property="CanResize" Value="False" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:DialogWindow">
+            <ControlTemplate TargetType="tio:CustomDialogWindow">
                 <Panel>
                     <Border IsHitTestVisible="False" Name="PART_TransparencyFallback" />
                     <Border
@@ -527,7 +527,7 @@
                                     Background="Transparent"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    Name="{x:Static tio:DialogWindow.PART_TitleArea}" />
+                                    Name="{x:Static tio:CustomDialogWindow.PART_TitleArea}" />
                                 <TextBlock
                                     FontSize="14"
                                     FontWeight="{DynamicResource TextBlockTitleFontWeight}"
@@ -551,7 +551,7 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:DefaultDialogWindow" x:Key="{x:Type tio:DefaultDialogWindow}">
+    <ControlTheme TargetType="tio:StandardDialogWindow" x:Key="{x:Type tio:StandardDialogWindow}">
         <Setter Property="Title" Value="{x:Null}" />
         <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource PopupBackgroundColor}" />
@@ -578,7 +578,7 @@
         </Setter>
         <Setter Property="CanResize" Value="False" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:DefaultDialogWindow">
+            <ControlTemplate TargetType="tio:StandardDialogWindow">
                 <Panel>
                     <Border IsHitTestVisible="False" Name="PART_TransparencyFallback" />
                     <Border
@@ -603,7 +603,7 @@
                                     Background="Transparent"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
-                                    Name="{x:Static tio:DialogWindow.PART_TitleArea}" />
+                                    Name="{x:Static tio:CustomDialogWindow.PART_TitleArea}" />
                                 <PathIcon
                                     Classes="ExtraLarge"
                                     Grid.Column="0"
@@ -636,10 +636,10 @@
                                 Margin="24,0,24,24"
                                 Name="PART_Footer"
                                 Orientation="Horizontal">
-                                <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_CancelButton}" />
-                                <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_NoButton}" />
-                                <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_YesButton}" />
-                                <Button Margin="8,0,0,0" Name="{x:Static tio:DefaultDialogControl.PART_OKButton}" />
+                                <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_CancelButton}" />
+                                <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_NoButton}" />
+                                <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_YesButton}" />
+                                <Button Margin="8,0,0,0" Name="{x:Static tio:StandardDialogControl.PART_OKButton}" />
                             </StackPanel>
 
                         </Grid>

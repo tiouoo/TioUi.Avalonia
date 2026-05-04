@@ -101,7 +101,7 @@ public class MessageBoxDemoViewModel : ObservableObject
     {
         if (UseOverlay)
         {
-            Result = await MessageBox.ShowOverlayAsync(_message, _title, icon: SelectedIcon);
+            Result = await OverlayMessageBox.ShowAsync(_message, _title, icon: SelectedIcon);
         }
         else
         {
@@ -133,13 +133,13 @@ public class MessageBoxDemoViewModel : ObservableObject
     {
         if (UseOverlay)
         {
-            Result = await MessageBox.ShowOverlayAsync(_message, _title, icon: SelectedIcon, button: button);
+            Result = await OverlayMessageBox.ShowAsync(_message, _title, icon: SelectedIcon, button: button);
         }
         else
         {
             if (OperatingSystem.IsBrowser() || OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
             {
-                await MessageBox.ShowOverlayAsync("Only overlay message box is supported on this platform.",
+                await OverlayMessageBox.ShowAsync("Only overlay message box is supported on this platform.",
                     "TioUi MessageBox", button: MessageBoxButton.OK, icon: MessageBoxIcon.Error);
                 return;
             }

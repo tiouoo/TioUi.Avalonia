@@ -61,10 +61,10 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource SemiColorFill1}" />
+            <Setter Property="Background" Value="#ff0000" />
         </Style>
         <Style Selector="^:pressed /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource SemiColorFill2}" />
+            <Setter Property="Background" Value="#ff0000" />
         </Style>
     </ControlTheme>
 
