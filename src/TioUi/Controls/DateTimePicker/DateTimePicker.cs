@@ -38,6 +38,10 @@ public class DateTimePicker : DatePickerBase
     public static readonly StyledProperty<bool> NeedConfirmationProperty = AvaloniaProperty.Register<TimePicker, bool>(
         nameof(NeedConfirmation));
 
+    public static readonly StyledProperty<DateTimeKind> DefaultDateKindProperty =
+        AvaloniaProperty.Register<DateTimePicker, DateTimeKind>(
+            nameof(DefaultDateKind), DateTimeKind.Unspecified);
+
     private Button? _button;
     private DatePickerCalendarView? _calendar;
 
@@ -79,6 +83,12 @@ public class DateTimePicker : DatePickerBase
     {
         get => GetValue(NeedConfirmationProperty);
         set => SetValue(NeedConfirmationProperty, value);
+    }
+
+    public DateTimeKind DefaultDateKind
+    {
+        get => GetValue(DefaultDateKindProperty);
+        set => SetValue(DefaultDateKindProperty, value);
     }
 
     private void OnSelectionChanged(AvaloniaPropertyChangedEventArgs<DateTime?> args)
@@ -133,14 +143,14 @@ public class DateTimePicker : DatePickerBase
             if (e.Date is null) return;
             var date = e.Date.Value;
             var time = DateTime.Now.ToTimeOnly();
-            SetCurrentValue(SelectedDateProperty, date.ToDateTime(time));
+            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(time), DefaultDateKind));
         }
         else
         {
             var selectedDate = SelectedDate;
             if (e.Date is null) return;
             var date = e.Date.Value;
-            SetCurrentValue(SelectedDateProperty, date.ToDateTime(selectedDate.Value.ToTimeOnly()));
+            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date.ToDateTime(selectedDate.Value.ToTimeOnly()), DefaultDateKind));
         }
     }
 
@@ -150,14 +160,14 @@ public class DateTimePicker : DatePickerBase
         {
             if (e.NewTime is null) return;
             var time = e.NewTime.Value;
-            SetCurrentValue(SelectedDateProperty, DateTime.Today.ToDateOnly().ToDateTime(time));
+            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(DateTime.Today.ToDateOnly().ToDateTime(time), DefaultDateKind));
         }
         else
         {
             var selectedDate = SelectedDate;
             if (e.NewTime is null) return;
             var time = e.NewTime.Value;
-            SetCurrentValue(SelectedDateProperty, selectedDate.Value.ToDateOnly().ToDateTime(time));
+            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(selectedDate.Value.ToDateOnly().ToDateTime(time), DefaultDateKind));
         }
     }
 
@@ -189,7 +199,7 @@ public class DateTimePicker : DatePickerBase
         {
             if (DateTime.TryParse(_textBox?.Text, out var defaultTime))
             {
-                SetCurrentValue(SelectedDateProperty, defaultTime);
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(defaultTime, DefaultDateKind));
                 _calendar?.MarkDates(defaultTime.ToDateOnly(), defaultTime.ToDateOnly());
                 _timePickerPresenter?.SyncTime(defaultTime.ToTimeOnly());
             }
@@ -258,7 +268,7 @@ public class DateTimePicker : DatePickerBase
         if (DateTime.TryParseExact(_textBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
                 out var date))
         {
-            SetCurrentValue(SelectedDateProperty, date);
+            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date, DefaultDateKind));
             if (_calendar is not null)
             {
                 _calendar.ContextDate = _calendar.ContextDate.With(date.Year, date.Month);

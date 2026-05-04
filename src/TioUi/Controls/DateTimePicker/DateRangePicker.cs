@@ -39,6 +39,10 @@ public class DateRangePicker : DatePickerBase, IClearControl
         AvaloniaProperty.Register<DateRangePicker, bool>(
             nameof(EnableMonthSync));
 
+    public static readonly StyledProperty<DateTimeKind> DefaultDateKindProperty =
+        AvaloniaProperty.Register<DateRangePicker, DateTimeKind>(
+            nameof(DefaultDateKind), DateTimeKind.Unspecified);
+
     private Button? _button;
     private DatePickerCalendarView? _endCalendar;
     private TextBox? _endTextBox;
@@ -77,6 +81,12 @@ public class DateRangePicker : DatePickerBase, IClearControl
     {
         get => GetValue(SelectedEndDateProperty);
         set => SetValue(SelectedEndDateProperty, value);
+    }
+
+    public DateTimeKind DefaultDateKind
+    {
+        get => GetValue(DefaultDateKindProperty);
+        set => SetValue(DefaultDateKindProperty, value);
     }
 
     public void Clear()
@@ -256,8 +266,10 @@ public class DateRangePicker : DatePickerBase, IClearControl
         {
             if (SelectedEndDate.ToDateOnly() is { } selectedEndDate && e.Date is { } selectedDate && selectedEndDate < selectedDate) 
                 SelectedEndDate = null;
-            SetCurrentValue(SelectedStartDateProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue) : null);
-            _startTextBox?.SetValue(TextBox.TextProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue).ToString(DisplayFormat ?? "yyyy-MM-dd") : null);
+            SetCurrentValue(SelectedStartDateProperty, 
+                e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null);
+            _startTextBox?.SetValue(TextBox.TextProperty, 
+                e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind).ToString(DisplayFormat ?? "yyyy-MM-dd") : null);
             //_start = false;
             _previewStart = null;
             _previewEnd = null;
@@ -269,8 +281,10 @@ public class DateRangePicker : DatePickerBase, IClearControl
         {
             if (SelectedStartDate.ToDateOnly() is { } selectedStartDate && e.Date is { } selectedDate && selectedStartDate > selectedDate) 
                 SelectedStartDate = null;
-            SetCurrentValue(SelectedEndDateProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue) : null);
-            _endTextBox?.SetValue(TextBox.TextProperty, e.Date.HasValue ? e.Date.Value.ToDateTime(TimeOnly.MinValue).ToString(DisplayFormat ?? "yyyy-MM-dd") : null);
+            SetCurrentValue(SelectedEndDateProperty, 
+                e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null);
+            _endTextBox?.SetValue(TextBox.TextProperty, 
+                e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind).ToString(DisplayFormat ?? "yyyy-MM-dd") : null);
             _start = null;
             _previewStart = null;
             _previewEnd = null;
@@ -368,7 +382,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
         {
             if (DateTime.TryParse(textBox.Text, out var defaultTime))
             {
-                SetCurrentValue(property, defaultTime);
+                SetCurrentValue(property, DateTime.SpecifyKind(defaultTime, DefaultDateKind));
                 _startCalendar?.MarkDates(defaultTime.ToDateOnly(), defaultTime.ToDateOnly());
                 _endCalendar?.MarkDates(defaultTime.ToDateOnly(), defaultTime.ToDateOnly());
             }
@@ -378,7 +392,7 @@ public class DateRangePicker : DatePickerBase, IClearControl
             if (DateTime.TryParseExact(textBox.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
                     out var date))
             {
-                SetCurrentValue(property, date);
+                SetCurrentValue(property, DateTime.SpecifyKind(date, DefaultDateKind));
                 if (_startCalendar is not null)
                 {
                     var date1 = SelectedStartDate ?? DateTime.Today;
@@ -526,8 +540,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
                 DateTimeStyles.None,
                 out var localStartDate))
         {
-            startDate = localStartDate;
-            SetCurrentValue(SelectedStartDateProperty, localStartDate);
+            startDate = DateTime.SpecifyKind(localStartDate, DefaultDateKind);
+            SetCurrentValue(SelectedStartDateProperty, startDate);
             if (_startCalendar is not null)
             {
                 _startCalendar.ContextDate =
@@ -546,8 +560,8 @@ public class DateRangePicker : DatePickerBase, IClearControl
         if (DateTime.TryParseExact(_endTextBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
                 out var localEndDate))
         {
-            endDate = localEndDate;
-            SetCurrentValue(SelectedEndDateProperty, localEndDate);
+            endDate = DateTime.SpecifyKind(localEndDate, DefaultDateKind);
+            SetCurrentValue(SelectedEndDateProperty, endDate);
             if (_endCalendar is not null)
             {
                 _endCalendar.ContextDate =

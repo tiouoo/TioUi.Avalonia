@@ -31,6 +31,10 @@ public class DatePicker : DatePickerBase, IClearControl
         AvaloniaProperty.Register<DatePicker, string?>(
             nameof(PlaceholderText));
 
+    public static readonly StyledProperty<DateTimeKind> DefaultDateKindProperty =
+        AvaloniaProperty.Register<DatePicker, DateTimeKind>(
+            nameof(DefaultDateKind), DateTimeKind.Unspecified);
+
     private Button? _button;
     private DatePickerCalendarView? _calendar;
 
@@ -55,6 +59,12 @@ public class DatePicker : DatePickerBase, IClearControl
     {
         get => GetValue(PlaceholderTextProperty);
         set => SetValue(PlaceholderTextProperty, value);
+    }
+
+    public DateTimeKind DefaultDateKind
+    {
+        get => GetValue(DefaultDateKindProperty);
+        set => SetValue(DefaultDateKindProperty, value);
     }
 
     public void Clear()
@@ -90,7 +100,8 @@ public class DatePicker : DatePickerBase, IClearControl
 
     private void OnDateSelected(object? sender, DatePickerCalendarDayButtonEventArgs e)
     {
-        SetCurrentValue(SelectedDateProperty, e.Date?.ToDateTime(TimeOnly.MinValue));
+        SetCurrentValue(SelectedDateProperty, 
+            e.Date.HasValue ? DateTime.SpecifyKind(e.Date.Value.ToDateTime(TimeOnly.MinValue), DefaultDateKind) : null);
         SetCurrentValue(IsDropdownOpenProperty, false);
     }
 
@@ -134,7 +145,7 @@ public class DatePicker : DatePickerBase, IClearControl
         {
             if (DateTime.TryParse(_textBox?.Text, out var defaultTime))
             {
-                SetCurrentValue(SelectedDateProperty, defaultTime);
+                SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(defaultTime, DefaultDateKind));
                 var selectedDate = defaultTime.ToDateOnly();
                 _calendar?.MarkDates(startDate: selectedDate, endDate: selectedDate);
             }
@@ -233,7 +244,7 @@ public class DatePicker : DatePickerBase, IClearControl
         if (DateTime.TryParseExact(_textBox?.Text, DisplayFormat, CultureInfo.CurrentUICulture, DateTimeStyles.None,
                 out var date))
         {
-            SetCurrentValue(SelectedDateProperty, date);
+            SetCurrentValue(SelectedDateProperty, DateTime.SpecifyKind(date, DefaultDateKind));
             if (_calendar is not null)
             {
                 _calendar.ContextDate = _calendar.ContextDate.With(year: date.Year, month: date.Month);
