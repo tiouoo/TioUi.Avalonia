@@ -23,7 +23,6 @@ public class IconRepeatButton : RepeatButton
 
     static IconRepeatButton()
     {
-        ReversibleStackPanelUtils.EnsureBugFixed();
     }
 
     public object? Icon

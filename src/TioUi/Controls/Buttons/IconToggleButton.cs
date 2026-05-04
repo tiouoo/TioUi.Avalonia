@@ -22,7 +22,6 @@ public class IconToggleButton : ToggleButton
 
     static IconToggleButton()
     {
-        ReversibleStackPanelUtils.EnsureBugFixed();
     }
 
     public object? Icon

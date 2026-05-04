@@ -23,7 +23,6 @@ public class IconDropDownButton : DropDownButton
 
     static IconDropDownButton()
     {
-        ReversibleStackPanelUtils.EnsureBugFixed();
     }
 
     public object? Icon

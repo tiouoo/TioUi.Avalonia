@@ -23,7 +23,6 @@ public class IconSplitButton : SplitButton
 
     static IconSplitButton()
     {
-        ReversibleStackPanelUtils.EnsureBugFixed();
     }
 
     public object? Icon
