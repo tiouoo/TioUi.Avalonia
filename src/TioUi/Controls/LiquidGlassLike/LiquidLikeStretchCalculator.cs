@@ -7,7 +7,7 @@ namespace TioUi.Controls;
 /// <summary>
 /// 液态玻璃拉伸计算器
 /// </summary>
-public class LiquidGlassLikeStretchCalculator
+public class LiquidLikeStretchCalculator
 {
     public Size OriginalSize { get; set; }
     public Vector DragDelta { get; set; }

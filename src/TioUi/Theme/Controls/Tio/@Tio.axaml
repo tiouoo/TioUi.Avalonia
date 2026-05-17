@@ -66,6 +66,6 @@
         <ResourceInclude Source="PathPicker.axaml" />
         <ResourceInclude Source="ContentDialog.axaml" />
         <ResourceInclude Source="TioView.axaml" />
-        <ResourceInclude Source="LiquidGlassLikeDecorator.axaml" />
+        <ResourceInclude Source="LiquidLikeDecorator.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

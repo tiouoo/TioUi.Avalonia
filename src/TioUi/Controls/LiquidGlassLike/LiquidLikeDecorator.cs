@@ -6,21 +6,21 @@ using Avalonia.Input;
 
 namespace TioUi.Controls;
 
-public class LiquidGlassLikeDecorator : Decorator
+public class LiquidLikeDecorator : Decorator
 {
-    private readonly LiquidGlassLikeTransformController _controller;
+    private readonly LiquidLikeTransformController _controller;
     private bool _isMouseDown;
     private Point _mouseDownPosition;
     private bool _isDragging;
 
-    static LiquidGlassLikeDecorator()
+    static LiquidLikeDecorator()
     {
-        AffectsRender<LiquidGlassLikeDecorator>(ChildProperty);
+        AffectsRender<LiquidLikeDecorator>(ChildProperty);
     }
 
-    public LiquidGlassLikeDecorator()
+    public LiquidLikeDecorator()
     {
-        _controller = new LiquidGlassLikeTransformController(this);
+        _controller = new LiquidLikeTransformController(this);
         RenderTransform = _controller.Transform;
         RenderTransformOrigin = new RelativePoint(0.5, 0.5, RelativeUnit.Relative);
         

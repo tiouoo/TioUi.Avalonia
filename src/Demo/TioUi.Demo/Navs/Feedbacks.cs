@@ -65,8 +65,8 @@ public static class Feedbacks
         },
         new()
         {
-            Title = "LiquidGlassDecorator",
-            Content = new LiquidGlassLikeDecoratorPage(),
+            Title = "LiquidLikeDecoratorPage",
+            Content = new LiquidLikeDecoratorPage(),
         }
     ];
 }

@@ -8,20 +8,20 @@ using Avalonia.Threading;
 
 namespace TioUi.Controls;
 
-public class LiquidGlassLikeTransformController
+public class LiquidLikeTransformController
 {
     private readonly Control _target;
     private readonly TransformGroup _transformGroup;
     private readonly ScaleTransform _scaleTransform = new(1, 1);
     private readonly TranslateTransform _translateTransform = new(0, 0);
-    private readonly LiquidGlassLikeStretchCalculator _stretchCalculator = new();
+    private readonly LiquidLikeStretchCalculator _stretchCalculator = new();
     
     private Vector _dragDelta;
     private DispatcherTimer? _resetTimer;
     private double _animationProgress;
     private double _startScaleX, _startScaleY, _startTranslateX, _startTranslateY;
 
-    public LiquidGlassLikeTransformController(Control target)
+    public LiquidLikeTransformController(Control target)
     {
         _target = target;
         _target.SizeChanged += OnTargetSizeChanged;

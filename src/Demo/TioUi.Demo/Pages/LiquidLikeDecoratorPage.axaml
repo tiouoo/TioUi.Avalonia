@@ -2,8 +2,8 @@
     d:DesignHeight="800"
     d:DesignWidth="900"
     mc:Ignorable="d"
-    x:Class="TioUi.Demo.Pages.LiquidGlassLikeDecoratorPage"
-    x:DataType="pages:LiquidGlassLikeDecoratorPage"
+    x:Class="TioUi.Demo.Pages.LiquidLikeDecoratorPage"
+    x:DataType="pages:LiquidLikeDecoratorPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,28 +19,28 @@
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="Drag Me"
                                 Height="40"
                                 Width="120" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Classes="Danger"
                                 Content="Danger"
                                 Height="40"
                                 Width="120" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Classes="Primary"
                                 Content="Primary"
                                 Height="40"
                                 Width="120" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 
@@ -49,7 +49,7 @@
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="+"
                                 CornerRadius="25"
@@ -57,9 +57,9 @@
                                 FontWeight="Bold"
                                 Height="50"
                                 Width="50" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="−"
                                 CornerRadius="25"
@@ -67,9 +67,9 @@
                                 FontWeight="Bold"
                                 Height="50"
                                 Width="50" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="×"
                                 CornerRadius="25"
@@ -77,27 +77,27 @@
                                 FontWeight="Bold"
                                 Height="50"
                                 Width="50" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 
                 <tio:GroupBorder Header="TextBox">
                     <StackPanel Margin="15" Spacing="15">
-                        <tio:LiquidGlassLikeDecorator HorizontalAlignment="Left">
+                        <tio:LiquidLikeDecorator HorizontalAlignment="Left">
                             <TextBox
                                 CornerRadius="18"
                                 Height="36"
                                 PlaceholderText="Drag to stretch"
                                 Width="240" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator HorizontalAlignment="Left">
+                        <tio:LiquidLikeDecorator HorizontalAlignment="Left">
                             <TextBox
                                 CornerRadius="18"
                                 Height="36"
                                 PlaceholderText="Type something..."
                                 Width="300" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
                     </StackPanel>
                 </tio:GroupBorder>
 
@@ -106,28 +106,28 @@
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="Small"
                                 FontSize="12"
                                 Height="30"
                                 Width="80" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="Medium"
                                 Height="40"
                                 Width="120" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Button
                                 Content="Large"
                                 FontSize="16"
                                 Height="50"
                                 Width="160" />
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 
@@ -136,7 +136,7 @@
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Border
                                 Background="{DynamicResource SystemAccentColor}"
                                 CornerRadius="8"
@@ -159,9 +159,9 @@
                                         Text="Drag me" />
                                 </StackPanel>
                             </Border>
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
 
-                        <tio:LiquidGlassLikeDecorator>
+                        <tio:LiquidLikeDecorator>
                             <Border
                                 Background="#FF6B6B"
                                 CornerRadius="50"
@@ -173,7 +173,7 @@
                                     Text="🎨"
                                     VerticalAlignment="Center" />
                             </Border>
-                        </tio:LiquidGlassLikeDecorator>
+                        </tio:LiquidLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 

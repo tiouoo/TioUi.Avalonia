@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace TioUi.Demo.Pages;
 
-public partial class LiquidGlassLikeDecoratorPage : UserControl
+public partial class LiquidLikeDecoratorPage : UserControl
 {
-    public LiquidGlassLikeDecoratorPage()
+    public LiquidLikeDecoratorPage()
     {
         InitializeComponent();
         DataContext = this;
