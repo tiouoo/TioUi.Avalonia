@@ -52,6 +52,10 @@ public static class Layouts
         {
             Title = "SplitView",
             Content = new SplitViewPage(),
+        },        new()
+        {
+            Title = "GroupBox",
+            Content = new GroupBoxPage(),
         },
     ];
 }

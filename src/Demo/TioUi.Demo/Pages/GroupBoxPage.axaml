@@ -1,0 +1,115 @@
+﻿<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="TioUi.Demo.Pages.GroupBoxPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <tio:GroupBorder
+        Header="GroupBox"
+        Margin="15"
+        Padding="15">
+        <ScrollViewer>
+            <StackPanel Spacing="24">
+
+                <!--  Basic TioGroupBox with text header  -->
+                <tio:TioGroupBox Header="Connection Settings" HeaderSpacing="12">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Host: localhost" />
+                        <TextBlock Text="Port: 5432" />
+                        <TextBlock Text="Database: mydb" />
+                    </StackPanel>
+                </tio:TioGroupBox>
+
+                <!--  Larger corner radius  -->
+                <tio:TioGroupBox
+                    BorderBrush="#0095ee"
+                    BorderThickness="2"
+                    CornerRadius="12"
+                    HeaderSpacing="12">
+                    <tio:TioGroupBox.Header>
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Foreground="#0095ee"
+                            Text="Appearance" />
+                    </tio:TioGroupBox.Header>
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Font size: 14" />
+                        <TextBlock Text="Accent colour: SteelBlue" />
+                    </StackPanel>
+                </tio:TioGroupBox>
+
+                <!--  No header — plain rounded border  -->
+                <tio:TioGroupBox BorderThickness="1" CornerRadius="8">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="This TioGroupBox has no header." TextWrapping="Wrap" />
+                        <TextBlock Text="The border is drawn as a complete rounded rectangle." TextWrapping="Wrap" />
+                    </StackPanel>
+                </tio:TioGroupBox>
+
+                <!--  Asymmetric corner radius  -->
+                <tio:TioGroupBox
+                    BorderBrush="#fc8800"
+                    BorderThickness="2"
+                    CornerRadius="16,4,16,4"
+                    HeaderSpacing="12">
+                    <tio:TioGroupBox.Header>
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Foreground="#fc8800"
+                            Text="Asymmetric Corners" />
+                    </tio:TioGroupBox.Header>
+                    <TextBlock Text="TopLeft=16  TopRight=4  BottomRight=16  BottomLeft=4" TextWrapping="Wrap" />
+                </tio:TioGroupBox>
+
+                <!--  With background fill  -->
+                <tio:TioGroupBox
+                    Background="#1DF93920"
+                    BorderBrush="#f93920"
+                    BorderThickness="1.5"
+                    CornerRadius="6"
+                    HeaderSpacing="12">
+                    <tio:TioGroupBox.Header>
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Foreground="#f93920"
+                            Text="With Background" />
+                    </tio:TioGroupBox.Header>
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="The interior of this border has a semi-transparent fill." TextWrapping="Wrap" />
+                        <Button Content="Click Me" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </tio:TioGroupBox>
+
+                <!--  Rich header control  -->
+                <tio:TioGroupBox
+                    BorderBrush="#3bb346"
+                    BorderThickness="8,8,24,24"
+                    CornerRadius="48"
+                    HeaderSpacing="12"
+                    Height="300">
+                    <tio:TioGroupBox.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Ellipse
+                                Fill="#3bb346"
+                                Height="8"
+                                Width="8" />
+                            <TextBlock
+                                FontWeight="SemiBold"
+                                Foreground="#3bb346"
+                                Text="Online" />
+                        </StackPanel>
+                    </tio:TioGroupBox.Header>
+                    <StackPanel>
+                        <TextBlock Margin="0,4,0,0" Text="The header can be any Avalonia Control, not just text." />
+                        <Calendar />
+                    </StackPanel>
+                </tio:TioGroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+    </tio:GroupBorder>
+</UserControl>
