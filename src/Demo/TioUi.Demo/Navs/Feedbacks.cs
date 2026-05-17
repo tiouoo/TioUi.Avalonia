@@ -62,6 +62,11 @@ public static class Feedbacks
         {
             Title = "ContentDialog",
             Content = new ContentDialogPage(),
+        },
+        new()
+        {
+            Title = "LiquidGlassLikeDecorator",
+            Content = new LiquidGlassLikeDecoratorPage(),
         }
     ];
 }
