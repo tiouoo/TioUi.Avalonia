@@ -13,223 +13,168 @@
     <Border>
         <ScrollViewer Margin="0,0,5,0">
             <StackPanel Margin="15,15,10,15" Spacing="10">
-                
-                <!-- 基础示例 -->
-                <tio:GroupBorder Header="基础用法 - 拖动按钮体验液态玻璃效果">
+
+                <tio:GroupBorder Header="Basic Usage">
                     <WrapPanel
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
                         <tio:LiquidGlassLikeDecorator>
-                            <Button Content="拖动我试试" Width="120" Height="40" />
+                            <Button
+                                Content="Drag Me"
+                                Height="40"
+                                Width="120" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
+                            <Button
                                 Classes="Danger"
-                                Content="危险按钮" 
-                                Width="120" 
-                                Height="40" />
+                                Content="Danger"
+                                Height="40"
+                                Width="120" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
+                            <Button
                                 Classes="Primary"
-                                Content="主要按钮" 
-                                Width="120" 
-                                Height="40" />
+                                Content="Primary"
+                                Height="40"
+                                Width="120" />
                         </tio:LiquidGlassLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 
-                <!-- 圆形按钮 -->
-                <tio:GroupBorder Header="圆形按钮">
+                <tio:GroupBorder Header="Circular Buttons">
                     <WrapPanel
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
+                            <Button
                                 Content="+"
-                                Width="50"
-                                Height="50"
                                 CornerRadius="25"
                                 FontSize="24"
-                                FontWeight="Bold" />
+                                FontWeight="Bold"
+                                Height="50"
+                                Width="50" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
+                            <Button
                                 Content="−"
-                                Width="50"
-                                Height="50"
                                 CornerRadius="25"
                                 FontSize="24"
-                                FontWeight="Bold" />
+                                FontWeight="Bold"
+                                Height="50"
+                                Width="50" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
+                            <Button
                                 Content="×"
-                                Width="50"
-                                Height="50"
                                 CornerRadius="25"
                                 FontSize="24"
-                                FontWeight="Bold" />
+                                FontWeight="Bold"
+                                Height="50"
+                                Width="50" />
                         </tio:LiquidGlassLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 
-                <!-- TextBox示例 -->
-                <tio:GroupBorder Header="文本框">
-                    <StackPanel Spacing="15" Margin="15">
+                <tio:GroupBorder Header="TextBox">
+                    <StackPanel Margin="15" Spacing="15">
                         <tio:LiquidGlassLikeDecorator HorizontalAlignment="Left">
-                            <TextBox 
-                                Width="240"
+                            <TextBox
+                                CornerRadius="18"
                                 Height="36"
-                                PlaceholderText="拖动文本框试试"
-                                CornerRadius="18" />
+                                PlaceholderText="Drag to stretch"
+                                Width="240" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator HorizontalAlignment="Left">
-                            <TextBox 
-                                Width="300"
+                            <TextBox
+                                CornerRadius="18"
                                 Height="36"
-                                PlaceholderText="输入一些文字..."
-                                CornerRadius="18" />
+                                PlaceholderText="Type something..."
+                                Width="300" />
                         </tio:LiquidGlassLikeDecorator>
                     </StackPanel>
                 </tio:GroupBorder>
 
-                <!-- 不同尺寸 -->
-                <tio:GroupBorder Header="不同尺寸">
+                <tio:GroupBorder Header="Different Sizes">
                     <WrapPanel
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
-                                Content="小按钮" 
-                                Width="80" 
+                            <Button
+                                Content="Small"
+                                FontSize="12"
                                 Height="30"
-                                FontSize="12" />
+                                Width="80" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
-                                Content="中等按钮" 
-                                Width="120" 
-                                Height="40" />
+                            <Button
+                                Content="Medium"
+                                Height="40"
+                                Width="120" />
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Button 
-                                Content="大按钮" 
-                                Width="160" 
+                            <Button
+                                Content="Large"
+                                FontSize="16"
                                 Height="50"
-                                FontSize="16" />
+                                Width="160" />
                         </tio:LiquidGlassLikeDecorator>
                     </WrapPanel>
                 </tio:GroupBorder>
 
-                <!-- 带图标的按钮 -->
-                <tio:GroupBorder Header="带图标的按钮">
+                <tio:GroupBorder Header="Custom Content">
                     <WrapPanel
                         ItemSpacing="20"
                         LineSpacing="20"
                         Margin="15">
                         <tio:LiquidGlassLikeDecorator>
-                            <Button Width="140" Height="40">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <PathIcon 
-                                        Data="{DynamicResource SaveIcon}"
-                                        Width="16" 
-                                        Height="16" />
-                                    <TextBlock Text="保存" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button>
-                        </tio:LiquidGlassLikeDecorator>
-                        
-                        <tio:LiquidGlassLikeDecorator>
-                            <Button Width="140" Height="40">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <PathIcon 
-                                        Data="{DynamicResource DeleteIcon}"
-                                        Width="16" 
-                                        Height="16" />
-                                    <TextBlock Text="删除" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button>
-                        </tio:LiquidGlassLikeDecorator>
-                    </WrapPanel>
-                </tio:GroupBorder>
-
-                <!-- 自定义内容 -->
-                <tio:GroupBorder Header="自定义内容">
-                    <WrapPanel
-                        ItemSpacing="20"
-                        LineSpacing="20"
-                        Margin="15">
-                        <tio:LiquidGlassLikeDecorator>
-                            <Border 
+                            <Border
                                 Background="{DynamicResource SystemAccentColor}"
                                 CornerRadius="8"
-                                Width="150"
-                                Height="80">
-                                <StackPanel 
-                                    VerticalAlignment="Center"
+                                Height="80"
+                                Width="150">
+                                <StackPanel
                                     HorizontalAlignment="Center"
-                                    Spacing="5">
-                                    <TextBlock 
-                                        Text="自定义卡片" 
+                                    Spacing="5"
+                                    VerticalAlignment="Center">
+                                    <TextBlock
                                         FontWeight="Bold"
                                         Foreground="White"
-                                        HorizontalAlignment="Center" />
-                                    <TextBlock 
-                                        Text="拖动试试" 
+                                        HorizontalAlignment="Center"
+                                        Text="Custom Card" />
+                                    <TextBlock
                                         FontSize="12"
                                         Foreground="White"
+                                        HorizontalAlignment="Center"
                                         Opacity="0.8"
-                                        HorizontalAlignment="Center" />
+                                        Text="Drag me" />
                                 </StackPanel>
                             </Border>
                         </tio:LiquidGlassLikeDecorator>
-                        
+
                         <tio:LiquidGlassLikeDecorator>
-                            <Border 
+                            <Border
                                 Background="#FF6B6B"
                                 CornerRadius="50"
-                                Width="100"
-                                Height="100">
-                                <TextBlock 
-                                    Text="🎨" 
+                                Height="100"
+                                Width="100">
+                                <TextBlock
                                     FontSize="40"
                                     HorizontalAlignment="Center"
+                                    Text="🎨"
                                     VerticalAlignment="Center" />
                             </Border>
                         </tio:LiquidGlassLikeDecorator>
                     </WrapPanel>
-                </tio:GroupBorder>
-
-                <!-- 使用说明 -->
-                <tio:GroupBorder Header="使用说明">
-                    <StackPanel Margin="15" Spacing="10">
-                        <TextBlock TextWrapping="Wrap">
-                            <Run Text="LiquidGlassLikeDecorator 是一个装饰器控件，可以为任何子控件添加液态玻璃般的拖动效果。" />
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            <Run Text="• 用鼠标按住控件并拖动，会看到类似液态玻璃的拉伸和变形效果" />
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            <Run Text="• 松开鼠标后，控件会以弹性动画回到原始状态" />
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            <Run Text="• 可以包裹任何控件：Button、TextBox、Border 等" />
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            <Run Text="• 效果基于数学饱和函数，提供自然的物理感受" />
-                        </TextBlock>
-                    </StackPanel>
                 </tio:GroupBorder>
 
             </StackPanel>
