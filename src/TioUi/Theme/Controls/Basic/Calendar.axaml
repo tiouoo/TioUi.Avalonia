@@ -1,7 +1,7 @@
-<ResourceDictionary 
-    xmlns="https://github.com/avaloniaui" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia">
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
             <Calendar />
@@ -354,7 +354,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="tio:DatePickerCalendarDayButton" x:Key="{x:Type tio:DatePickerCalendarDayButton}">
+    <ControlTheme TargetType="CalendarDayButton" x:Key="{x:Type CalendarDayButton}">
         <Setter Property="Margin" Value="2" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource CalendarItemCalendarDayButtonForeground}" />
@@ -369,7 +369,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="tio:DatePickerCalendarDayButton">
+            <ControlTemplate TargetType="CalendarDayButton">
                 <ContentPresenter
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
