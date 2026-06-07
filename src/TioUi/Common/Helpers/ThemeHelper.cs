@@ -1,10 +1,12 @@
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Styling;
 using TioUi.Common.Converter;
+using TioUi.Shared;
 
 namespace TioUi.Common.Helpers;
 
-internal static class ThemeHelper
+public static class ThemeHelper
 {
     public static void SetThemeColor(Color accentColor)
     {
@@ -34,5 +36,17 @@ internal static class ThemeHelper
         {
             SetThemeColor(color);
         }
+    }
+    
+    public static void ToggleTheme(Shared.Theme theme)
+    {
+        if (theme == Shared.Theme.Light)
+            Application.Current.RequestedThemeVariant = ThemeVariant.Light;
+        else if (theme == Shared.Theme.Dark)
+            Application.Current.RequestedThemeVariant = ThemeVariant.Dark;
+        else if (theme == Shared.Theme.Mirage)
+            Application.Current.RequestedThemeVariant = Themes.Mirage;
+        else if (theme == Shared.Theme.System)
+            Application.Current.RequestedThemeVariant = ThemeVariant.Default;
     }
 }
