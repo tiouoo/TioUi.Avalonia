@@ -43,7 +43,6 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="8" />
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:SelectionListItem">
                 <ContentPresenter
