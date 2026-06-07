@@ -144,24 +144,7 @@
     </ControlTheme>
 
     <ControlTheme TargetType="Button" x:Key="TransparentButton">
-        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="Hand" />
-
-        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-
-        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-
-        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-
-        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultDisabledForeground}" />
-        </Style>
     </ControlTheme>
 
     <ControlTheme TargetType="Button" x:Key="InnerIconButton">
