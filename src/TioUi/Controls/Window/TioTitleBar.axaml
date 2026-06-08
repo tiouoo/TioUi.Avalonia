@@ -10,7 +10,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Border
         Background="Transparent"
-        Height="36"
+        Height="{Binding #RootControl.TitleBarHeight}"
         VerticalAlignment="Top">
         <Grid
             Background="Transparent"
@@ -18,19 +18,19 @@
             Name="MoveDragArea">
             <ContentControl
                 Content="{Binding #RootControl.LeftContent}"
-                TabIndex="1"
-                KeyboardNavigation.TabNavigation="Local" />
+                KeyboardNavigation.TabNavigation="Local"
+                TabIndex="1" />
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <ContentControl
                     Content="{Binding #RootControl.RightContent}"
-                    TabIndex="2"
-                    KeyboardNavigation.TabNavigation="Local" />
+                    KeyboardNavigation.TabNavigation="Local"
+                    TabIndex="2" />
                 <StackPanel
                     HorizontalAlignment="Right"
+                    KeyboardNavigation.TabNavigation="Local"
                     Name="FunctionRoot"
                     Orientation="Horizontal"
-                    TabIndex="3"
-                    KeyboardNavigation.TabNavigation="Local">
+                    TabIndex="3">
                     <Button
                         Classes="title-bar-button"
                         Content="{Binding #RootControl.MinimizeIcon}"

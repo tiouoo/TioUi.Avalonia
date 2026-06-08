@@ -56,7 +56,7 @@ public class TioWindow : Window
         TitleBar = e.NameScope.Find<TioTitleBar>("PART_TitleBar");
         RootBorder = e.NameScope.Find<Border>("PART_Root");
         _dialogHost = e.NameScope.Find<OverlayDialogHost>("PART_DialogHost");
-        
+
         if (_dialogHost is not null)
         {
             LogicalChildren.Add(_dialogHost);
@@ -67,7 +67,7 @@ public class TioWindow : Window
             TitleBarLoaded?.Invoke(this, TitleBar);
             _titleBarLoadedCallback?.Invoke(TitleBar);
             _titleBarLoadedCallback = null;
-            
+
             // 设置 DialogHost 的 SafePadding
             UpdateDialogHostSafePadding();
         }
@@ -79,14 +79,14 @@ public class TioWindow : Window
     private void UpdateDialogHostSafePadding()
     {
         if (_dialogHost is null || TitleBar is null) return;
-        
+
         var height = TitleBar.Bounds.Height;
         if (height == 0)
         {
             // 如果 TitleBar 还没有测量，使用默认高度
-            height = 36;
+            height = TitleBarHeight;
         }
-        
+
         var dialogHostPadding = new Thickness(0, height, 0, 0);
         _dialogHost.SafePadding = dialogHostPadding;
     }
@@ -100,6 +100,24 @@ public class TioWindow : Window
     {
         get => GetValue(IsCloseBtnShowProperty);
         set => SetValue(IsCloseBtnShowProperty, value);
+    }
+
+    public static readonly StyledProperty<Thickness> TitleBarControlBtnMarginProperty =
+        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(TitleBarControlBtnMargin), new Thickness(0));
+
+    public Thickness TitleBarControlBtnMargin
+    {
+        get => GetValue(TitleBarControlBtnMarginProperty);
+        set => SetValue(TitleBarControlBtnMarginProperty, value);
+    }
+
+    public static readonly StyledProperty<double> TitleBarHeightProperty =
+        AvaloniaProperty.Register<TioWindow, double>(nameof(TitleBarHeight), 36);
+
+    public double TitleBarHeight
+    {
+        get => GetValue(TitleBarHeightProperty);
+        set => SetValue(TitleBarHeightProperty, value);
     }
 
     public static readonly StyledProperty<bool> IsMaxBtnShowProperty =

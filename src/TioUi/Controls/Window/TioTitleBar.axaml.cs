@@ -103,6 +103,15 @@ public partial class TioTitleBar : UserControl
         set => SetValue(LeftContentProperty, value);
     }
 
+    public static readonly StyledProperty<double> TitleBarHeightProperty =
+        AvaloniaProperty.Register<TioWindow, double>(nameof(TitleBarHeight), 36);
+
+    public double TitleBarHeight
+    {
+        get => GetValue(TitleBarHeightProperty);
+        set => SetValue(TitleBarHeightProperty, value);
+    }
+    
     public static readonly StyledProperty<object?> RightContentProperty =
         AvaloniaProperty.Register<TioTitleBar, object?>(nameof(RightContent));
 
