@@ -1,16 +1,11 @@
 <tio:TioWindow
-    CanResize="True"
-    ExtendClientAreaToDecorationsHint="True"
     Icon="icon.i.ico"
-    IsHitTestVisible="True"
     MinHeight="400"
     MinWidth="600"
     Title="TioUi.Demo"
-    WindowStartupLocation="CenterScreen"
     x:Class="TioUi.Demo.MainWindow"
     x:DataType="models:MainWindowModel"
     xmlns="https://github.com/avaloniaui"
-    xmlns:demo="clr-namespace:TioUi.Demo"
     xmlns:models="clr-namespace:TioUi.Demo.Models"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
