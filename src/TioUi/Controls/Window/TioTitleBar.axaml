@@ -4,6 +4,7 @@
     x:DataType="tio:TioTitleBar"
     x:Name="RootControl"
     xmlns="https://github.com/avaloniaui"
+    xmlns:cdp="clr-namespace:Avalonia.Controls.Chrome;assembly=Avalonia.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
@@ -15,7 +16,8 @@
         <Grid
             Background="Transparent"
             Margin="0,0,5,0"
-            Name="MoveDragArea">
+            Name="MoveDragArea"
+            cdp:WindowDecorationProperties.ElementRole="TitleBar">
             <ContentControl
                 Content="{Binding #RootControl.LeftContent}"
                 KeyboardNavigation.TabNavigation="Local"
@@ -38,21 +40,24 @@
                         IsVisible="{Binding #RootControl.IsMinBtnShow}"
                         Name="MinimizeButton"
                         Padding="0,9,0,0"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        cdp:WindowDecorationProperties.ElementRole="MinimizeButton" />
                     <Button
                         Classes="title-bar-button"
                         Content="{Binding #RootControl.MaximizeIcon}"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding #RootControl.IsMaxBtnShow}"
                         Name="MaximizeButton"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        cdp:WindowDecorationProperties.ElementRole="MaximizeButton" />
                     <Button
                         Classes="title-bar-button close-button"
                         Content="{Binding #RootControl.CloseIcon}"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding #RootControl.IsCloseBtnShow}"
                         Name="CloseButton"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        cdp:WindowDecorationProperties.ElementRole="CloseButton" />
                 </StackPanel>
             </StackPanel>
         </Grid>
