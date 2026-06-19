@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Media;
 
 namespace TioUi.Controls;
 
@@ -124,6 +125,16 @@ public class TioWindow : Window
         return false;
     }
 
+    public virtual bool OnMinimize()
+    {
+        return false;
+    }
+
+    public virtual bool OnMaximize()
+    {
+        return false;
+    }
+
     public static readonly StyledProperty<object?> TitleBarLeftContentProperty =
         AvaloniaProperty.Register<TioWindow, object?>(nameof(TitleBarLeftContent));
 
@@ -149,6 +160,36 @@ public class TioWindow : Window
     {
         get => GetValue(ContentMarginProperty);
         set => SetValue(ContentMarginProperty, value);
+    }
+
+    public static readonly StyledProperty<Geometry> MinimizeIconProperty =
+        AvaloniaProperty.Register<TioWindow, Geometry>(nameof(MinimizeIcon),
+            PathGeometry.Parse("M19 13H5a1 1 0 0 1 0-2h14a1 1 0 0 1 0 2z"));
+
+    public Geometry MinimizeIcon
+    {
+        get => GetValue(MinimizeIconProperty);
+        set => SetValue(MinimizeIconProperty, value);
+    }
+
+    public static readonly StyledProperty<Geometry> MaximizeIconProperty =
+        AvaloniaProperty.Register<TioWindow, Geometry>(nameof(MaximizeIcon),
+            PathGeometry.Parse("M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3zM6 5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"));
+
+    public Geometry MaximizeIcon
+    {
+        get => GetValue(MaximizeIconProperty);
+        set => SetValue(MaximizeIconProperty, value);
+    }
+
+    public static readonly StyledProperty<Geometry> CloseIconProperty =
+        AvaloniaProperty.Register<TioWindow, Geometry>(nameof(CloseIcon),
+            PathGeometry.Parse("M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"));
+
+    public Geometry CloseIcon
+    {
+        get => GetValue(CloseIconProperty);
+        set => SetValue(CloseIconProperty, value);
     }
 
     #endregion

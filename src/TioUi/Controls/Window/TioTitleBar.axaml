@@ -33,7 +33,7 @@
                     KeyboardNavigation.TabNavigation="Local">
                     <Button
                         Classes="title-bar-button"
-                        Content="{DynamicResource Minimize}"
+                        Content="{Binding #RootControl.MinimizeIcon}"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding #RootControl.IsMinBtnShow}"
                         Name="MinimizeButton"
@@ -41,14 +41,14 @@
                         VerticalAlignment="Center" />
                     <Button
                         Classes="title-bar-button"
-                        Content="{DynamicResource Maximize}"
+                        Content="{Binding #RootControl.MaximizeIcon}"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding #RootControl.IsMaxBtnShow}"
                         Name="MaximizeButton"
                         VerticalAlignment="Center" />
                     <Button
                         Classes="title-bar-button close-button"
-                        Content="{DynamicResource Close}"
+                        Content="{Binding #RootControl.CloseIcon}"
                         HorizontalAlignment="Right"
                         IsVisible="{Binding #RootControl.IsCloseBtnShow}"
                         Name="CloseButton"

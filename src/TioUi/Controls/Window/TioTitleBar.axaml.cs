@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 
 namespace TioUi.Controls;
 
@@ -56,31 +57,32 @@ public partial class TioTitleBar : UserControl
     private void MinimizeButton_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is not Button button) return;
-        if (TopLevel.GetTopLevel(button) is Window window) window.WindowState = WindowState.Minimized;
+        if (TopLevel.GetTopLevel(button) is not TioWindow window) return;
+
+        var handled = window.OnMinimize();
+        if (handled) return;
+
+        window.WindowState = WindowState.Minimized;
     }
 
     private void MaximizeButton_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is not Button button) return;
-        if (TopLevel.GetTopLevel(button) is not Window window) return;
+        if (TopLevel.GetTopLevel(button) is not TioWindow window) return;
+
+        var handled = window.OnMaximize();
+        if (handled) return;
+
         window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
     }
 
     private void CloseButton_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is not Button button) return;
-        if (TopLevel.GetTopLevel(button) is not Window window) return;
+        if (TopLevel.GetTopLevel(button) is not TioWindow window) return;
 
-        if (window is TioWindow tioWindow)
-        {
-            var handled = tioWindow.OnClose();
-            if (handled) return;
-        }
-        else if (OnClose != null)
-        {
-            var handled = OnClose.Invoke();
-            if (handled) return;
-        }
+        var handled = window.OnClose();
+        if (handled) return;
 
         CloseButton.Click -= CloseButton_Click;
         MaximizeButton.Click -= MaximizeButton_Click;
@@ -137,13 +139,34 @@ public partial class TioTitleBar : UserControl
         set => SetValue(IsMinBtnShowProperty, value);
     }
 
-    public static readonly StyledProperty<Func<bool>?> OnCloseProperty =
-        AvaloniaProperty.Register<TioTitleBar, Func<bool>?>(nameof(OnClose));
+    public static readonly StyledProperty<Geometry> MinimizeIconProperty =
+        AvaloniaProperty.Register<TioTitleBar, Geometry>(nameof(MinimizeIcon),
+            PathGeometry.Parse("M19 13H5a1 1 0 0 1 0-2h14a1 1 0 0 1 0 2z"));
 
-    public Func<bool>? OnClose
+    public Geometry MinimizeIcon
     {
-        get => GetValue(OnCloseProperty);
-        set => SetValue(OnCloseProperty, value);
+        get => GetValue(MinimizeIconProperty);
+        set => SetValue(MinimizeIconProperty, value);
+    }
+
+    public static readonly StyledProperty<Geometry> MaximizeIconProperty =
+        AvaloniaProperty.Register<TioTitleBar, Geometry>(nameof(MaximizeIcon),
+            PathGeometry.Parse("M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3zM6 5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"));
+
+    public Geometry MaximizeIcon
+    {
+        get => GetValue(MaximizeIconProperty);
+        set => SetValue(MaximizeIconProperty, value);
+    }
+
+    public static readonly StyledProperty<Geometry> CloseIconProperty =
+        AvaloniaProperty.Register<TioTitleBar, Geometry>(nameof(CloseIcon),
+            PathGeometry.Parse("M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"));
+
+    public Geometry CloseIcon
+    {
+        get => GetValue(CloseIconProperty);
+        set => SetValue(CloseIconProperty, value);
     }
 
     #endregion
