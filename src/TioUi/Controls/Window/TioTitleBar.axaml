@@ -13,20 +13,20 @@
         Background="Transparent"
         Height="{Binding #RootControl.TitleBarHeight}"
         VerticalAlignment="Top">
-        <Grid
-            Background="Transparent"
-            Margin="0,0,5,0"
-            Name="MoveDragArea"
-            cdp:WindowDecorationProperties.ElementRole="TitleBar">
+        <Grid Background="Transparent" cdp:WindowDecorationProperties.ElementRole="TitleBar">
+            <Panel Background="Transparent" Name="MoveDragArea" />
             <ContentControl
                 Content="{Binding #RootControl.LeftContent}"
+                HorizontalAlignment="Left"
                 KeyboardNavigation.TabNavigation="Local"
-                TabIndex="1" />
+                TabIndex="1"
+                cdp:WindowDecorationProperties.ElementRole="DecorationsElement" />
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <ContentControl
                     Content="{Binding #RootControl.RightContent}"
                     KeyboardNavigation.TabNavigation="Local"
-                    TabIndex="2" />
+                    TabIndex="2"
+                    cdp:WindowDecorationProperties.ElementRole="DecorationsElement" />
                 <StackPanel
                     HorizontalAlignment="Right"
                     KeyboardNavigation.TabNavigation="Local"
@@ -91,6 +91,27 @@
                     </Border>
                 </ControlTemplate>
             </Setter>
+            <Style Selector="^:pointerover">
+                <Style Selector="^ /template/ Border">
+                    <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
+                </Style>
+                <Style Selector="^.close-button /template/ Border">
+                    <Setter Property="Background" Value="Red" />
+                </Style>
+                <Style Selector="^.close-button /template/ Border">
+                    <Style Selector="^ Path">
+                        <Setter Property="Fill" Value="White" />
+                    </Style>
+                </Style>
+            </Style>
+        </Style>
+        <Style Selector="Button.costume-title-bar-button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Width" Value="25" />
+            <Setter Property="Theme" Value="{StaticResource TransparentButton}" />
             <Style Selector="^:pointerover">
                 <Style Selector="^ /template/ Border">
                     <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
