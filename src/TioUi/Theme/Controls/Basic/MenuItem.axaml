@@ -1,6 +1,7 @@
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:converters="clr-namespace:Avalonia.Controls.Converters;assembly=Avalonia.Controls"
+    xmlns:local="clr-namespace:TioUi.Common.Converter;assembly=TioUi"
     xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <converters:PlatformKeyGestureConverter x:Key="KeyGestureConverter" />
@@ -176,6 +177,10 @@
 
         <Style Selector="^:pointerover">
             <Setter Property="Background" Value="{DynamicResource SelectionNormal}" />
+        </Style>
+
+        <Style Selector="^.hide-icon /template/ ContentPresenter#PART_Icon">
+            <Setter Property="IsVisible" Value="False" />
         </Style>
 
         <!-- <Style Selector="^:open /template/ LayoutTransformControl#PART_LayoutTransform"> -->
