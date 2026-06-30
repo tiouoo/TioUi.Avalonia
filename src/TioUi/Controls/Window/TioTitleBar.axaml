@@ -105,7 +105,7 @@
                 </Style>
             </Style>
         </Style>
-        <Style Selector="Button.costume-title-bar-button">
+        <Style Selector="Button.custom-title-bar-button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Cursor" Value="Arrow" />
