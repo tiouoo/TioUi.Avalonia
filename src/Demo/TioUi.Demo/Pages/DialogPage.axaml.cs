@@ -67,7 +67,7 @@ public partial class DefaultWindowDialogDemoViewModel : ObservableObject
         {
             Title = Title,
             Mode = Mode,
-            Button = Button,
+            Buttons = Button,
             ShowInTaskBar = ShowInTaskBar,
             IsCloseButtonVisible = IsCloseButtonVisible,
             StartupLocation = Location,
