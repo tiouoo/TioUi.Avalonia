@@ -28,6 +28,11 @@ public class StandardDialogWindow : CustomDialogWindow
         AvaloniaProperty.Register<StandardDialogWindow, DialogMode>(
             nameof(Mode));
 
+    public string? OverrideOkButtonText { get; set; }
+    public string? OverrideCancelButtonText { get; set; }
+    public string? OverrideYesButtonText { get; set; }
+    public string? OverrideNoButtonText { get; set; }
+
     private Button? _cancelButton;
     private Button? _noButton;
     private Button? _okButton;
@@ -57,6 +62,15 @@ public class StandardDialogWindow : CustomDialogWindow
         _noButton = e.NameScope.Find<Button>(PART_NoButton);
         Button.ClickEvent.AddHandler(OnDefaultClose, _okButton, _cancelButton, _yesButton, _noButton);
         SetButtonVisibility();
+
+        if (OverrideOkButtonText != null)
+            _okButton.Content = OverrideOkButtonText;
+        if (OverrideCancelButtonText != null)
+            _cancelButton.Content = OverrideCancelButtonText;
+        if (OverrideYesButtonText != null)
+            _yesButton.Content = OverrideYesButtonText;
+        if (OverrideNoButtonText != null)
+            _noButton.Content = OverrideNoButtonText;
     }
 
     private void OnDefaultClose(object? sender, RoutedEventArgs e)

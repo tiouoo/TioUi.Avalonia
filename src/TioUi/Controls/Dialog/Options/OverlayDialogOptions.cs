@@ -83,4 +83,9 @@ public class OverlayDialogOptions
     /// <summary>
     /// </summary>
     internal Delegate? OnDialogControlClosed { set; get; }
+    
+    public string? OverrideOkButtonText { get; set; }
+    public string? OverrideCancelButtonText { get; set; }
+    public string? OverrideYesButtonText { get; set; }
+    public string? OverrideNoButtonText { get; set; }
 }

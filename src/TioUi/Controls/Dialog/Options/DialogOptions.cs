@@ -29,7 +29,7 @@ public class DialogOptions
     /// </summary>
     public DialogMode Mode { get; set; } = DialogMode.None;
 
-    public DialogButton Button { get; set; } = DialogButton.OKCancel;
+    public DialogButton Buttons { get; set; } = DialogButton.OKCancel;
 
     public bool? IsCloseButtonVisible { get; set; } = true;
 
@@ -49,4 +49,9 @@ public class DialogOptions
     /// Visibility of the vertical scrollbar inside the dialog content area. Default is <see cref="ScrollBarVisibility.Auto"/>.
     /// </summary>
     public ScrollBarVisibility VerticalScrollBarVisibility { get; set; } = ScrollBarVisibility.Auto;
+    
+    public string? OverrideOkButtonText { get; set; }
+    public string? OverrideCancelButtonText { get; set; }
+    public string? OverrideYesButtonText { get; set; }
+    public string? OverrideNoButtonText { get; set; }
 }

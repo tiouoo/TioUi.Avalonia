@@ -240,6 +240,11 @@ public static partial class OverlayDialog
             control.VerticalAlignment = VerticalAlignment.Stretch;
         }
 
+        control.OverrideCancelButtonText = options.OverrideCancelButtonText;
+        control.OverrideOkButtonText = options.OverrideOkButtonText;
+        control.OverrideYesButtonText = options.OverrideYesButtonText;
+        control.OverrideNoButtonText = options.OverrideNoButtonText;
+        
         control.HorizontalAnchor = options.HorizontalAnchor;
         control.VerticalAnchor = options.VerticalAnchor;
         control.ActualHorizontalAnchor = options.HorizontalAnchor;

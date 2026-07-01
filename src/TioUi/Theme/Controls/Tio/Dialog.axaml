@@ -12,7 +12,7 @@
             <SolidColorBrush Color="White" x:Key="SemiColorBackground2" />
             <SolidColorBrush
                 Color="#16161A"
-                Opacity="0.6"
+                Opacity="0.2"
                 x:Key="SemiColorOverlayBackground" />
             <SolidColorBrush Color="#0062D6" x:Key="SemiBlue6" />
             <SolidColorBrush Color="#D52515" x:Key="SemiRed6" />
@@ -27,7 +27,7 @@
             <SolidColorBrush Color="#35363C" x:Key="SemiColorBackground2" />
             <SolidColorBrush
                 Color="#16161A"
-                Opacity="0.6"
+                Opacity="0.2"
                 x:Key="SemiColorOverlayBackground" />
             <SolidColorBrush Color="#7FC1FF" x:Key="SemiBlue6" />
             <SolidColorBrush Color="#FD9983" x:Key="SemiRed6" />
@@ -599,12 +599,10 @@
                         <Grid RowDefinitions="Auto, *, Auto">
                             <ScrollViewer
                                 Grid.Row="1"
-                                Margin="24,8"
                                 HorizontalScrollBarVisibility="{Binding (ScrollViewer.HorizontalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}"
+                                Margin="24,8"
                                 VerticalScrollBarVisibility="{Binding (ScrollViewer.VerticalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}">
-                                <ContentPresenter
-                                    Content="{TemplateBinding Content}"
-                                    Name="PART_ContentPresenter" />
+                                <ContentPresenter Content="{TemplateBinding Content}" Name="PART_ContentPresenter" />
                             </ScrollViewer>
                             <Grid
                                 ColumnDefinitions="Auto, *, Auto"

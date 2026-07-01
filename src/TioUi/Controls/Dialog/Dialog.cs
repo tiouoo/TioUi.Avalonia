@@ -234,9 +234,15 @@ public static partial class Dialog
     private static void ConfigureStandardDialogWindow(StandardDialogWindow window, DialogOptions? options)
     {
         options ??= DialogOptions.Default;
+        
+        window.OverrideCancelButtonText = options.OverrideCancelButtonText;
+        window.OverrideOkButtonText = options.OverrideOkButtonText;
+        window.OverrideYesButtonText = options.OverrideYesButtonText;
+        window.OverrideNoButtonText = options.OverrideNoButtonText;
+        
         window.WindowStartupLocation = options.StartupLocation;
         window.Title = options.Title;
-        window.Buttons = options.Button;
+        window.Buttons = options.Buttons;
         window.Mode = options.Mode;
         window.ShowInTaskbar = options.ShowInTaskBar;
         window.IsCloseButtonVisible = options.IsCloseButtonVisible;

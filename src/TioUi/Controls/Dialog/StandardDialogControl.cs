@@ -38,6 +38,11 @@ public class StandardDialogControl : DialogControlBase
     private Button? _okButton;
     private Button? _yesButton;
 
+    public string? OverrideOkButtonText { get; set; }
+    public string? OverrideCancelButtonText { get; set; }
+    public string? OverrideYesButtonText { get; set; }
+    public string? OverrideNoButtonText { get; set; }
+
     public string? Title
     {
         get => GetValue(TitleProperty);
@@ -66,6 +71,15 @@ public class StandardDialogControl : DialogControlBase
         _noButton = e.NameScope.Find<Button>(PART_NoButton);
         Button.ClickEvent.AddHandler(DefaultButtonsClose, _okButton, _cancelButton, _yesButton, _noButton);
         SetButtonVisibility();
+        
+        if (OverrideCancelButtonText != null)
+            _cancelButton.Content = OverrideCancelButtonText;
+        if (OverrideOkButtonText != null)
+            _okButton.Content = OverrideOkButtonText;
+        if (OverrideYesButtonText != null)
+            _yesButton.Content = OverrideYesButtonText;
+        if (OverrideNoButtonText != null)
+            _noButton.Content = OverrideNoButtonText;
     }
 
 
