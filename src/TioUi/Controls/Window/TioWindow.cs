@@ -80,7 +80,7 @@ public class TioWindow : Window
         {
             PropertyChanged += (_, e) =>
             {
-                if(e.Property.Name != nameof(WindowState)) return;
+                if (e.Property.Name != nameof(WindowState)) return;
                 RootBorder?.CornerRadius = new CornerRadius(WindowState == WindowState.Maximized ? 0 : 10);
                 RootBorder?.BorderThickness = new Thickness(WindowState == WindowState.Maximized ? 0 : 1);
             };
@@ -89,6 +89,7 @@ public class TioWindow : Window
 
     private void UpdateDialogHostSafePadding()
     {
+        if (!IsEnabledDialogHostSafePadding) return;
         if (_dialogHost is null || TitleBar is null) return;
 
         var height = TitleBar.Bounds.Height;
@@ -113,8 +114,17 @@ public class TioWindow : Window
         set => SetValue(IsCloseBtnShowProperty, value);
     }
 
+    public static readonly StyledProperty<bool> IsEnabledDialogHostSafePaddingProperty =
+        AvaloniaProperty.Register<TioWindow, bool>(nameof(IsEnabledDialogHostSafePadding), false);
+
+    public bool IsEnabledDialogHostSafePadding
+    {
+        get => GetValue(IsEnabledDialogHostSafePaddingProperty);
+        set => SetValue(IsEnabledDialogHostSafePaddingProperty, value);
+    }
+
     public static readonly StyledProperty<Thickness> TitleBarControlBtnMarginProperty =
-        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(TitleBarControlBtnMargin), new Thickness(0,0,5,0));
+        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(TitleBarControlBtnMargin), new Thickness(0, 0, 5, 0));
 
     public Thickness TitleBarControlBtnMargin
     {
@@ -203,7 +213,8 @@ public class TioWindow : Window
 
     public static readonly StyledProperty<Geometry> MaximizeIconProperty =
         AvaloniaProperty.Register<TioWindow, Geometry>(nameof(MaximizeIcon),
-            PathGeometry.Parse("M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3zM6 5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"));
+            PathGeometry.Parse(
+                "M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3zM6 5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"));
 
     public Geometry MaximizeIcon
     {
@@ -213,7 +224,8 @@ public class TioWindow : Window
 
     public static readonly StyledProperty<Geometry> CloseIconProperty =
         AvaloniaProperty.Register<TioWindow, Geometry>(nameof(CloseIcon),
-            PathGeometry.Parse("M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"));
+            PathGeometry.Parse(
+                "M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"));
 
     public Geometry CloseIcon
     {
