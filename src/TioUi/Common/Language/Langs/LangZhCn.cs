@@ -36,4 +36,7 @@ public class LangZhCn : ILang
     public string BringToFront => "置于顶层";
     public string SendBackward => "后移一层";
     public string SendToBack => "置于底层";
+    public string Maximum => "最大化";
+    public string Minimum => "最小化";
+    public string Restore => "还原";
 }

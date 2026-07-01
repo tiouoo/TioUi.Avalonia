@@ -36,4 +36,7 @@ public class LangEnUs : ILang
     public string BringToFront => "Bring to Front";
     public string SendBackward => "Send Backward";
     public string SendToBack => "Send to Back";
+    public string Maximum => "Maximum";
+    public string Minimum => "Minimum";
+    public string Restore => "Restore";
 }

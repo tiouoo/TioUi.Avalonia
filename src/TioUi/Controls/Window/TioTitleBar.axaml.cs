@@ -12,6 +12,15 @@ public partial class TioTitleBar : UserControl
 {
     private DateTime? _lastClickTime;
     private Win32Properties.CustomWndProcHookCallback? _wndProcHookCallback;
+    
+    public static readonly StyledProperty<Thickness> ControlBtnMarginProperty =
+        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(ControlBtnMargin), new Thickness(0,0,5,0));
+
+    public Thickness ControlBtnMargin
+    {
+        get => GetValue(ControlBtnMarginProperty);
+        set => SetValue(ControlBtnMarginProperty, value);
+    }
 
     public TioTitleBar()
     {
@@ -21,12 +30,12 @@ public partial class TioTitleBar : UserControl
         MinimizeButton.Click += MinimizeButton_Click;
         MoveDragArea.PointerPressed += MoveDragArea_PointerPressed;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            AttachedToVisualTree += (_, _) =>
-            {
-                Debug.WriteLine("TioTitleBar: AttachedToVisualTree event fired");
-                EnableWindowsSnapLayout(MaximizeButton);
-            };
+        // if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        //     AttachedToVisualTree += (_, _) =>
+        //     {
+        //         Debug.WriteLine("TioTitleBar: AttachedToVisualTree event fired");
+        //         EnableWindowsSnapLayout(MaximizeButton);
+        //     };
     }
 
     private void MoveDragArea_PointerPressed(object? sender, PointerPressedEventArgs e)

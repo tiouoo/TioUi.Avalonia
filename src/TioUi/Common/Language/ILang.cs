@@ -36,4 +36,7 @@ public interface ILang
     public string BringToFront { get; }
     public string SendBackward { get; }
     public string SendToBack { get; }
+    public string Maximum { get; }
+    public string Minimum { get; }
+    public string Restore { get; }
 }

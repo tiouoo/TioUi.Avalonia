@@ -103,7 +103,7 @@ public class TioWindow : Window
     }
 
     public static readonly StyledProperty<Thickness> TitleBarControlBtnMarginProperty =
-        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(TitleBarControlBtnMargin), new Thickness(0));
+        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(TitleBarControlBtnMargin), new Thickness(0,0,5,0));
 
     public Thickness TitleBarControlBtnMargin
     {

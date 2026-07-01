@@ -33,6 +33,7 @@
                 <StackPanel
                     HorizontalAlignment="Right"
                     KeyboardNavigation.TabNavigation="Local"
+                    Margin="{Binding #RootControl.ControlBtnMargin}"
                     Name="FunctionRoot"
                     Orientation="Horizontal"
                     TabIndex="3">
