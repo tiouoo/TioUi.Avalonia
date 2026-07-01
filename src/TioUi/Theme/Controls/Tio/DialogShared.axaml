@@ -56,16 +56,12 @@
                     <PathIcon
                         Data="{DynamicResource Close}"
                         Foreground="{DynamicResource InnerForegroundColor}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         Width="12" />
                 </Border>
             </ControlTemplate>
         </Setter>
-        <Style Selector="^:pointerover /template/ Border">
-            <Setter Property="Background" Value="#ff0000" />
-        </Style>
-        <Style Selector="^:pressed /template/ Border">
-            <Setter Property="Background" Value="#ff0000" />
-        </Style>
     </ControlTheme>
 
     <ControlTheme
