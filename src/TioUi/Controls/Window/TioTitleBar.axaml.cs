@@ -32,7 +32,7 @@ public partial class TioTitleBar : UserControl
     private void MoveDragArea_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) return;
-        if (sender is Grid control)
+        if (sender is Panel control)
         {
             var window = TopLevel.GetTopLevel(control) as Window;
             window?.BeginMoveDrag(e);

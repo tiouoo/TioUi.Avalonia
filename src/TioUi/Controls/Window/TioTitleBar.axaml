@@ -14,7 +14,10 @@
         Height="{Binding #RootControl.TitleBarHeight}"
         VerticalAlignment="Top">
         <Grid Background="Transparent" cdp:WindowDecorationProperties.ElementRole="TitleBar">
-            <Panel Background="Transparent" Name="MoveDragArea" />
+            <Panel
+                Background="Transparent"
+                Name="MoveDragArea"
+                cdp:WindowDecorationProperties.ElementRole="User" />
             <ContentControl
                 Content="{Binding #RootControl.LeftContent}"
                 HorizontalAlignment="Left"
