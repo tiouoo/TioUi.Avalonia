@@ -24,7 +24,14 @@
             <ControlTemplate TargetType="tio:TioWindow">
                 <VisualLayerManager Name="PART_VisualLayerManager">
                     <Grid>
-                        <Border Background="{TemplateBinding Background}" Name="PART_Root">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{DynamicResource PopupBorderBrush}"
+                            BorderThickness="{OnPlatform Default=0,
+                                                         Linux=1}"
+                            CornerRadius="{OnPlatform Default=0,
+                                                      Linux=10}"
+                            Name="PART_Root">
                             <DockPanel>
                                 <tio:TioTitleBar
                                     CloseIcon="{Binding $parent[tio:TioWindow].CloseIcon}"

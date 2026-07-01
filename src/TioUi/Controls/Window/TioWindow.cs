@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
@@ -74,6 +75,16 @@ public class TioWindow : Window
 
         // 初始化根 Border 的 Margin
         if (RootBorder != null) RootBorder.Margin = new Thickness(WindowState == WindowState.Maximized ? 10 : 0);
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            PropertyChanged += (_, e) =>
+            {
+                if(e.Property.Name != nameof(WindowState)) return;
+                RootBorder?.CornerRadius = new CornerRadius(WindowState == WindowState.Maximized ? 0 : 10);
+                RootBorder?.BorderThickness = new Thickness(WindowState == WindowState.Maximized ? 0 : 1);
+            };
+        }
     }
 
     private void UpdateDialogHostSafePadding()
