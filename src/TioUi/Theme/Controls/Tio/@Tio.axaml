@@ -58,6 +58,7 @@
         <ResourceInclude Source="TimeRangePicker.axaml" />
         <ResourceInclude Source="DatePicker.axaml" />
         <ResourceInclude Source="DateTimePicker.axaml" />
+        <ResourceInclude Source="TioExpander.axaml" />
         <ResourceInclude Source="DateRangePicker.axaml" />
         <ResourceInclude Source="IconDropDownButton.axaml" />
         <ResourceInclude Source="IconSplitButton.axaml" />
