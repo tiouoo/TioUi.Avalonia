@@ -27,6 +27,7 @@ public partial class TioTitleBar : UserControl
         InitializeComponent();
         CloseButton.Click += CloseButton_Click;
         MaximizeButton.Click += MaximizeButton_Click;
+        RestoreButton.Click += MaximizeButton_Click;
         MinimizeButton.Click += MinimizeButton_Click;
         MoveDragArea.PointerPressed += MoveDragArea_PointerPressed;
 
@@ -175,6 +176,17 @@ public partial class TioTitleBar : UserControl
     {
         get => GetValue(MaximizeIconProperty);
         set => SetValue(MaximizeIconProperty, value);
+    }
+
+    public static readonly StyledProperty<Geometry> RestoreIconProperty =
+        AvaloniaProperty.Register<TioTitleBar, Geometry>(nameof(RestoreIcon),
+            PathGeometry.Parse(
+                "M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3zM6 5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"));
+
+    public Geometry RestoreIcon
+    {
+        get => GetValue(RestoreIconProperty);
+        set => SetValue(RestoreIconProperty, value);
     }
 
     public static readonly StyledProperty<Geometry> CloseIconProperty =
