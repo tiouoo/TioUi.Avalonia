@@ -24,9 +24,11 @@ public sealed class MainWindowModel : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
     }
 
-    public void ToggleTheme(string? theme = null)
+    public void ToggleTheme(object? theme)
     {
-        if (Application.Current != null && theme != null)
+        var t = theme as string;
+
+        if (Application.Current != null && t != null)
         {
             Application.Current.RequestedThemeVariant =
                 Application.Current.ActualThemeVariant == ThemeVariant.Dark
@@ -34,22 +36,23 @@ public sealed class MainWindowModel : INotifyPropertyChanged
                     : ThemeVariant.Dark;
         }
 
-        if (theme == "a")
+        if (t == "a")
             Application.Current!.RequestedThemeVariant = ThemeVariant.Default;
-        else if (theme == "l")
+        else if (t == "l")
             Application.Current!.RequestedThemeVariant = ThemeVariant.Light;
-        else if (theme == "d")
+        else if (t == "d")
             Application.Current!.RequestedThemeVariant = ThemeVariant.Dark;
     }
 
 
-    public void ToggleLang(string? l = null)
+    public void ToggleLang(object? l)
     {
-        if (l == null) return;
+        var lang = l as string;
+        if (lang == null) return;
 
-        if (l == "c")
+        if (lang == "c")
             LangManager.SetLanguage(Languages.zh_cn);
-        else if (l == "e")
+        else if (lang == "e")
             LangManager.SetLanguage(Languages.en_us);
     }
 }
