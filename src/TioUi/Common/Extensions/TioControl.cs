@@ -11,6 +11,11 @@ public static class TioControl
         return TopLevel.GetTopLevel(control);
     }
 
+    public static TioWindow? TryGetTioWindow(this Control control)
+    {
+        return control.GetTopLevel() as TioWindow;
+    }
+
     public static string? TryGetHostId(this Control control)
     {
         if (control.GetTopLevel() is TioWindow tioWindow)
