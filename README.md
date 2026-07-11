@@ -18,25 +18,11 @@
 
 </div>
 
-## 📖 项目简介
+## 项目简介
 
 TioUi 二次修改于 [Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia) 和 [Ursa.Avalonia](https://github.com/irihitech/Ursa.Avalonia)
 
-## ✨ 特性
-
-- 🎨 **现代设计** - 采用流畅设计语言，注重视觉层次和交互反馈
-- 🧩 **丰富组件** - 提供精心设计的 UI 组件
-- 🌈 **主题系统** - 内置亮色/暗色主题，支持自定义主题
-- 🌍 **国际化** - 内置中英文支持，可扩展多语言
-
-## 🎯 设计理念
-
-TioUi 的设计风格融合了现代 UI 设计的精髓：
-
-- **流畅性** - 平滑的动画过渡和交互反馈
-- **一致性** - 统一的视觉语言和交互模式
-
-## 📦 安装
+## 安装
 
 ### 通过 NuGet 安装
 
@@ -62,7 +48,7 @@ git clone https://github.com/tiouoo/TioUi.Avalonia.git
 <ProjectReference Include="path/to/TioUi/TioUi.csproj" />
 ```
 
-## 🚀 快速开始
+## 快速开始
 
 ### 配置 App.axaml
 
@@ -168,15 +154,13 @@ public void SwitchToJapanese()
 }
 ```
 
-## 📚 组件列表
+## 组件列表
 
 TioUi 提供了丰富的组件库，涵盖基础组件、数据展示、导航、数据录入、反馈、布局等多个类别。
 
-包括但不限于：Button、Input、DatePicker、ColorPicker、Table、Tree、Menu、Tabs、Dialog、Notification、Layout、Grid 等常用组件。
-
 完整的组件列表和使用方法请查看[示例项目](https://github.com/tiouoo/TioUi.Avalonia/releases/tag/auto-release)。
 
-## 🎯 示例项目
+## 示例项目
 
 TioUi 提供了一个完整的示例项目，展示了所有组件的用法：
 
@@ -185,19 +169,7 @@ cd src/TioUi.Demo
 dotnet run
 ```
 
-示例项目包含：
-
-- 所有组件的演示
-- 主题切换功能
-- 语言切换功能
-- 响应式布局示例
-- 最佳实践参考
-
-## 🤝 贡献
-
-我们欢迎所有形式的贡献！无论是报告 bug、提出新功能建议，还是提交代码，都非常感谢。
-
-## ❤️ 致谢
+## 致谢
 
 TioUi 的开发受到了以下优秀项目的启发：
 
@@ -205,6 +177,6 @@ TioUi 的开发受到了以下优秀项目的启发：
 - [Ursa.Avalonia](https://github.com/irihitech/Ursa.Avalonia)
 - [SukiUI](https://github.com/kikipoulet/SukiUI)
 
-## 📄 许可证
+## 许可证
 
 本项目采用 [MIT](LICENSE) 许可证。
