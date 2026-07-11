@@ -22,6 +22,7 @@
                                 Name="PART_ContentPresenter"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                             <tio:OverlayDialogHost
+                                HostId="{Binding $parent[tio:TioView].HostId}"
                                 IsModalStatusReporter="True"
                                 IsTopLevel="True"
                                 Name="PART_DialogHost" />

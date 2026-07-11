@@ -232,6 +232,8 @@ public class TioWindow : Window
         get => GetValue(CloseIconProperty);
         set => SetValue(CloseIconProperty, value);
     }
-
+    
+    public string HostId { get; set; } = Guid.NewGuid().ToString();
+    
     #endregion
 }

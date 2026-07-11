@@ -58,6 +58,7 @@
                         </Border>
                         <Panel>
                             <tio:OverlayDialogHost
+                                HostId="{Binding $parent[tio:TioWindow].HostId}"
                                 IsModalStatusReporter="True"
                                 IsTopLevel="True"
                                 Name="PART_DialogHost" />

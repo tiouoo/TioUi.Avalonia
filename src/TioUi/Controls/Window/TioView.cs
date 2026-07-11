@@ -7,6 +7,8 @@ public class TioView : ContentControl
 {
     public const string PART_DialogHost = "PART_DialogHost";
     protected override Type StyleKeyOverride => typeof(TioView);
+    
+    public string HostId { get; set; } = Guid.NewGuid().ToString();
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {

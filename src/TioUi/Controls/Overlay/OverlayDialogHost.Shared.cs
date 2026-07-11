@@ -58,7 +58,14 @@ public partial class OverlayDialogHost : Canvas
     public bool IsAnimationDisabled { get; set; }
     public bool IsTopLevel { get; set; }
 
-    public string? HostId { get; set; }
+    public static readonly StyledProperty<string?> HostIdProperty =
+        AvaloniaProperty.Register<OverlayDialogHost, string?>(nameof(HostId));
+
+    public string? HostId
+    {
+        get => GetValue(HostIdProperty);
+        set => SetValue(HostIdProperty, value);
+    }
 
     public DataTemplates DialogDataTemplates { get; set; } = new();
 
