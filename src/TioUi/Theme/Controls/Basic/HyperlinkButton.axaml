@@ -115,4 +115,78 @@
             <Setter Property="Background" Value="Transparent" />
         </Style>
     </ControlTheme>
+
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type HyperlinkButton}}"
+        TargetType="HyperlinkButton"
+        x:Key="UnderlineHyperlinkButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Background="Transparent">
+                    <ContentPresenter
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Foreground="{TemplateBinding Foreground}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Name="ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        RecognizesAccessKey="True"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter.Transitions>
+                            <Transitions>
+                                <BrushTransition Duration="0:0:0.1" Property="Foreground" />
+                            </Transitions>
+                        </ContentPresenter.Transitions>
+                    </ContentPresenter>
+                    <Border
+                        Background="{DynamicResource SystemAccentColor}"
+                        CornerRadius="2"
+                        Height="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        ZIndex="-2">
+                        <Border.Transitions>
+                            <Transitions>
+                                <ThicknessTransition Duration="0:0:0.1" Property="Margin" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^">
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
+        </Style>
+        <Style Selector="^:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight1}" />
+        </Style>
+        <Style Selector="^ /template/ ContentPresenter#ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="^:pointerover /template/ ContentPresenter#ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="^ /template/ Border">
+            <Setter Property="Margin" Value="0,-1,0,0" />
+        </Style>
+        <Style Selector="^:pointerover /template/ Border">
+            <Setter Property="Margin" Value="0,-2,0,1" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border">
+            <Setter Property="Margin" Value="0,-2,0,1" />
+        </Style>
+        <Style Selector="^:pressed /template/ ContentPresenter#ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>
