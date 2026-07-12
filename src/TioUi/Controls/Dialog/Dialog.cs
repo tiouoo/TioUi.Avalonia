@@ -209,6 +209,8 @@ public static partial class Dialog
         window.CanDragMove = options.CanDragMove;
         window.CanResize = options.CanResize;
         window.IsManagedResizerVisible = options.CanResize;
+        window.MinHeight = options.DialogWindowMinHeight;
+        window.MinWidth = options.DialogWindowMinWidth;
         ScrollViewer.SetHorizontalScrollBarVisibility(window, options.HorizontalScrollBarVisibility);
         ScrollViewer.SetVerticalScrollBarVisibility(window, options.VerticalScrollBarVisibility);
         if (options.StartupLocation == WindowStartupLocation.Manual)
@@ -249,6 +251,8 @@ public static partial class Dialog
         window.CanDragMove = options.CanDragMove;
         window.IsManagedResizerVisible = options.CanResize;
         window.CanResize = options.CanResize;
+        window.MinHeight = options.DialogWindowMinHeight;
+        window.MinWidth = options.DialogWindowMinWidth;
         ScrollViewer.SetHorizontalScrollBarVisibility(window, options.HorizontalScrollBarVisibility);
         ScrollViewer.SetVerticalScrollBarVisibility(window, options.VerticalScrollBarVisibility);
         if (options.StartupLocation == WindowStartupLocation.Manual)

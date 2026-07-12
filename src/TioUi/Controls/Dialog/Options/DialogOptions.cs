@@ -54,4 +54,7 @@ public class DialogOptions
     public string? OverrideCancelButtonText { get; set; }
     public string? OverrideYesButtonText { get; set; }
     public string? OverrideNoButtonText { get; set; }
+
+    public double DialogWindowMinWidth { get; set; } = Double.NaN;
+    public double DialogWindowMinHeight { get; set; } = Double.NaN;
 }

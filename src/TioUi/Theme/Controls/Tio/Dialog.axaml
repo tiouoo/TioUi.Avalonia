@@ -491,9 +491,6 @@
         <Setter Property="WindowStartupLocation" Value="CenterOwner" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="1" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
-
-        <Setter Property="MinWidth" Value="{DynamicResource DialogMinWidth}" />
-        <Setter Property="MinHeight" Value="{DynamicResource DialogMinHeight}" />
         <Setter Property="WindowDecorations">
             <OnPlatform>
                 <OnPlatform.Windows>
@@ -516,6 +513,8 @@
                         BackgroundSizing="InnerBorderEdge"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{OnPlatform Default=0,
+                                                  Linux=10}"
                         IsHitTestVisible="False" />
                     <Panel Background="Transparent" Margin="{TemplateBinding WindowDecorationMargin}" />
                     <VisualLayerManager>
