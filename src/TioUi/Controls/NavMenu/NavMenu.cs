@@ -282,6 +282,11 @@ public class NavMenu : ItemsControl, ICustomKeyboardNavigation
 
     protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey)
     {
+        if (item is Label)
+        {
+            recycleKey = null;
+            return false;
+        }
         return NeedsContainer<NavMenuItem>(item, out recycleKey);
     }
 
@@ -289,7 +294,7 @@ public class NavMenu : ItemsControl, ICustomKeyboardNavigation
     {
         return new NavMenuItem();
     }
-
+    
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
