@@ -39,4 +39,6 @@ public interface ILang
     public string Maximum { get; }
     public string Minimum { get; }
     public string Restore { get; }
+    public string On { get; }
+    public string Off { get; }
 }

@@ -39,4 +39,6 @@ public class LangEnUs : ILang
     public string Maximum => "Maximum";
     public string Minimum => "Minimum";
     public string Restore => "Restore";
+    public string On => "On";
+    public string Off => "Off";
 }

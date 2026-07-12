@@ -39,4 +39,6 @@ public class LangZhCn : ILang
     public string Maximum => "最大化";
     public string Minimum => "最小化";
     public string Restore => "还原";
+    public string On => "开启";
+    public string Off => "关闭";
 }

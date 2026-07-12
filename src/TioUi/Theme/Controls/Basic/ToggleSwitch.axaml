@@ -166,6 +166,8 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="OffContent" Value="{DynamicResource Lang.Off}" />
+        <Setter Property="OnContent" Value="{DynamicResource Lang.On}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FocusAdorner">
             <FocusAdornerTemplate>
