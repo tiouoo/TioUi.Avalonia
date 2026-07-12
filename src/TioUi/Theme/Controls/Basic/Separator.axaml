@@ -8,6 +8,7 @@
         <Setter Property="Template">
             <ControlTemplate TargetType="Separator">
                 <Border
+                    Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{TemplateBinding CornerRadius}"
@@ -18,7 +19,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^ /template/ Border">
+        <Style Selector="^">
             <Setter Property="Background" Value="{DynamicResource LineColor}" />
         </Style>
     </ControlTheme>
