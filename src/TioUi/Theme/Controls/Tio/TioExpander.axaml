@@ -65,7 +65,7 @@
                                                 Width="{TemplateBinding IconWidth}" />
                                             <ContentPresenter
                                                 Content="{TemplateBinding Header}"
-                                                FontWeight="{DynamicResource DefaultDemiBold}"
+                                                FontWeight="{DynamicResource TioFontWeight}"
                                                 Margin="{TemplateBinding HeaderMargin}"
                                                 Padding="{TemplateBinding HeaderPadding}"
                                                 VerticalAlignment="Center" />

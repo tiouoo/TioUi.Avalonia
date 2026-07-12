@@ -15,6 +15,7 @@
     </ResourceDictionary.ThemeDictionaries>
 
     <ControlTheme TargetType="Label" x:Key="{x:Type Label}">
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="Label">

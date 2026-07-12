@@ -67,6 +67,7 @@
         <Setter Property="BorderThickness" Value="1.5" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -134,7 +135,7 @@
                                 VerticalAlignment="Center">
                                 <ContentPresenter.DataTemplates>
                                     <DataTemplate DataType="system:String">
-                                        <TextBlock FontWeight="{DynamicResource DefaultDemiBold}" Text="{Binding}" />
+                                        <TextBlock FontWeight="{DynamicResource TioFontWeight}" Text="{Binding}" />
                                     </DataTemplate>
                                 </ContentPresenter.DataTemplates>
                             </ContentPresenter>

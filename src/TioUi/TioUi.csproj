@@ -38,16 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Include="Assets\AlimamaFangYuanTi-Bold.ttf" />
+    <AvaloniaResource Include="Assets\AlimamaFangYuanTi-Regular.ttf" />
     <AvaloniaResource Include="Themes\**\*.axaml" />
     <None Remove="Public\MiSans-Regular.ttf" />
     <None Remove="Assets\MiSans-Regular.otf" />
-    <AvaloniaResource Include="Assets\MiSans-Regular.otf" />
     <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\" />
     <Folder Include="Common\Language\Langs\" />
   </ItemGroup>
 

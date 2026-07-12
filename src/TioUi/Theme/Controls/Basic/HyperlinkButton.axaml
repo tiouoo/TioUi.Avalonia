@@ -51,9 +51,9 @@
         <Setter Property="Padding" Value="11,5,11,6" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource TioFontSize}" />
-        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{DynamicResource TioCornerRadius}" />
         <Setter Property="Template">

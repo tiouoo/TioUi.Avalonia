@@ -38,7 +38,7 @@
         <Setter Property="Cursor" Value="Ibeam" />
         <Setter Property="SelectionBrush" Value="{DynamicResource TextBoxSelectionBackground}" />
         <Setter Property="SelectionForegroundBrush" Value="{DynamicResource TextBoxSelectionForeground}" />
-
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="Transitions">
             <Transitions>

@@ -22,6 +22,7 @@
 
     <ControlTheme TargetType="TextBlock" x:Key="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="Transitions">
             <Transitions>
                 <BrushTransition

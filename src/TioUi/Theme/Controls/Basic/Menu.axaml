@@ -5,7 +5,7 @@
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTheme TargetType="MenuItem" x:Key="SukiTopLevelMenuItem">
-        <Setter Property="FontWeight" Value="{DynamicResource DefaultDemiBold}" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="10 0" />
         <Setter Property="Template">
@@ -37,7 +37,7 @@
                             VerticalContentAlignment="Center">
                             <ContentPresenter.DataTemplates>
                                 <DataTemplate DataType="system:String">
-                                    <TextBlock FontWeight="{DynamicResource DefaultDemiBold}" Text="{CompiledBinding}" />
+                                    <TextBlock FontWeight="{DynamicResource TioFontWeight}" Text="{CompiledBinding}" />
                                 </DataTemplate>
                             </ContentPresenter.DataTemplates>
                         </ContentPresenter>
@@ -114,6 +114,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PopupBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="CornerRadius" Value="14" />
@@ -183,6 +184,7 @@
 
     <ControlTheme TargetType="ScrollViewer" x:Key="MenuScrollViewer">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="ScrollViewer">

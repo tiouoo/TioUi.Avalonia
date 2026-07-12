@@ -485,6 +485,7 @@
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource PopupBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowDefaultForeground}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="Padding" Value="48 24" />
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
@@ -561,6 +562,7 @@
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource PopupBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowDefaultForeground}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="Padding" Value="48 24" />
         <Setter Property="SizeToContent" Value="WidthAndHeight" />

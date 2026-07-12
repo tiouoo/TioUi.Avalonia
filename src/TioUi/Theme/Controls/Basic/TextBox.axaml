@@ -215,6 +215,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource TioCornerRadius}" />
         <Setter Property="Padding" Value="10,0,8,0" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="Transitions">
             <Transitions>

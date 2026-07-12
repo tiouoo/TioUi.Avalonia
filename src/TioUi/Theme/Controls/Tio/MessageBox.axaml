@@ -47,6 +47,7 @@
         <Setter Property="Background" Value="{DynamicResource PopupBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
         <Setter Property="FontSize" Value="{DynamicResource TioFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
         <Setter Property="Padding" Value="48 24" />
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
