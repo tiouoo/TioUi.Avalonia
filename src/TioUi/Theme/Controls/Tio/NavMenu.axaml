@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
+    xmlns:shared="clr-namespace:TioUi.Shared"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -36,13 +37,29 @@
                 x:Key="NavigationMenuItemSeparatorBorderForeground" />
             <Color x:Key="TextBlockQuaternaryForeground">#F9F9F9</Color>
             <Color x:Key="ListBoxItemPointeroverForeground">#F9F9F9</Color>
-            <Color x:Key="ListBoxItemPointeroverBackground">#232429</Color>
+            <SolidColorBrush
+                Color="#232429"
+                Opacity="0.6"
+                x:Key="ListBoxItemPointeroverBackground" />
             <Color x:Key="ListBoxItemSelectedForeground">#F9F9F9</Color>
-            <Color x:Key="ListBoxItemSelectedBackground">#35363C</Color>
+            <SolidColorBrush
+                Color="#35363C"
+                Opacity="0.6"
+                x:Key="ListBoxItemSelectedBackground" />
             <Color x:Key="ListBoxItemSelectedPointeroverBackground">#3E3F45</Color>
             <Color x:Key="MenuFlyoutBackground">#43444A</Color>
             <Color x:Key="MenuFlyoutBorderBrush">#F9F9F9</Color>
             <BoxShadows x:Key="MenuFlyoutBorderBoxShadow">inset 0 0 0 1 #1AFFFFFF, 0 4 14 #40000000</BoxShadows>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="{x:Static shared:Themes.Mirage}">
+            <SolidColorBrush
+                Color="#FF1A1E25"
+                Opacity="0.6"
+                x:Key="ListBoxItemSelectedBackground" />
+            <SolidColorBrush
+                Color="#FF222832"
+                Opacity="0.6"
+                x:Key="ListBoxItemPointeroverBackground" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 

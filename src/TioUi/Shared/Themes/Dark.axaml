@@ -20,11 +20,11 @@
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PanelBorderBrush" />
             <SolidColorBrush
-                Color="#0f131a"
+                Color="#FF0C0E10"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBackgroundColor" />
             <SolidColorBrush
-                Color="#06080b"
+                Color="#FF1D1F23"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBorderBrush" />
             <SolidColorBrush

@@ -10,7 +10,7 @@
                 #1f2430
             </Color>
             <SolidColorBrush
-                Color="#293040"
+                Color="#FF252B39"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="SelectionNormal" />
             <SolidColorBrush
@@ -22,11 +22,11 @@
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PanelBorderBrush" />
             <SolidColorBrush
-                Color="#1c212c"
+                Color="#FF2C3342"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBackgroundColor" />
             <SolidColorBrush
-                Color="#161922"
+                Color="#FF374156"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBorderBrush" />
             <SolidColorBrush
