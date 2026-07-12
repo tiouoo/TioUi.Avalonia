@@ -1,5 +1,6 @@
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTheme TargetType="tio:TioWindow" x:Key="{x:Type tio:TioWindow}">
@@ -20,10 +21,20 @@
                 </On>
             </OnPlatform>
         </Setter>
+        <Setter Property="IsManagedResizerVisible">
+            <OnPlatform>
+                <On Options="Default">
+                    <system:Boolean>False</system:Boolean>
+                </On>
+                <On Options="Linux">
+                    <system:Boolean>True</system:Boolean>
+                </On>
+            </OnPlatform>
+        </Setter>
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:TioWindow">
                 <VisualLayerManager Name="PART_VisualLayerManager">
-                    <Grid>
+                    <Panel>
                         <Border
                             Background="{TemplateBinding Background}"
                             BorderBrush="{DynamicResource PopupBorderBrush}"
@@ -63,7 +74,8 @@
                                 IsTopLevel="True"
                                 Name="PART_DialogHost" />
                         </Panel>
-                    </Grid>
+                        <tio:WindowResizer IsVisible="{TemplateBinding IsManagedResizerVisible}" />
+                    </Panel>
                 </VisualLayerManager>
             </ControlTemplate>
         </Setter>

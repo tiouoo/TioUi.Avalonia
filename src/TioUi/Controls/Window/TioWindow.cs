@@ -123,6 +123,16 @@ public class TioWindow : Window
         set => SetValue(IsEnabledDialogHostSafePaddingProperty, value);
     }
 
+    public bool IsManagedResizerVisible
+    {
+        get => GetValue(IsManagedResizerVisibleProperty);
+        set => SetValue(IsManagedResizerVisibleProperty, value);
+    }
+
+    public static readonly StyledProperty<bool> IsManagedResizerVisibleProperty =
+        AvaloniaProperty.Register<CustomDialogWindow, bool>(
+            nameof(IsManagedResizerVisible));
+
     public static readonly StyledProperty<Thickness> TitleBarControlBtnMarginProperty =
         AvaloniaProperty.Register<TioWindow, Thickness>(nameof(TitleBarControlBtnMargin), new Thickness(0, 0, 5, 0));
 
@@ -232,8 +242,8 @@ public class TioWindow : Window
         get => GetValue(CloseIconProperty);
         set => SetValue(CloseIconProperty, value);
     }
-    
+
     public string HostId { get; set; } = Guid.NewGuid().ToString();
-    
+
     #endregion
 }
