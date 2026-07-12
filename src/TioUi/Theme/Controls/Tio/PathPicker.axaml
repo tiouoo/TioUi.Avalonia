@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <StackPanel Margin="20">
-            <tio:PathPicker Title="Hello World" ButtonContent="Hello World" Width="300" />
+            <tio:PathPicker
+                ButtonContent="Hello World"
+                Title="Hello World"
+                Width="300" />
         </StackPanel>
     </Design.PreviewWith>
     <ControlTheme TargetType="tio:PathPicker" x:Key="{x:Type tio:PathPicker}">
@@ -22,6 +25,7 @@
                         AcceptsReturn="{TemplateBinding AllowMultiple}"
                         DockPanel.Dock="Left"
                         Name="PART_TextBox"
+                        PlaceholderText="{TemplateBinding PlaceholderText}"
                         Text="{TemplateBinding SelectedPathsText,
                                                Mode=TwoWay}" />
                 </DockPanel>

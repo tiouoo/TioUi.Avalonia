@@ -73,6 +73,16 @@ public partial class PathPicker : TemplatedControl
     public static readonly StyledProperty<bool> IsClearSelectionOnCancelProperty =
         AvaloniaProperty.Register<PathPicker, bool>(
             nameof(IsClearSelectionOnCancel));
+    
+    public static readonly StyledProperty<string?> PlaceholderTextProperty =
+        AvaloniaProperty.Register<PathPicker, string?>(
+            nameof(PlaceholderText));
+
+    public string? PlaceholderText
+    {
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
+    }
 
     public bool IsClearSelectionOnCancel
     {
