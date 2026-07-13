@@ -3,7 +3,10 @@
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush Color="#e6e1cf" x:Key="InnerForegroundColor" />
             <SolidColorBrush Color="#e6e1cf" x:Key="ForegroundColor" />
-            <SolidColorBrush Color="#1B1F29" x:Key="LineColor" />
+            <SolidColorBrush
+                Color="#1B1F29"
+                Opacity="{DynamicResource BackGroundOpacity}"
+                x:Key="LineColor" />
             <Color x:Key="BackgroundColor">
                 #0d1017
             </Color>

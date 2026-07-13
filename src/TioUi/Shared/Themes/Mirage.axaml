@@ -5,7 +5,10 @@
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="{x:Static t:Themes.Mirage}">
             <SolidColorBrush Color="#e6e1cf" x:Key="ForegroundColor" />
-            <SolidColorBrush Color="#171b24" x:Key="LineColor" />
+            <SolidColorBrush
+                Color="#171b24"
+                Opacity="{DynamicResource BackGroundOpacity}"
+                x:Key="LineColor" />
             <Color x:Key="BackgroundColor">
                 #1f2430
             </Color>
