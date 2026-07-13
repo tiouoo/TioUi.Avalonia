@@ -21,7 +21,6 @@
         </StackPanel>
     </Design.PreviewWith>
 
-    <system:Double x:Key="BackGroundOpacity">1</system:Double>
     <system:Double x:Key="TabItemCardDefaultHeight">32</system:Double>
     <FontWeight x:Key="SemiFontWeightBold">600</FontWeight>
     <system:Double x:Key="SemiHeightControlDefault">32</system:Double>
@@ -100,8 +99,7 @@
                 Color="#F9F9F9"
                 Opacity="0.6"
                 x:Key="TabItemLineHeaderPointeroverForeground" />
-            <SolidColorBrush Color="{DynamicResource SystemAccentColorLight1}"
-                             x:Key="TabItemLinePipeSelectedBackground" />
+            <SolidColorBrush Color="{DynamicResource SystemAccentColorLight1}" x:Key="TabItemLinePipeSelectedBackground" />
             <SolidColorBrush
                 Color="White"
                 Opacity="0.16"
@@ -135,8 +133,7 @@
                 Color="White"
                 Opacity="0.16"
                 x:Key="TabItemCardHeaderPressedBackground" />
-            <SolidColorBrush Color="{DynamicResource SystemAccentColorLight1}"
-                             x:Key="TabItemButtonHeaderSelectedForeground" />
+            <SolidColorBrush Color="{DynamicResource SystemAccentColorLight1}" x:Key="TabItemButtonHeaderSelectedForeground" />
             <SolidColorBrush
                 Color="{DynamicResource SystemAccentColorLight1}"
                 Opacity="0.2"
