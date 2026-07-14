@@ -68,7 +68,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
-        <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border
@@ -107,7 +107,7 @@
                                 <PathIcon
                                     Classes="Flippable"
                                     Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                                    Foreground="{DynamicResource SukiText}"
+                                    Foreground="{DynamicResource ForegroundColor}"
                                     Height="8"
                                     HorizontalAlignment="Center"
                                     Name="PART_RightArrow"
