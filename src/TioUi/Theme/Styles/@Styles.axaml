@@ -9,4 +9,5 @@
     <StyleInclude Source="Menu.axaml" />
     <StyleInclude Source="GroupBorder.axaml" />
     <StyleInclude Source="PathIcon.axaml" />
+    <StyleInclude Source="TitleBar.axaml" />
 </Styles>
