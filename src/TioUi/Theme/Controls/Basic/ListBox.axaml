@@ -817,4 +817,81 @@
             </Style>
         </Style>
     </ControlTheme>
+
+    <ControlTheme TargetType="ListBoxItem" x:Key="BorderListBoxItem">
+        <Setter Property="Margin" Value="0 0 8 0" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="{DynamicResource TabItemCardDefaultHeight}" />
+        <Setter Property="Padding" Value="12 0" />
+        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ListBoxItem">
+                <Border
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Name="SelectBorder">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition Duration="0:0:0.2" Property="BorderBrush" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ContentPresenter
+                        Background="{DynamicResource ComboBoxSelectorBackground}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        Foreground="{TemplateBinding Foreground}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Duration="0:0:0.2" Property="BorderBrush" />
+            </Transitions>
+        </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource TabItemButtonHeaderPointeroverBackground}" />
+        </Style>
+        <Style Selector="^:selected">
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+            <Style Selector="^ Border#SelectBorder">
+                <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+            </Style>
+        </Style>
+        <Style Selector="^:not(:selected)">
+            <Setter Property="Cursor" Value="Hand" />
+            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource TabItemButtonHeaderPointeroverBackground}" />
+            </Style>
+            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource TabItemButtonHeaderPressedBackground}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+    <ControlTheme
+        BasedOn="{StaticResource RadioGroupListBox}"
+        TargetType="ListBox"
+        x:Key="BorderListBox">
+        <Setter Property="ItemContainerTheme" Value="{DynamicResource BorderListBoxItem}" />
+
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </Setter>
+    </ControlTheme>
 </ResourceDictionary>

@@ -31,6 +31,14 @@
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="PopupBorderBrush" />
             <SolidColorBrush
+                Color="#ffffff"
+                Opacity="{DynamicResource TranslucentBackGroundOpacity}"
+                x:Key="TranslucentBackgroundColor" />
+            <SolidColorBrush
+                Color="#eaedf0"
+                Opacity="{DynamicResource TranslucentBackGroundOpacity}"
+                x:Key="TranslucentBorderBrush" />
+            <SolidColorBrush
                 Color="#f1f1f1"
                 Opacity="{DynamicResource BackGroundOpacity}"
                 x:Key="TitleBarBackgroundColor" />
