@@ -49,7 +49,7 @@ public class DialogOptions
     /// Visibility of the vertical scrollbar inside the dialog content area. Default is <see cref="ScrollBarVisibility.Auto"/>.
     /// </summary>
     public ScrollBarVisibility VerticalScrollBarVisibility { get; set; } = ScrollBarVisibility.Auto;
-    
+
     public string? OverrideOkButtonText { get; set; }
     public string? OverrideCancelButtonText { get; set; }
     public string? OverrideYesButtonText { get; set; }
@@ -57,4 +57,8 @@ public class DialogOptions
 
     public double DialogWindowMinWidth { get; set; } = Double.NaN;
     public double DialogWindowMinHeight { get; set; } = Double.NaN;
+    public double DialogWindowMaxWidth { get; set; } = double.PositiveInfinity;
+    public double DialogWindowMaxHeight { get; set; } = double.PositiveInfinity;
+    public double DialogWindowWidth { get; set; } = Double.NaN;
+    public double DialogWindowHeight { get; set; } = Double.NaN;
 }

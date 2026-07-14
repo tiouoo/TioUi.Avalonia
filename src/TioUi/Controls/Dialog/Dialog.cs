@@ -211,6 +211,10 @@ public static partial class Dialog
         window.IsManagedResizerVisible = options.CanResize;
         window.MinHeight = options.DialogWindowMinHeight;
         window.MinWidth = options.DialogWindowMinWidth;
+        window.MaxHeight = options.DialogWindowMaxHeight;
+        window.MaxWidth = options.DialogWindowMaxWidth;
+        window.Width = options.DialogWindowWidth;
+        window.Height = options.DialogWindowHeight;
         ScrollViewer.SetHorizontalScrollBarVisibility(window, options.HorizontalScrollBarVisibility);
         ScrollViewer.SetVerticalScrollBarVisibility(window, options.VerticalScrollBarVisibility);
         if (options.StartupLocation == WindowStartupLocation.Manual)
