@@ -32,7 +32,7 @@
     <ControlTheme TargetType="AutoCompleteBox" x:Key="{x:Type AutoCompleteBox}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="32" />
-        <Setter Property="MaxDropDownHeight" Value="209" />
+        <Setter Property="MaxDropDownHeight" Value="200" />
         <Setter Property="Template">
             <ControlTemplate TargetType="AutoCompleteBox">
                 <DataValidationErrors>

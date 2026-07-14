@@ -55,11 +55,6 @@
                 <Setter Property="BorderBrush" Value="#1C1F23" />
                 <Setter Property="BorderThickness" Value="1" />
             </ControlTheme>
-            <SolidColorBrush
-                Color="#1C1F23"
-                Opacity="0.62"
-                x:Key="DescriptionsKeyTextForeground" />
-            <SolidColorBrush Color="#1C1F23" x:Key="DescriptionsValueTextForeground" />
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush Color="#F9F9F9" x:Key="SemiColorText0" />
@@ -79,11 +74,6 @@
                 <Setter Property="BorderBrush" Value="#F9F9F9" />
                 <Setter Property="BorderThickness" Value="1" />
             </ControlTheme>
-            <SolidColorBrush
-                Color="#F9F9F9"
-                Opacity="0.6"
-                x:Key="DescriptionsKeyTextForeground" />
-            <SolidColorBrush Color="#F9F9F9" x:Key="DescriptionsValueTextForeground" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
     <ControlTheme TargetType="tio:Descriptions" x:Key="{x:Type tio:Descriptions}">
@@ -118,13 +108,13 @@
                         <Label
                             Content="{TemplateBinding Label}"
                             ContentTemplate="{TemplateBinding LabelTemplate}"
-                            Foreground="{DynamicResource DescriptionsKeyTextForeground}"
+                            Foreground="{DynamicResource InnerForegroundColor}"
                             Grid.Column="0"
                             Name="{x:Static tio:LabeledContentControl.PART_Label}"
                             TextBlock.LineHeight="{DynamicResource DescriptionsLineHeight}"
                             Width="{TemplateBinding LabelWidth}" />
                         <TextBlock
-                            Foreground="{DynamicResource DescriptionsKeyTextForeground}"
+                            Foreground="{DynamicResource InnerForegroundColor}"
                             Grid.Column="1"
                             Margin="{DynamicResource DescriptionsKeyPlainMargin}"
                             Name="PART_Colon"
@@ -132,7 +122,7 @@
                         <ContentPresenter
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Foreground="{DynamicResource DescriptionsValueTextForeground}"
+                            Foreground="{DynamicResource ForegroundColor}"
                             Grid.Column="2"
                             Name="{x:Static tio:PartNames.PART_ContentPresenter}"
                             TextBlock.LineHeight="{DynamicResource DescriptionsLineHeight}" />
@@ -191,14 +181,14 @@
                             Content="{TemplateBinding Label}"
                             ContentTemplate="{TemplateBinding LabelTemplate}"
                             DataContext="{TemplateBinding Label}"
-                            Foreground="{DynamicResource DescriptionsKeyTextForeground}"
+                            Foreground="{DynamicResource InnerForegroundColor}"
                             Name="{x:Static tio:LabeledContentControl.PART_Label}"
                             Width="{TemplateBinding LabelWidth}" />
                         <ContentPresenter
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
                             FontWeight="{DynamicResource DescriptionsValueFontWeight}"
-                            Foreground="{DynamicResource DescriptionsValueTextForeground}"
+                            Foreground="{DynamicResource ForegroundColor}"
                             Name="{x:Static tio:PartNames.PART_ContentPresenter}" />
                     </StackPanel>
                 </ControlTemplate>
