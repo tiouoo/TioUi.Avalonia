@@ -228,11 +228,12 @@
                                 PlacementTarget="{TemplateBinding}">
                                 <Border
                                     BorderBrush="{DynamicResource PopupBorderBrush}"
-                                    BorderThickness="1"
+                                    BorderThickness="0"
                                     CornerRadius="{DynamicResource CalendarCornerRadius}"
                                     Margin="4">
                                     <Calendar
-                                        BorderThickness="0"
+                                        BorderBrush="{DynamicResource PopupBorderBrush}"
+                                        BorderThickness="1"
                                         DisplayDate="{TemplateBinding DisplayDate}"
                                         DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
                                         DisplayDateStart="{TemplateBinding DisplayDateStart}"
