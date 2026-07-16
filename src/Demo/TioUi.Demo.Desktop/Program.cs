@@ -2,7 +2,6 @@ using System.Runtime.Versioning;
 using Avalonia;
 using Avalonia.Dialogs;
 using Avalonia.Media;
-using HotAvalonia;
 
 namespace TioUi.Demo.Desktop;
 
@@ -35,9 +34,6 @@ internal class Program
     public static AppBuilder BuildAvaloniaApp()
     {
         return AppBuilder.Configure<App>()
-#if DEBUG
-            .UseHotReload()
-#endif
             .UsePlatformDetect()
             .UseManagedSystemDialogs()
             .WithInterFont()
