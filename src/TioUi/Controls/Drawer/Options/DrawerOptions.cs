@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls.Primitives;
+using System.Windows.Input;
 using TioUi.Common;
 
 namespace TioUi.Controls.Options;
@@ -15,6 +16,11 @@ public class DrawerOptions
     public double? MaxHeight { get; set; } = null;
     public DialogButton Buttons { get; set; } = DialogButton.OKCancel;
     public string? Title { get; set; }
+
+    /// <summary>
+    /// 标准抽屉标题的可选命令。设置后标题可点击执行该命令。
+    /// </summary>
+    public ICommand? TitleCommand { get; set; }
 
     [Obsolete("Use IsCloseButtonVisible")] public bool ShowCloseButton { get; set; } = true;
 

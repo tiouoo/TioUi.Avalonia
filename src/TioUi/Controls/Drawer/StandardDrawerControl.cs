@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using System.Windows.Input;
 using TioUi.Common;
 using TioUi.Common.Classes;
 using TioUi.Common.Helpers;
@@ -33,6 +34,9 @@ public class StandardDrawerControl : DrawerControlBase
         AvaloniaProperty.Register<StandardDrawerControl, string?>(
             nameof(Title));
 
+    public static readonly StyledProperty<ICommand?> TitleCommandProperty =
+        AvaloniaProperty.Register<StandardDrawerControl, ICommand?>(nameof(TitleCommand));
+
     private Button? _cancelButton;
     private Button? _noButton;
     private Button? _okButton;
@@ -55,6 +59,15 @@ public class StandardDrawerControl : DrawerControlBase
     {
         get => GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
+    }
+
+    /// <summary>
+    /// 标题被点击时执行的可选命令。
+    /// </summary>
+    public ICommand? TitleCommand
+    {
+        get => GetValue(TitleCommandProperty);
+        set => SetValue(TitleCommandProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)

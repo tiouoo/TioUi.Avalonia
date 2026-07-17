@@ -236,6 +236,7 @@ public static class OverlayDrawer
         drawer.CanLightDismiss = options.CanLightDismiss;
         drawer.Buttons = options.Buttons;
         drawer.Title = options.Title;
+        drawer.TitleCommand = options.TitleCommand;
         drawer.CanResize = options.CanResize;
         ScrollViewer.SetHorizontalScrollBarVisibility(drawer, options.HorizontalScrollBarVisibility);
         ScrollViewer.SetVerticalScrollBarVisibility(drawer, options.VerticalScrollBarVisibility);

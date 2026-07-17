@@ -159,17 +159,19 @@
                                         Name="PART_ContentPresenter" />
                                 </ScrollViewer>
                                 <Grid ColumnDefinitions=" *, Auto" Grid.Row="0">
-                                    <TextBlock
+                                    <Button
+                                        Command="{TemplateBinding TitleCommand}"
+                                        Content="{TemplateBinding Title}"
                                         FontSize="16"
                                         FontWeight="{DynamicResource TextBlockTitleFontWeight}"
                                         Grid.Column="0"
-                                        IsHitTestVisible="False"
+                                        HorizontalAlignment="Left"
                                         IsVisible="{TemplateBinding Title,
-                                                                    Converter={x:Static ObjectConverters.IsNotNull}}"
-                                        Margin="24,24,0,0"
+                                                                     Converter={x:Static ObjectConverters.IsNotNull}}"
+                                        Margin="18,18,0,0"
                                         Name="PART_Title"
-                                        Text="{TemplateBinding Title}"
-                                        TextWrapping="Wrap"
+                                        Padding="6"
+                                        Theme="{StaticResource TransparentButton}"
                                         VerticalAlignment="Center" />
                                     <Button
                                         DockPanel.Dock="Right"
