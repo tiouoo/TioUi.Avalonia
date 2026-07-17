@@ -137,6 +137,7 @@
                                         Padding="{DynamicResource TreeViewItemIconMargin}"
                                         Theme="{StaticResource ToggleButtonTreeViewItemIconButton}" />
                                     <ContentPresenter
+                                        Background="Transparent"
                                         Content="{TemplateBinding Header}"
                                         ContentTemplate="{TemplateBinding HeaderTemplate}"
                                         Focusable="False"
