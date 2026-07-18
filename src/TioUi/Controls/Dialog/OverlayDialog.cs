@@ -212,6 +212,7 @@ public static partial class OverlayDialog
         control.VerticalAnchor = options.VerticalAnchor;
         control.ActualHorizontalAnchor = options.HorizontalAnchor;
         control.ActualVerticalAnchor = options.VerticalAnchor;
+        control.CloseBtnMargin = options.CloseBtnMargin;
         control.HorizontalOffset =
             control.HorizontalAnchor == HorizontalPosition.Center ? null : options.HorizontalOffset;
         control.VerticalOffset =
@@ -256,6 +257,7 @@ public static partial class OverlayDialog
         control.Mode = options.Mode;
         control.Buttons = options.Buttons;
         control.Title = options.Title;
+        control.CloseBtnMargin = options.CloseBtnMargin;
         control.CanLightDismiss = options.CanLightDismiss;
         control.IsCloseButtonVisible = options.IsCloseButtonVisible;
         control.CanResize = options.CanResize;

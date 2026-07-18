@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Primitives;
+﻿using Avalonia;
+using Avalonia.Controls.Primitives;
 using TioUi.Common;
 
 namespace TioUi.Controls;
@@ -58,6 +59,7 @@ public class OverlayDialogOptions
 
     public bool CanLightDismiss { get; set; }
     public bool CanDragMove { get; set; } = true;
+    public Thickness CloseBtnMargin { get; set; } = new(0, 24, 24, 0);
 
     /// <summary>
     ///     The hash code of the top level dialog host. This is used to identify the dialog host if there are multiple dialog
@@ -83,7 +85,7 @@ public class OverlayDialogOptions
     /// <summary>
     /// </summary>
     internal Delegate? OnDialogControlClosed { set; get; }
-    
+
     public string? OverrideOkButtonText { get; set; }
     public string? OverrideCancelButtonText { get; set; }
     public string? OverrideYesButtonText { get; set; }

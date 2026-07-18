@@ -101,7 +101,7 @@
                                     <Button
                                         DockPanel.Dock="Right"
                                         Grid.Column="1"
-                                        Margin="0,24,24,0"
+                                        Margin="{TemplateBinding CloseBtnMargin}"
                                         Name="{x:Static tio:MessageBoxWindow.PART_CloseButton}"
                                         Theme="{DynamicResource OverlayCloseButton}" />
                                 </Grid>
@@ -246,7 +246,7 @@
                                     <Button
                                         DockPanel.Dock="Right"
                                         Grid.Column="2"
-                                        Margin="0,24,24,0"
+                                        Margin="{TemplateBinding CloseBtnMargin}"
                                         Name="{x:Static tio:MessageBoxWindow.PART_CloseButton}"
                                         Theme="{DynamicResource OverlayCloseButton}" />
                                 </Grid>

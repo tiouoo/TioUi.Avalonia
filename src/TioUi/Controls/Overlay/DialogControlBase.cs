@@ -34,7 +34,15 @@ public abstract class DialogControlBase : OverlayFeedbackElement
     private Point _moveDragStartPoint;
     private Panel? _titleArea;
 
+    public static readonly StyledProperty<Thickness> CloseBtnMarginProperty =
+        AvaloniaProperty.Register<CustomDialogControl, Thickness>(nameof(CloseBtnMargin), new Thickness(0,24,24,0));
 
+    public Thickness CloseBtnMargin
+    {
+        get => GetValue(CloseBtnMarginProperty);
+        set => SetValue(CloseBtnMarginProperty, value);
+    }
+    
     static DialogControlBase()
     {
         CanDragMoveProperty.Changed.AddClassHandler<InputElement, bool>(OnCanDragMoveChanged);
