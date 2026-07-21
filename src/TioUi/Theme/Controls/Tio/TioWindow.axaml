@@ -35,48 +35,50 @@
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:TioWindow">
                 <VisualLayerManager Name="PART_VisualLayerManager">
-                    <Panel>
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{DynamicResource PopupBorderBrush}"
-                            BorderThickness="{OnPlatform Default=0,
-                                                         Linux=1}"
-                            CornerRadius="{OnPlatform Default=0,
-                                                      Linux=10}"
-                            Name="PART_Root">
-                            <DockPanel>
-                                <tio:TioTitleBar
-                                    CloseIcon="{Binding $parent[tio:TioWindow].CloseIcon}"
-                                    ControlBtnMargin="{Binding $parent[tio:TioWindow].TitleBarControlBtnMargin}"
-                                    DockPanel.Dock="Top"
-                                    IsCloseBtnShow="{Binding $parent[tio:TioWindow].IsCloseBtnShow}"
-                                    IsMaxBtnShow="{Binding $parent[tio:TioWindow].IsMaxBtnShow}"
-                                    IsMinBtnShow="{Binding $parent[tio:TioWindow].IsMinBtnShow}"
-                                    LeftContent="{Binding $parent[tio:TioWindow].TitleBarLeftContent}"
-                                    MaximizeIcon="{Binding $parent[tio:TioWindow].MaximizeIcon}"
-                                    MinimizeIcon="{Binding $parent[tio:TioWindow].MinimizeIcon}"
-                                    Name="PART_TitleBar"
-                                    RightContent="{Binding $parent[tio:TioWindow].TitleBarRightContent}"
-                                    TitleBarHeight="{Binding $parent[tio:TioWindow].TitleBarHeight}" />
-                                <ContentPresenter
-                                    Content="{Binding $parent[tio:TioWindow].Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    DockPanel.Dock="Bottom"
-                                    HorizontalContentAlignment="{Binding $parent[tio:TioWindow].HorizontalContentAlignment}"
-                                    Margin="{Binding $parent[tio:TioWindow].Padding}"
-                                    Name="PART_ContentPresenter"
-                                    VerticalContentAlignment="{Binding $parent[tio:TioWindow].VerticalContentAlignment}" />
-                            </DockPanel>
-                        </Border>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{DynamicResource PopupBorderBrush}"
+                        BorderThickness="{OnPlatform Default=0,
+                                                     Linux=1}"
+                        ClipToBounds="True"
+                        CornerRadius="{OnPlatform Default=0,
+                                                  Linux=10}">
                         <Panel>
-                            <tio:OverlayDialogHost
-                                HostId="{Binding $parent[tio:TioWindow].HostId}"
-                                IsModalStatusReporter="True"
-                                IsTopLevel="True"
-                                Name="PART_DialogHost" />
+                            <Border Name="PART_Root">
+                                <DockPanel>
+                                    <tio:TioTitleBar
+                                        CloseIcon="{Binding $parent[tio:TioWindow].CloseIcon}"
+                                        ControlBtnMargin="{Binding $parent[tio:TioWindow].TitleBarControlBtnMargin}"
+                                        DockPanel.Dock="Top"
+                                        IsCloseBtnShow="{Binding $parent[tio:TioWindow].IsCloseBtnShow}"
+                                        IsMaxBtnShow="{Binding $parent[tio:TioWindow].IsMaxBtnShow}"
+                                        IsMinBtnShow="{Binding $parent[tio:TioWindow].IsMinBtnShow}"
+                                        LeftContent="{Binding $parent[tio:TioWindow].TitleBarLeftContent}"
+                                        MaximizeIcon="{Binding $parent[tio:TioWindow].MaximizeIcon}"
+                                        MinimizeIcon="{Binding $parent[tio:TioWindow].MinimizeIcon}"
+                                        Name="PART_TitleBar"
+                                        RightContent="{Binding $parent[tio:TioWindow].TitleBarRightContent}"
+                                        TitleBarHeight="{Binding $parent[tio:TioWindow].TitleBarHeight}" />
+                                    <ContentPresenter
+                                        Content="{Binding $parent[tio:TioWindow].Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        DockPanel.Dock="Bottom"
+                                        HorizontalContentAlignment="{Binding $parent[tio:TioWindow].HorizontalContentAlignment}"
+                                        Margin="{Binding $parent[tio:TioWindow].Padding}"
+                                        Name="PART_ContentPresenter"
+                                        VerticalContentAlignment="{Binding $parent[tio:TioWindow].VerticalContentAlignment}" />
+                                </DockPanel>
+                            </Border>
+                            <Panel>
+                                <tio:OverlayDialogHost
+                                    HostId="{Binding $parent[tio:TioWindow].HostId}"
+                                    IsModalStatusReporter="True"
+                                    IsTopLevel="True"
+                                    Name="PART_DialogHost" />
+                            </Panel>
+                            <tio:WindowResizer IsVisible="{TemplateBinding IsManagedResizerVisible}" />
                         </Panel>
-                        <tio:WindowResizer IsVisible="{TemplateBinding IsManagedResizerVisible}" />
-                    </Panel>
+                    </Border>
                 </VisualLayerManager>
             </ControlTemplate>
         </Setter>
