@@ -150,11 +150,12 @@
                         CornerRadius="2"
                         Height="2"
                         HorizontalAlignment="Stretch"
+                        Margin="0,-1,0,0"
                         VerticalAlignment="Bottom"
                         ZIndex="-2">
                         <Border.Transitions>
                             <Transitions>
-                                <ThicknessTransition Duration="0:0:0.1" Property="Margin" />
+                                <DoubleTransition Duration="0:0:0.1" Property="TranslateTransform.Y" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -173,14 +174,11 @@
         <Style Selector="^:pointerover /template/ ContentPresenter#ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
-        <Style Selector="^ /template/ Border">
-            <Setter Property="Margin" Value="0,-1,0,0" />
-        </Style>
         <Style Selector="^:pointerover /template/ Border">
-            <Setter Property="Margin" Value="0,-2,0,1" />
+            <Setter Property="TranslateTransform.Y" Value="-1" />
         </Style>
         <Style Selector="^:pressed /template/ Border">
-            <Setter Property="Margin" Value="0,-2,0,1" />
+            <Setter Property="TranslateTransform.Y" Value="-1" />
         </Style>
         <Style Selector="^:pressed /template/ ContentPresenter#ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
