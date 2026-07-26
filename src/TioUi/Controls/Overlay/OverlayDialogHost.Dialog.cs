@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.VisualTree;
 using TioUi.Common.Classes;
 using TioUi.Common.Helpers;
@@ -41,6 +42,10 @@ public partial class OverlayDialogHost
 
     internal void AddDialog(DialogControlBase control)
     {
+        // The dialog theme assigns a css-style TransformOperations RenderTransform, which
+        // TransformAnimator silently refuses to animate. Replace it with a plain ScaleTransform
+        // so the pop animation can drive ScaleX/ScaleY.
+        control.RenderTransform = new ScaleTransform();
         PureRectangle? mask = null;
         if (control.CanLightDismiss) mask = CreateOverlayMask(false, control.CanLightDismiss);
         if (mask is not null) Children.Add(mask);
@@ -63,6 +68,7 @@ public partial class OverlayDialogHost
         control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosing);
         control.AddHandler(DialogControlBase.LayerChangedEvent, OnDialogLayerChanged);
         ResetZIndices();
+        if (!IsAnimationDisabled) DialogAppearAnimation.RunAsync(control);
     }
 
     private async void OnDialogControlClosing(object? sender, object? e)
@@ -77,19 +83,28 @@ public partial class OverlayDialogHost
         control.RemoveHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosing);
         control.RemoveHandler(DialogControlBase.LayerChangedEvent, OnDialogLayerChanged);
         layer.Mask?.RemoveHandler(PointerPressedEvent, DragMaskToMoveWindow);
+        layer.Mask?.RemoveHandler(PointerReleasedEvent, ClickMaskToCloseDialog);
+
+        if (layer.Mask is not null && layer.Modal)
+        {
+            _modalCount--;
+            IsInModalStatus = _modalCount > 0;
+        }
+
+        if (!IsAnimationDisabled)
+        {
+            control.IsHitTestVisible = false;
+            if (layer.Mask is not null) layer.Mask.IsHitTestVisible = false;
+            if (control.RenderTransform is not ScaleTransform) control.RenderTransform = new ScaleTransform();
+            var disappear = DialogDisappearAnimation.RunAsync(control);
+            if (layer.Mask is not null && layer.Modal)
+                await Task.WhenAll(disappear, MaskDisappearAnimation.RunAsync(layer.Mask));
+            else
+                await disappear;
+        }
 
         Children.Remove(control);
-
-        if (layer.Mask is not null)
-        {
-            Children.Remove(layer.Mask);
-            if (layer.Modal)
-            {
-                _modalCount--;
-                IsInModalStatus = _modalCount > 0;
-                if (!IsAnimationDisabled) await MaskDisappearAnimation.RunAsync(layer.Mask);
-            }
-        }
+        if (layer.Mask is not null) Children.Remove(layer.Mask);
 
         ResetZIndices();
     }
@@ -100,6 +115,7 @@ public partial class OverlayDialogHost
     /// <param name="control"></param>
     internal void AddModalDialog(DialogControlBase control)
     {
+        control.RenderTransform = new ScaleTransform();
         var mask = CreateOverlayMask(true, control.CanLightDismiss);
         _layers.Add(new DialogPair(mask, control));
         control.SetAsModal(true);
@@ -122,8 +138,11 @@ public partial class OverlayDialogHost
         SetToPosition(control);
         control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDialogControlClosing);
         control.AddHandler(DialogControlBase.LayerChangedEvent, OnDialogLayerChanged);
-        // Notice: mask animation here is not really awaited, because currently dialogs appears immediately.
-        if (!IsAnimationDisabled) MaskAppearAnimation.RunAsync(mask);
+        if (!IsAnimationDisabled)
+        {
+            MaskAppearAnimation.RunAsync(mask);
+            DialogAppearAnimation.RunAsync(control);
+        }
 
         var element = control.GetVisualDescendants().OfType<InputElement>()
             .FirstOrDefault(FocusHelper.GetDialogFocusHint);

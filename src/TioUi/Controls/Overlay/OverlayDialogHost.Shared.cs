@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Animation;
+using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Input;
@@ -15,6 +16,8 @@ public partial class OverlayDialogHost : Canvas
 {
     private static readonly Animation MaskAppearAnimation;
     private static readonly Animation MaskDisappearAnimation;
+    private static readonly Animation DialogAppearAnimation;
+    private static readonly Animation DialogDisappearAnimation;
 
     public static readonly AttachedProperty<bool> IsModalStatusScopeProperty =
         AvaloniaProperty.RegisterAttached<OverlayDialogHost, Control, bool>("IsModalStatusScope");
@@ -41,6 +44,8 @@ public partial class OverlayDialogHost : Canvas
         ClipToBoundsProperty.OverrideDefaultValue<OverlayDialogHost>(true);
         MaskAppearAnimation = CreateOpacityAnimation(true);
         MaskDisappearAnimation = CreateOpacityAnimation(false);
+        DialogAppearAnimation = CreateDialogPopAnimation(true);
+        DialogDisappearAnimation = CreateDialogPopAnimation(false);
     }
 
     public bool IsModalStatusReporter
@@ -118,6 +123,48 @@ public partial class OverlayDialogHost : Canvas
         animation.Children.Add(keyFrame2);
         animation.Duration = TimeSpan.FromSeconds(0.2);
         return animation;
+    }
+
+    private static Animation CreateDialogPopAnimation(bool appear)
+    {
+        var animation = new Animation
+        {
+            Easing = new CubicEaseOut(),
+            FillMode = FillMode.Forward
+        };
+        if (appear)
+        {
+            var start = new KeyFrame { Cue = new Cue(0.0) };
+            AddPopFrameSetters(start, 0.0, 0.92);
+            // Slight overshoot to give the dialog a gentle pop without feeling bouncy.
+            var overshoot = new KeyFrame { Cue = new Cue(0.7) };
+            AddPopFrameSetters(overshoot, 1.0, 1.02);
+            var end = new KeyFrame { Cue = new Cue(1.0) };
+            AddPopFrameSetters(end, 1.0, 1.0);
+            animation.Children.Add(start);
+            animation.Children.Add(overshoot);
+            animation.Children.Add(end);
+            animation.Duration = TimeSpan.FromMilliseconds(240);
+        }
+        else
+        {
+            var start = new KeyFrame { Cue = new Cue(0.0) };
+            AddPopFrameSetters(start, 1.0, 1.0);
+            var end = new KeyFrame { Cue = new Cue(1.0) };
+            AddPopFrameSetters(end, 0.0, 0.93);
+            animation.Children.Add(start);
+            animation.Children.Add(end);
+            animation.Duration = TimeSpan.FromMilliseconds(180);
+        }
+
+        return animation;
+    }
+
+    private static void AddPopFrameSetters(KeyFrame frame, double opacity, double scale)
+    {
+        frame.Setters.Add(new Setter { Property = OpacityProperty, Value = opacity });
+        frame.Setters.Add(new Setter { Property = ScaleTransform.ScaleXProperty, Value = scale });
+        frame.Setters.Add(new Setter { Property = ScaleTransform.ScaleYProperty, Value = scale });
     }
 
     private PureRectangle CreateOverlayMask(bool modal, bool canCloseOnClick)
