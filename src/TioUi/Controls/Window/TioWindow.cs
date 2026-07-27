@@ -142,6 +142,33 @@ public class TioWindow : Window
         set => SetValue(TitleBarControlBtnMarginProperty, value);
     }
 
+    public static readonly StyledProperty<Thickness> FrameBorderThicknessProperty =
+        AvaloniaProperty.Register<TioWindow, Thickness>(nameof(FrameBorderThickness));
+
+    public Thickness FrameBorderThickness
+    {
+        get => GetValue(FrameBorderThicknessProperty);
+        set => SetValue(FrameBorderThicknessProperty, value);
+    }
+
+    public static readonly StyledProperty<CornerRadius> FrameBorderCornerRadiusProperty =
+        AvaloniaProperty.Register<TioWindow, CornerRadius>(nameof(FrameBorderCornerRadius));
+
+    public CornerRadius FrameBorderCornerRadius
+    {
+        get => GetValue(FrameBorderCornerRadiusProperty);
+        set => SetValue(FrameBorderCornerRadiusProperty, value);
+    }
+
+    public static readonly StyledProperty<Brush> FrameBorderBrushProperty =
+        AvaloniaProperty.Register<TioWindow, Brush>(nameof(FrameBorderBrush));
+
+    public Brush FrameBorderBrush
+    {
+        get => GetValue(FrameBorderBrushProperty);
+        set => SetValue(FrameBorderBrushProperty, value);
+    }
+
     public static readonly StyledProperty<double> TitleBarHeightProperty =
         AvaloniaProperty.Register<TioWindow, double>(nameof(TitleBarHeight), 36);
 

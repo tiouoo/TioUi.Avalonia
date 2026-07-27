@@ -10,6 +10,7 @@
         <Setter Property="FontSize" Value="{DynamicResource TioFontSize}" />
         <Setter Property="FontWeight" Value="{DynamicResource TioFontWeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource TioFontFamily}" />
+        <Setter Property="FrameBorderBrush" Value="{DynamicResource PopupBorderBrush}" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
         <Setter Property="WindowDecorations">
@@ -32,17 +33,42 @@
                 </On>
             </OnPlatform>
         </Setter>
+        <Setter Property="FrameBorderCornerRadius">
+            <OnPlatform>
+                <On Options="Default">
+                    <CornerRadius>0</CornerRadius>
+                </On>
+                <On Options="Linux">
+                    <CornerRadius>10</CornerRadius>
+                </On>
+            </OnPlatform>
+        </Setter>
+        <Setter Property="FrameBorderThickness">
+            <OnPlatform>
+                <On Options="Default">
+                    <Thickness>0</Thickness>
+                </On>
+                <On Options="Linux">
+                    <Thickness>1</Thickness>
+                </On>
+            </OnPlatform>
+        </Setter>
         <Setter Property="Template">
             <ControlTemplate TargetType="tio:TioWindow">
                 <VisualLayerManager Name="PART_VisualLayerManager">
                     <Border
                         Background="{TemplateBinding Background}"
-                        BorderBrush="{DynamicResource PopupBorderBrush}"
-                        BorderThickness="{OnPlatform Default=0,
-                                                     Linux=1}"
+                        BorderBrush="{TemplateBinding FrameBorderBrush}"
+                        BorderThickness="{TemplateBinding FrameBorderThickness}"
                         ClipToBounds="True"
-                        CornerRadius="{OnPlatform Default=0,
-                                                  Linux=10}">
+                        CornerRadius="{TemplateBinding FrameBorderCornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Duration="0.2" Property="BorderBrush" />
+                                <ThicknessTransition Duration="0.2" Property="BorderThickness" />
+                                <CornerRadiusTransition Duration="0.2" Property="CornerRadius" />
+                            </Transitions>
+                        </Border.Transitions>
                         <Panel>
                             <Border Name="PART_Root">
                                 <DockPanel>
