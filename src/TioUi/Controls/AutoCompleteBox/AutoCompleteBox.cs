@@ -62,6 +62,12 @@ public class AutoCompleteBox : Avalonia.Controls.AutoCompleteBox, IClearControl
             && e.GetCurrentPoint(this).Properties.IsLeftButtonPressed
             && IsDropDownOpen == false)
         {
+            // Don't open the dropdown when the press originates from an interactive
+            // control embedded in InnerLeftContent/InnerRightContent (e.g. a ComboBox),
+            // so that control can handle the click without the dropdown competing with it.
+            if (e.Source is Visual source && source.FindAncestorOfType<ComboBox>() is not null)
+                return;
+
             SetCurrentValue(IsDropDownOpenProperty, true);
         }
     }

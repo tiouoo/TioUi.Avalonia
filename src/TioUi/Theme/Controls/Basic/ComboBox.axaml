@@ -734,7 +734,7 @@
         <Setter Property="MaxDropDownHeight" Value="300" />
         <Setter Property="Template">
             <ControlTemplate TargetType="ComboBox">
-                <Grid ColumnDefinitions="Auto, Auto, Auto">
+                <Grid Background="{TemplateBinding Background}" ColumnDefinitions="Auto, Auto, Auto">
                     <ContentPresenter
                         Content="{TemplateBinding SelectionBoxItem}"
                         ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -769,7 +769,7 @@
                             HorizontalAlignment="Stretch"
                             Margin="4"
                             MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                            Padding="4,-2">
+                            Padding="0,-2">
                             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                                 <Border Margin="4">
                                     <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Name="PART_ItemsPresenter" />
