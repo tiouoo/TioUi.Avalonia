@@ -718,4 +718,67 @@
             <Setter Property="RenderTransform" Value="scaleY(1)" />
         </Style>
     </ControlTheme>
+
+    <ControlTheme TargetType="ComboBox" x:Key="BareComboBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource InnerForegroundColor}" />
+        <Setter Property="MaxDropDownHeight" Value="300" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ComboBox">
+                <Grid ColumnDefinitions="Auto, Auto, Auto">
+                    <ContentPresenter
+                        Content="{TemplateBinding SelectionBoxItem}"
+                        ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    <PathIcon
+                        Data="{DynamicResource ComboBoxIcon}"
+                        Foreground="{DynamicResource InnerForegroundColor}"
+                        Grid.Column="1"
+                        Height="10"
+                        IsHitTestVisible="False"
+                        Margin="5,0,10,0"
+                        VerticalAlignment="Center"
+                        Width="12" />
+                    <Popup
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        InheritsTransform="True"
+                        IsLightDismissEnabled="True"
+                        IsOpen="{TemplateBinding IsDropDownOpen,
+                                                 Mode=TwoWay}"
+                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                        Name="PART_Popup"
+                        PlacementTarget="{TemplateBinding}"
+                        WindowManagerAddShadowHint="False">
+                        <Border
+                            Background="{DynamicResource PopupBackgroundColor}"
+                            BorderBrush="{DynamicResource PopupBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource TioCornerRadius}"
+                            HorizontalAlignment="Stretch"
+                            Margin="4"
+                            MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                            Padding="4,-2">
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                <Border Margin="4">
+                                    <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Name="PART_ItemsPresenter" />
+                                </Border>
+                            </ScrollViewer>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 </ResourceDictionary>
