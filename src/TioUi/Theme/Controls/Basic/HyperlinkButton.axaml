@@ -150,7 +150,7 @@
                         CornerRadius="2"
                         Height="2"
                         HorizontalAlignment="Stretch"
-                        Margin="0,-1,0,0"
+                        Margin="0,0,0,0"
                         VerticalAlignment="Bottom"
                         ZIndex="-2">
                         <Border.Transitions>
