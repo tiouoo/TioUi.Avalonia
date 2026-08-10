@@ -1,0 +1,110 @@
+<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="TioUi.Demo.Pages.SmoothScrollPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <tio:ScrollViewerSmoothTheme />
+    </UserControl.Styles>
+    <ScrollViewer>
+        <StackPanel Spacing="15" Margin="15">
+            <tio:GroupBorder Header="ScrollView - 平滑滚动与缩放">
+                <Panel Height="420">
+                    <tio:ScrollView
+                        x:Name="ZoomScrollView"
+                        HorizontalContentAlignment="Stretch"
+                        HorizontalScrollBarVisibility="Hidden"
+                        IsZoomEnabled="True"
+                        VerticalContentAlignment="Stretch"
+                        VerticalScrollBarVisibility="Hidden">
+                        <Grid Width="900" Height="500">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Offset="0" Color="#FF5E9C" />
+                                    <GradientStop Offset="1" Color="#2C4F7C" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <UniformGrid Columns="3" Margin="24" Rows="3" RowSpacing="8" ColumnSpacing="8">
+                                <Border Background="#88FDF398" CornerRadius="8" />
+                                <Border Background="#8898CDFD" CornerRadius="8" />
+                                <Border Background="#88F6A0B5" CornerRadius="8" />
+                                <Border Background="#88A4E0A7" CornerRadius="8" />
+                                <Border Background="#88C39BD6" CornerRadius="8" />
+                                <Border Background="#88F0A868" CornerRadius="8" />
+                                <Border Background="#887FB8A0" CornerRadius="8" />
+                                <Border Background="#88E5B3D4" CornerRadius="8" />
+                                <Border Background="#889FD2DB" CornerRadius="8" />
+                            </UniformGrid>
+                            <TextBlock
+                                Margin="30"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="28"
+                                Foreground="White"
+                                Text="滚轮滚动 · Ctrl + 滚轮缩放 · 也可拖动缩放"
+                                TextAlignment="Center" />
+                        </Grid>
+                    </tio:ScrollView>
+                    <Border
+                        Margin="16"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+                        ClipToBounds="True"
+                        CornerRadius="128">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button
+                                x:Name="ZoomInButton"
+                                Padding="12,4,8,4"
+                                Click="ZoomInButton_Click"
+                                Content="+"
+                                CornerRadius="0"
+                                FontSize="20" />
+                            <TextBlock
+                                Width="64"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Text="{Binding #ZoomScrollView.ZoomFactor, Mode=OneWay, StringFormat={}{0:P1}}"
+                                TextAlignment="Center" />
+                            <Button
+                                x:Name="ZoomOutButton"
+                                Padding="8,4,12,4"
+                                Click="ZoomOutButton_Click"
+                                Content="-"
+                                CornerRadius="0"
+                                FontSize="20" />
+                        </StackPanel>
+                    </Border>
+                </Panel>
+            </tio:GroupBorder>
+
+            <tio:GroupBorder Header="ScrollViewer - 启用平滑滚动（ScrollViewerSmoothTheme）">
+                <StackPanel Spacing="10">
+                    <TextBlock
+                        Opacity="0.75"
+                        Text="页面顶部已启用 ScrollViewerSmoothTheme，下方所有 ScrollViewer 均使用平滑滚动。"
+                        TextWrapping="Wrap" />
+                    <ScrollViewer Height="200">
+                        <UniformGrid
+                            Columns="2"
+                            Height="300"
+                            Rows="2"
+                            RowSpacing="8"
+                            ColumnSpacing="8"
+                            Width="300">
+                            <Rectangle Fill="#fdf398" />
+                            <Rectangle Fill="#98cdfd" />
+                            <Rectangle Fill="#f6a0b5" />
+                            <Rectangle Fill="#a4e0a7" />
+                        </UniformGrid>
+                    </ScrollViewer>
+                </StackPanel>
+            </tio:GroupBorder>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

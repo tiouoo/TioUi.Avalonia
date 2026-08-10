@@ -40,6 +40,11 @@ public static class Layouts
         },
         new()
         {
+            Title = "SmoothScroll",
+            Content = new SmoothScrollPage(),
+        },
+        new()
+        {
             Title = "ThemeVariantScope",
             Content = new ThemeVariantScopePage(),
         },

@@ -160,6 +160,49 @@ TioUi 提供了丰富的组件库，涵盖基础组件、数据展示、导航�
 
 完整的组件列表和使用方法请查看[示例项目](https://github.com/tiouoo/TioUi.Avalonia/releases/tag/auto-release)。
 
+## 平滑滚动
+
+TioUi 内置了基于 [SmoothScroll.Avalonia](https://github.com/zxbmmmmmmmmm/SmoothScroll.Avalonia) 移植的平滑滚动能力（独立程序集 `TioUi.SmoothScroll`）。
+
+### ScrollView（平滑滚动 + 缩放）
+
+`ScrollView` 是继承自 `ScrollViewer` 的平滑滚动容器，支持惯性滚动、触控/鼠标拖动、捏合与 Ctrl+滚轮缩放。引入 `TioUiTheme` 后即可直接使用：
+
+```xaml
+xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
+
+<tio:ScrollView IsZoomEnabled="True">
+    <!-- 超大的内容 -->
+</tio:ScrollView>
+```
+
+可通过 `ZoomTo` / `ZoomBy` 方法或 `ZoomFactor` 属性控制缩放：
+
+```csharp
+scrollView.ZoomTo(scrollView.ZoomFactor * 1.2);
+```
+
+### 让所有 ScrollViewer 平滑滚动（可选）
+
+TioUi 主题默认不覆盖 `ScrollViewer` 外观。如需让整个应用中所有 `ScrollViewer` 都使用平滑滚动，可在任意层级引入 `ScrollViewerSmoothTheme`：
+
+```xaml
+<Application.Styles>
+    <tio:TioUiTheme />
+    <tio:ScrollViewerSmoothTheme />
+</Application.Styles>
+```
+
+或仅对局部生效：
+
+```xaml
+<UserControl.Styles>
+    <tio:ScrollViewerSmoothTheme />
+</UserControl.Styles>
+```
+
+
+
 ## 示例项目
 
 TioUi 提供了一个完整的示例项目，展示了所有组件的用法：
@@ -176,6 +219,7 @@ TioUi 的开发受到了以下优秀项目的启发：
 - [Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia)
 - [Ursa.Avalonia](https://github.com/irihitech/Ursa.Avalonia)
 - [SukiUI](https://github.com/kikipoulet/SukiUI)
+- [SmoothScroll.Avalonia](https://github.com/zxbmmmmmmmmm/SmoothScroll.Avalonia)（平滑滚动，MIT）
 
 ## 许可证
 

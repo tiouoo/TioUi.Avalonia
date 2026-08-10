@@ -38,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TioUi.SmoothScroll\TioUi.SmoothScroll.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AvaloniaResource Include="Assets\AlimamaFangYuanTi-Bold.ttf" />
     <AvaloniaResource Include="Assets\AlimamaFangYuanTi-Regular.ttf" />
     <AvaloniaResource Include="Themes\**\*.axaml" />

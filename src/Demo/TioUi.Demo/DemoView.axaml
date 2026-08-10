@@ -30,7 +30,7 @@
                 SearchPlacement="Top"
                 SelectedItem="{Binding SelectedPage}"
                 SubMenuBinding="{Binding Children}"
-                Width="235"
+                Width="240"
                 x:Name="NavMenu">
                 <tio:NavMenu.Styles>
                     <Style Selector="tio|NavMenu /template/ ItemsPresenter#PART_ItemsPresenter">
