@@ -48,6 +48,14 @@ public partial class ScrollView : ScrollViewer
     [GeneratedStyledProperty(ScrollMode.Auto)]
     public partial ScrollMode VerticalScrollMode { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value that indicates whether the scroll bars occupy layout space.
+    /// When false (the default), the scroll bars are overlaid on the content and showing or
+    /// hiding them does not change the layout of the control.
+    /// </summary>
+    [GeneratedStyledProperty]
+    public partial bool ScrollBarOccupiesSpace { get; set; }
+
     public void ZoomTo(double zoomFactor, bool isAnimated = true)
     {
         var presenter = Presenter as ScrollPresenter;
