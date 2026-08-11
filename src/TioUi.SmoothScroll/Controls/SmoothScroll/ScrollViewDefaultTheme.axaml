@@ -59,6 +59,10 @@
                 <Style Selector="^[IsExpanded=true] /template/ Panel#PART_ScrollBarsSeparator">
                     <Setter Property="Opacity" Value="1" />
                 </Style>
+                <Style Selector="^[ScrollBarOccupiesSpace=False] /template/ controls|ScrollPresenter#PART_ContentPresenter">
+                    <Setter Property="Grid.ColumnSpan" Value="2" />
+                    <Setter Property="Grid.RowSpan" Value="2" />
+                </Style>
                 <Style Selector="^[ScrollBarOccupiesSpace=True] /template/ controls|ScrollPresenter#PART_ContentPresenter">
                     <Setter Property="Grid.ColumnSpan" Value="1" />
                     <Setter Property="Grid.RowSpan" Value="1" />
