@@ -1,4 +1,7 @@
-<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia">
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:tio="https://github.com/tiouoo/TioUi.Avalonia"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -6,7 +9,6 @@
                 <ResourceInclude Source="Controls/Tio/@Tio.axaml" />
                 <ResourceInclude Source="Controls/ColorPicker/@ColorPicker.axaml" />
                 <ResourceInclude Source="Controls/DataGrid/DataGrid.axaml" />
-                <!-- <ResourceInclude Source="Controls/TreeDataGrid/TreeDataGrid.axaml.no" /> -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
