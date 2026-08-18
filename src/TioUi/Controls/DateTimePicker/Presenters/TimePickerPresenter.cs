@@ -324,6 +324,11 @@ public class TimePickerPresenter : TemplatedControl
     [Obsolete("Confirm() on TimePickerPresenter is obsolete. Call Confirm() on the picker control instead.")]
     public void Confirm()
     {
+        Commit();
+    }
+
+    internal void Commit()
+    {
         RaiseEvent(new TimeChangedEventArgs(null, TimeHolder) { RoutedEvent = SelectedTimeChangedEvent });
     }
 

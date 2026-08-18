@@ -147,8 +147,8 @@ public abstract class TimeRangePickerBase<T> : TimeRangePickerBase where T : str
 
     public override void Confirm()
     {
-        _startPresenter?.Confirm();
-        _endPresenter?.Confirm();
+        _startPresenter?.Commit();
+        _endPresenter?.Commit();
         SetCurrentValue(IsDropdownOpenProperty, false);
     }
 

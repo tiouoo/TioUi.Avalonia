@@ -161,7 +161,7 @@ public abstract class TimePickerBase<T> : TimePickerBase where T : struct
 
     public override void Confirm()
     {
-        _presenter?.Confirm();
+        _presenter?.Commit();
         SetCurrentValue(IsDropdownOpenProperty, false);
     }
 

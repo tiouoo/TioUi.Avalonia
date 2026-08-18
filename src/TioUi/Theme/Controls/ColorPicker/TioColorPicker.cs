@@ -14,13 +14,13 @@ public class TioColorPicker : Avalonia.Controls.ColorPicker
     /// <para>1 = Palette（调色板）</para>
     /// <para>2 = Components（组件）</para>
     /// </summary>
-    public static readonly StyledProperty<int> SelectedIndexProperty =
+    public static new readonly StyledProperty<int> SelectedIndexProperty =
         AvaloniaProperty.Register<TioColorPicker, int>(nameof(SelectedIndex), 0);
 
     /// <summary>
     /// 获取或设置默认选中的页面索引
     /// </summary>
-    public int SelectedIndex
+    public new int SelectedIndex
     {
         get => GetValue(SelectedIndexProperty);
         set => SetValue(SelectedIndexProperty, value);

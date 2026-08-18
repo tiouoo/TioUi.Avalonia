@@ -11,8 +11,7 @@ namespace TioUi.Controls;
 public partial class TioTitleBar : UserControl
 {
     private DateTime? _lastClickTime;
-    private Win32Properties.CustomWndProcHookCallback? _wndProcHookCallback;
-    
+
     public static readonly StyledProperty<Thickness> ControlBtnMarginProperty =
         AvaloniaProperty.Register<TioWindow, Thickness>(nameof(ControlBtnMargin), new Thickness(0,0,5,0));
 

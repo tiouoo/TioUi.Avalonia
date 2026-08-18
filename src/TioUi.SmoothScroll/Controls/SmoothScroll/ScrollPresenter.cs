@@ -540,7 +540,7 @@ public sealed partial class ScrollPresenter : ContentPresenter, IScrollable, ISc
         _ownerSubscriptions?.Dispose();
         _owner = owner;
 
-        IDisposable?[] subscriptionDisposables = new IDisposable?[]
+        var subscriptionDisposables = new IDisposable?[]
         {
             owner is ScrollView ? null : IfUnset(CanHorizontallyScrollProperty, p => Bind(p, owner.GetObservable(ScrollViewer.HorizontalScrollBarVisibilityProperty, NotDisabled), BindingPriority.Template)),
             owner is ScrollView ? null : IfUnset(CanVerticallyScrollProperty, p => Bind(p, owner.GetObservable(ScrollViewer.VerticalScrollBarVisibilityProperty, NotDisabled), BindingPriority.Template)),
