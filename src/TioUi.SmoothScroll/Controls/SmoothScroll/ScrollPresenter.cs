@@ -722,6 +722,18 @@ public sealed partial class ScrollPresenter : ContentPresenter, IScrollable, ISc
         }
     }
 
+    /// <summary>
+    /// Indicates whether the content needs a layout pass to follow the scroll offset.
+    /// Virtualizing hosts (ItemsControl/ItemsPresenter) and anchor-based scrolling require
+    /// layout-driven offsetting; for plain static content the scroll position is applied
+    /// directly on the composition visual by <see cref="CreateScrollAnimationGroup"/>,
+    /// so re-arranging on every scroll frame is redundant work that hurts smoothness.
+    /// </summary>
+    private bool RequiresLayoutOnScroll()
+    {
+        return Content is ItemsControl or ItemsPresenter || _anchorCandidates is { Count: > 0 };
+    }
+
     private void ArrangeTimerTick(object? sender, EventArgs e)
     {
         if (_hasPendingArrange)
@@ -807,7 +819,10 @@ public sealed partial class ScrollPresenter : ContentPresenter, IScrollable, ISc
             {
                 if (_compositionUpdate)
                 {
-                    RequestArrangeOnScroll();
+                    if (RequiresLayoutOnScroll())
+                    {
+                        RequestArrangeOnScroll();
+                    }
                 }
                 else
                 {
